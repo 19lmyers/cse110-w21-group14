@@ -1,7 +1,7 @@
 # Team Working Agreement
 **Term Winter 2021**   
 **Creation 01/18/2021**   
-**~~Revised 00/00/0000~~**   
+**Revised 01/18/2021**   
 
 ## 1. Group Identification
 **Instructor:** Thomas Powell  
@@ -9,7 +9,7 @@
 
 **Team Members:**   
 Harshi Agrawal   
-Luke Meyers   
+Luke Myers   
 Gary Li   
 Jackson Grenier   
 Jacob Khaliqi   
@@ -19,19 +19,37 @@ Mahkameh Torabi-goodarzi
 Mon Morera   
 
 ## 2. Primary Means of Communication and Expectations
-> State your team’s agreed upon various means of communication and expectations for response. (Example: All members will be expected to read emails from anyone in the group on a daily basis and respond in not more than 12 hours.)
+Our group's primary method of communication is Slack. 
+
+We encourage members to turn on their notifications and react or respond promptly to messages so our group stays in-sync and everyone knows what is going on.
+If that is not possible, members are expected to check Slack at least once a day at minimum.
 
 ## 3. Scheduling Meetings
-> Agreed upon means of scheduling meetings. (Example: Team will agree, at the end of each class, to set any meetings times and agenda needed before the next class and beyond if possible. Team members will take turns to send out a reminder of the meeting with an agenda within eight hours after the class.)
+Before every meeting, one team member will prepare an agenda (usually based on assignments due).
+
+Every Sunday morning, the team leads will send out a When2Meet on Slack to determine the best meeting times for that week. 
+Team members are expected to fill it out accurately and comprehensively.
+
+If someone misses a meeting, they are expected to ask questions and look at the meeting minutes to ensure they are caught up.
 
 ## 4. General Responsibilities for All Team Members
-> This element of the team working agreement is the list of rules/agreements or the contract that all members agrees to live by.
+Team members are expected to:
+- Treat their fellow team members with respect
+- Ask questions and stay on top of things
+- COMMUNICATE and keep each other updated
+- Follow through with assigned duties, or reach out for help
+
+In addition, team members will be expected to record meeting minutes on a rotating basis.
 
 ## 5. Conflict Resolution
-> Each team should have an agreed-upon approach to addressing issues that may arise. For example, if a team member is not meeting deadlines, the team agrees to do X [specific action decided by the team] to address the problem before bringing the issue to a TA or professor.
+To resolve any conflicts that may arise, team members should speak with each other and attempt to work out a resolution, as a group if necessary. 
+Conflicts can and will happen, so team members need to be willing to listen to each other.
+
+If a resolution cannot be reached for a major decision, we will come to a decision via majority vote. 
+Ties will be settled by the team leads, and if necessary, the TA.
 
 ## 6. Expectations of Faculty and TA's
-> Suggested Statement: If a team member fails to live up to this agreement, the situation may be reported to the staff, but the team will still be responsible for submitting a completed assignment. Staff will be available to meet with teams to resolve issues.
+If a team member fails to live up to this agreement, the situation may be reported to the staff, but the team will still be responsible for submitting a completed assignment. Staff will be available to meet with teams to resolve issues.
 
 ## 7. Team Members Sign and Date
 
@@ -40,5 +58,6 @@ Mon Morera
 
 
 Name: _________________________________________
+
 
 Date: _________________________________________
