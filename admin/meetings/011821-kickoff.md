@@ -1,14 +1,21 @@
 # Meeting Minutes: GROUP 14
-Date: 01-18-2021, 00:00 - 00:00 p.m.  
+Date: 01-18-2021, 05:00 - 06:35 p.m.  
 Location: Virtual through Zoom  
-Minutes prepared by: 
+Minutes prepared by: Harshi Agrawal
 
 ## Attendance
 **Present**
-- Name here
+- Harshi Agrawal
+- Luke Meyers 
+- Jackson Grenier
+- Justin Sun 
+- Jacob Khaliqi
+- Jenny Xin
+- Gary Li
+- Mahkameh Goodarzi
 
 **Absent**
-- Name here
+- Mon Morera (excused)
 
 ## Agenda and Meeting Notes
 
@@ -23,6 +30,10 @@ Minutes prepared by:
 - *Team Name*: Yay or nay?  
 ***Notes:*** 
 
+1. A lot of us are excited to try to finish a project all the way through.
+2. We really want to gain experience in HTML and JavaScript.
+3. Most of us have never really worked in groups so we are excited to do that.
+
 
 ### Group Assignments
 #### 1. First Assignment
@@ -30,6 +41,8 @@ Minutes prepared by:
   - Explain folders and organization
 - Volunteer meeting minute taker?   
 ***Notes:*** 
+
+None.
 
 
 #### 2. Second Assignment
@@ -43,8 +56,11 @@ Minutes prepared by:
     - Link to GitHub page
 - Create team intro video (2.5 minutes max)
   - Ideas?
+    - Say the name and then picture what you would be doing if you were outside
   - **Task:** Film your part   
 ***Notes:*** 
+1. Will complete github page on Wednesday because we need more info
+2. Jackson is interested in designing and will put together the entire video.
 
 
 #### 3. Third Assignment
@@ -55,14 +71,12 @@ Minutes prepared by:
   - Sign and date
   - Upload to GitHub   
 ***Notes:***
+None.
 
 
 ### New Business
 #### Setting Team Meetings
-- Decide consistent weekly meetings (i.e. same day, same time)
-  - If different, someone create When2Meet before end of meeting to decide next week date/time
-
-
+- Decided to send out a When2Meet every Sunday morning to get everyone's availability for the week and schedule meetings.
 
 ### Agenda for Next Week
-- 
+- Get started on the design of our project and how we want it to work / look (begin brainstorming)
