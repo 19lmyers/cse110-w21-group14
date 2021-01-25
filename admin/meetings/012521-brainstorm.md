@@ -34,7 +34,7 @@ Tasks:
 1. Capture documents and diagrams to upload in Github `/specs/brainstorm/` folder.
 2. Summarize brainstorming notes:
 
-**Notes**    
+***Notes***    
 
 
 ### New Business
