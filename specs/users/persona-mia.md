@@ -5,7 +5,7 @@
 <img src="https://live.staticflickr.com/1602/25388752744_2fd9124360_6k.jpg" width="200px" alt="female programmer" />
 
 **Image Credit:**  
-WOCinTech Chat via ![Flickr](https://www.flickr.com/photos/wocintechchat/25388752744/)
+WOCinTech Chat via [Flickr](https://www.flickr.com/photos/wocintechchat/25388752744/)
 
 ## Quote:
 > As a freelancer, I write code everywhere, from coffee shops to bars, and need to meet deadlines.
