@@ -8,7 +8,7 @@
 WOCinTech Chat via [Flickr](https://www.flickr.com/photos/wocintechchat/25388752744/)
 
 ## Quote:
-> As a freelancer, I write code everywhere, from coffee shops to bars, and need to meet deadlines.
+> As a freelancer, I like to write code everywhere, from coffee shops to bars.
 
 ##Background:
 **Age:** 27<br> 
