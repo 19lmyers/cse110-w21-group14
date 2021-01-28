@@ -2,7 +2,7 @@
 
 ## Luna's Image
 
-![Luna](/25388788904_72d2f5ec6f_q.jpg)
+<img src="https://live.staticflickr.com/1602/25388752744_2fd9124360_6k.jpg" width="200px" alt="female programmer" />
 
 #### I found the picture from: [Flicker](https://www.flickr.com/photos/wocintechchat/25388788904/)
 
@@ -10,7 +10,7 @@
 
 ## Luna's Background:
 
-**Age:** 25
+**Age:** 28
 
 **Gender:** Female
 
@@ -24,7 +24,7 @@
 
 **Work Location:** New York
 
-**Marital Status:** Single
+**Marital Status:** Married
 
 **Occupation:** Web Devoloper
 
