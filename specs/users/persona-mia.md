@@ -10,7 +10,8 @@ WOCinTech Chat via [Flickr](https://www.flickr.com/photos/wocintechchat/25388752
 ## Quote:
 > As a freelancer, I like to write code everywhere, from coffee shops to bars.
 
-##Background:
+## Background:
+
 **Age:** 27<br> 
 **Location:** Chicago<br> 
 **Marital Status:** Single<br> 
