@@ -2,7 +2,7 @@
 
 ## Luna's Image
 
-<img src="https://flic.kr/p/EFwbpJ" />
+![Luna](/25388788904_72d2f5ec6f_q.jpg)
 
 #### I found the picture from: [Flicker](https://www.flickr.com/photos/wocintechchat/25388788904/)
 
