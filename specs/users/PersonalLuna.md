@@ -2,9 +2,9 @@
 
 ## Luna's Image
 
-![Image of wocintechchat](https://www.flickr.com/photos/wocintechchat/25388788904/)
+<img src="https://www.flickr.com/photos/wocintechchat/25388788904/" />
 
-#### I found the picture from: [wocintechchat](https://www.wocintechchat.com)
+#### I found the picture from: [Flicker](https://www.flickr.com/photos/wocintechchat/25388788904/)
 
 
 
