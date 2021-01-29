@@ -2,7 +2,7 @@
 ## Name: Claire
 
 ## Image: 
-<img src="https://flic.kr/p/FsLaso" width="200px" alt="female programmer" />
+<img src="https://live.staticflickr.com/1641/25900759582_59d7a9d392_n.jpg" width="200px" alt="female programmer" />
 
 **Image Credit:**  
 WOCinTech Chat via [Flickr](https://www.flickr.com/photos/wocintechchat/25900759582/)
