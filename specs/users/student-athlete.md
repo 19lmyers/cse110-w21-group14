@@ -18,7 +18,7 @@
 
 ## Characteristics
 * Athlete
-* Tall
+* Good teammate
 * Hard-working
 
 ## Goals/Needs
@@ -29,4 +29,4 @@
 
 
 ## About
-Bronny is a high school student athlete playing on his schools basketball team. 
+Bronny is a high school student athlete playing on his schools basketball team. He finds it hard to focus and complete homework since he plays basketball. His practice is after school and most of the time he is too tired to complete homework right after. When he has game days it gets even harder to focus on school work because of the excitement of playing a game. He is looking for a solution that can allow him to take breaks and help him focus on school work to complete homework and studying in the best way.    
