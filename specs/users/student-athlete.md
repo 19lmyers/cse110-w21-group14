@@ -1,7 +1,7 @@
 ## Name: Bronny James
 
 ## Image: 
-<img src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fca-times.brightspotcdn.com%2Fdims4%2Fdefault%2Fc9a3fab%2F2147483647%2Fstrip%2Ftrue%2Fcrop%2F3000x2000%2B0%2B0%2Fresize%2F840x560!%2Fquality%2F90%2F%3Furl%3Dhttps%253A%252F%252Fcalifornia-times-brightspot.s3.amazonaws.com%252F5c%252F7f%252Fa9685d494fc49af358aa41c0d4d8%252Fla-photos-1staff-468680-sp-1010-sierracanyon-6-rcg.JPG&imgrefurl=https%3A%2F%2Fwww.latimes.com%2Fsports%2Flakers%2Fstory%2F2019-12-14%2Flebron-james-ohio-son-bronny-alma-mater-sierra-canyon&tbnid=ULy29Y8oNJlc-M&vet=12ahUKEwiTpeP2o8LuAhUsHzQIHfudBUMQMygBegUIARCzAQ..i&docid=jzLhs4b7kk17NM&w=840&h=560&q=bronny%20james&ved=2ahUKEwiTpeP2o8LuAhUsHzQIHfudBUMQMygBegUIARCzAQ" width="200px" alt="High School student athlete" />
+<img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.nbclosangeles.com%2Fnews%2Fsports%2Fbronny-james-lebrons-son-joins-pro-esports-organization%2F2420896%2F&psig=AOvVaw3q7evau64VtzVMK3m37xsr&ust=1612048810127000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMDO5_ejwu4CFQAAAAAdAAAAABAO" width="200px" alt="High School student athlete" />
 
 **Image Credit:**  
 WOCinTech Chat via [Flickr](https://www.flickr.com/photos/wocintechchat/25388752744/)
