@@ -3,7 +3,7 @@
 ## Image: 
 <img src="" width="200px" alt="High School student athlete" />
 
-**Image Credit:**  
+**Image Credit:** 
 <!-- WOCinTech Chat via [Flickr](https://www.flickr.com/photos/wocintechchat/25388752744/) -->
 
 
