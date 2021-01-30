@@ -1,7 +1,7 @@
 ## Name: Bronny James
 
 ## Image: 
-<img src="" width="200px" alt="High School student athlete" />
+<img src="picture.png" width="200px" alt="High School student athlete" />
 
 **Image Credit:** 
 Los Angeles Times [Full-article](https://www.latimes.com/sports/lakers/story/2019-12-14/lebron-james-ohio-son-bronny-alma-mater-sierra-canyon)
