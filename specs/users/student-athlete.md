@@ -4,7 +4,7 @@
 <img src="" width="200px" alt="High School student athlete" />
 
 **Image Credit:** 
-Los Angeles Times [LAtimes](https://www.latimes.com/sports/lakers/story/2019-12-14/lebron-james-ohio-son-bronny-alma-mater-sierra-canyon)
+Los Angeles Times [Full-article](https://www.latimes.com/sports/lakers/story/2019-12-14/lebron-james-ohio-son-bronny-alma-mater-sierra-canyon)
 
 
 ## Background:
