@@ -48,6 +48,7 @@ function updateCountdown() {
 
     countdown.innerHTML = `${minutes}:${seconds}`;
 
+    // Timer counting down
     time--;
     
     /* If time reaches 0, clock stops at 0:00 */
