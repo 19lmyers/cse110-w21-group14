@@ -29,7 +29,7 @@ button15.onclick = function() {
     time = SECONDS * MIN15;
 }
 
-time = 1 * 60;
+time = 1 * 5;
 // Sets timer
 const countdown = document.getElementById('timer');
 setInterval(updateCountdown, 1000);
@@ -58,9 +58,6 @@ function updateCountdown() {
     /* If time reaches 0, clock stops at 0:00 */
     if (time <= 0) {
         clearInterval(time = 0);
-    }
-    
-    if (time == 0) {
         endSound.play();
     }
 }
