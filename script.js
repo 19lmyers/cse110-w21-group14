@@ -10,6 +10,9 @@ var button25 = document.getElementById("work");
 var button5 = document.getElementById("short");
 var button15 = document.getElementById("long");
 
+// Assign sound
+var endSound = document.getElementById("endSound");
+
 // Button functions when clicked
 button25.onclick = function() {
     clearInterval(time);
@@ -54,5 +57,10 @@ function updateCountdown() {
     /* If time reaches 0, clock stops at 0:00 */
     if (time <= 0) {
         clearInterval(time = 0);
+    }
+    
+    if (time == 0) {
+        endSound.play();
+        endSound.pause();
     }
 }
