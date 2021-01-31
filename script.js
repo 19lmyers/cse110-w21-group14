@@ -29,6 +29,7 @@ button15.onclick = function() {
     time = SECONDS * MIN15;
 }
 
+time = 1 * 60;
 // Sets timer
 const countdown = document.getElementById('timer');
 setInterval(updateCountdown, 1000);
@@ -40,7 +41,6 @@ setInterval(updateCountdown, 1000);
     Description: Converts time to minutes and seconds and begins countdown.
                  Displays numbers to screen.
 */
-time = 1 * 60;
 function updateCountdown() {
     let minutes = Math.floor(time / 60);
     let seconds = time % 60;
