@@ -6,6 +6,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install ESLint using yarn
-      run: yarn add --dev ESLint
+      run: yarn add --dev eslint
     - name: Run ESLint
       run: eslint . --ext .js,.jsx,.ts,.tsx
