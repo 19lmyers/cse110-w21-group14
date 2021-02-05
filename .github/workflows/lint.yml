@@ -7,5 +7,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install ESLint using yarn
       run: yarn add --dev eslint
+    - name: Initialize config file
+      run: yarn run eslint --init
     - name: Run ESLint
       run: yarn run eslint . --ext .js,.jsx,.ts,.tsx
