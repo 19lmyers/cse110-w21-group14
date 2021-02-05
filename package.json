@@ -1,4 +1,14 @@
 {
+  "name": "cse110-w21-group14",
+  "version": "1.0.0",
+  "description": "Pomodoro Timer App",
+  "main": "",
+  "repository": {
+    "url": "https://github.com/19lmyers/cse110-w21-group14/",
+    "type": "git"
+  },
+  "author": "Catch me Outside",
+  "license": "MIT",
   "scripts": {
     "test": "jest"
   }
