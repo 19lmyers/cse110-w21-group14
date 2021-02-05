@@ -29,14 +29,12 @@ Minutes prepared by: Harshi Agrawal
 - Create a Pitch document - will have its own breakout room
 - CI Pipeline part 1 - will have its own breakout room as well
 
-***Notes***
-
-
 ### New Business
-- Will look at the final prototype and design for our timer
-- Starting on UML diagrams or something similar
-- Flow chart
-- Project Roadmap
+**Design and CI Pipeline**   
+- Create a Pitch document - will have its own breakout room
+ - Start on system diagrams
+- CI Pipeline part 1 - will have its own breakout room as well
 
 ### Agenda for Next Week/Meeting
-- 
+- Finish Pipeline and system diagram
+- Project roadmap
