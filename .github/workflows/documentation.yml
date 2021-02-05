@@ -32,3 +32,16 @@ jobs:
           source_dir: /source
           recurse: true
           output_dir: /docs
+          
+      - name: Zip
+        uses: papeloto/action-zip@v1
+        with:
+         files: /docs
+         recursive: true
+         dest: docs.zip
+         
+      - name: Upload
+        uses: actions/upload-artifact@v1
+        with:
+          name: Documentation
+          path: ${{ github.workspace }}/docs.zip
