@@ -1,0 +1,16 @@
+{
+  "name": "cse110-w21-group14",
+  "version": "1.0.0",
+  "main": "\"\"",
+  "repository": "git@github.com:19lmyers/cse110-w21-group14.git",
+  "author": "Catch Me Outside",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-config-google": "^0.14.0",
+    "jest": "^26.6.3"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}

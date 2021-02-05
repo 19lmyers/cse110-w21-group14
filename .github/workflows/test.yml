@@ -1,12 +1,12 @@
 name: Unit Testing with Jest
-on: push
+on: [push, pull_request, workflow_dispatch] 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install jest through yarn
-      run: yarn add --dev jest
+    - name: Install dependencies
+      run: yarn
     - name: Run jest unit tests
-      run: yarn jest
+      run: yarn test

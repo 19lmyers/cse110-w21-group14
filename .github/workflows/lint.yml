@@ -1,13 +1,11 @@
 name: Lint
-on: push
+on: [push, pull_request, workflow_dispatch] 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Install ESLint using yarn
-      run: yarn add --dev eslint
-    - name: Initialize config file
-      run: yarn run eslint --init
+    - name: Install dependencies
+      run: yarn
     - name: Run ESLint
-      run: yarn run eslint . --ext .js,.jsx,.ts,.tsx
+      run: eslint . --ext .js,.jsx,.ts,.tsx
