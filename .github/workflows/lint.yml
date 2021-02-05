@@ -8,4 +8,4 @@ jobs:
     - name: Install ESLint using yarn
       run: yarn add --dev eslint
     - name: Run ESLint
-      run: eslint . --ext .js,.jsx,.ts,.tsx
+      run: yarn run eslint . --ext .js,.jsx,.ts,.tsx
