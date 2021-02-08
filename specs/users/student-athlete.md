@@ -1,7 +1,7 @@
 ## Name: Bronny James
 
 ## Image: 
-<img src="[picture.png](https://ca-times.brightspotcdn.com/dims4/default/c9a3fab/2147483647/strip/true/crop/3000x2000+0+0/resize/840x560!/quality/90/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F5c%2F7f%2Fa9685d494fc49af358aa41c0d4d8%2Fla-photos-1staff-468680-sp-1010-sierracanyon-6-rcg.JPG)" width="200px" alt="High School student athlete" />
+<img src="https://ca-times.brightspotcdn.com/dims4/default/c9a3fab/2147483647/strip/true/crop/3000x2000+0+0/resize/840x560!/quality/90/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F5c%2F7f%2Fa9685d494fc49af358aa41c0d4d8%2Fla-photos-1staff-468680-sp-1010-sierracanyon-6-rcg.JPG" width="200px" alt="High School student athlete" />
 
 **Image Credit:** 
 Los Angeles Times [Full-article](https://www.latimes.com/sports/lakers/story/2019-12-14/lebron-james-ohio-son-bronny-alma-mater-sierra-canyon)
