@@ -12,7 +12,7 @@
 
 ## Luna's Background:
 
-**Age:** 28
+**Age:** 25
 
 **Gender:** Female
 
@@ -41,8 +41,8 @@
 
 ## About Luna and Her Needs: 
 Before the pandemic, she worked in an office for her employer.
-During the pademic, she was ordered to work from home to minimize contact with others. 
-Working from home has many temptations including: Playing on her phone, social media, and watching TV. This has caused her production to drop. She needs something to help her manage working time and break time. 
-She wants to work 8 hours a day to be able to finish her project by the deadlines set. 
-
-
+During the pandemic, she is working less hours and from home.
+So she decided to get her Master's degree in CS from an online college.
+Working from home has many temptations including: Playing on her phone, social media, and watching TV. This has caused her production to drop. 
+She wants to keep all work to 8 hours a day to be able to take care of her family. 
+She needs something to help her manage working time, school time, and break time. 
