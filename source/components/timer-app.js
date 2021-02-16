@@ -1,4 +1,5 @@
 /**
+ * COPY/PASTED FROM TIMER-TEST BRANCH
  * timerTest.js: A test for timer functionality that uses one button.
  * 
  * The current implementation uses the prototype pattern for a timer and timerButton to avoid
