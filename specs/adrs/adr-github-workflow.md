@@ -65,42 +65,22 @@ We chose
 > - Most logical way to represent our tasks
 > - Issue descriptions will be used to break down our tasks to set standards for development
 
-- _**Tasks**_: [Use labels for categorization + agile point assignment] 
+> - _**Labels**_: [Use labels for categorization + agile point assignment] 
+> - Labels will be used to assign point values in order to port the agile process into our github workflow.
+>   - Points will be assigned through weekly planning poker.
 
 
 ### Positive Consequences <!-- optional -->
 
-> - keeps repo branches simple
->   - having too many branches adds to complexity and this should limit the creation of too many branches
-> - allows for checks on development work
+> - Using each project to represent a weekly sprint creates logical workflow organization
+> - Agile can be done mostly in github and tracked
+> - Since we are breaking down our schedule by week, we can venture more in depth into weekly activity
+>   - For example, we're allowed to monitor progress on a weekly basis rather than on the project as a whole.
+>     - This allows for flexibility and changing around of tasks, and in a coding environment where people are diving into new languages, this is important
+> - The github project automation feature allows us to automate code reviews through pull requests in each of our weekly projects.
+>   - Circumvents possible git conflicts.
 
 ### Negative Consequences <!-- optional -->
 
-> - simplicity may compromise repo organization if content is directly pushed to master incorrectly
-> - removes the extra layer of security provided by option 1
-
-## Pros and Cons of the Options <!-- optional -->
-
-### [Branching will be split up into dev branches, pipe, and other]
->   - other
->     - under the other branch, changes to the general repo (which consists mainly of admin/ and specs/) will be pushed here and pend review.
->     - having this branch allows us to add another security check for repo content changes outside of development.
->       - allows for pipeline managers to have maintain organization of repo by checking if files are being placed into the right spot by members
->   - pipe
->     - under the pipe branch, changes to the pipeline (which consists mainly of .github/workflows) will be pushed and pend review.
->     - also allows for checks by other pipeline managers before being merged.
->   - dev branches:
->     - dev branches will be made per partner per task.
->       - eg if gary and jackson are working on timer-functionality, the branch gary-jackson-timerfunc would contain these changes.
->     - separation like this would allow for all groups to work on their individual tasks while keeping all progress updated on the repo.
-
-### [Only task-based dev branches will be created]
-> - branches will be created only for development, one per pair per task.
->   - e.g: if gary and jacob are working on timer functionality, all progress would be pushed to gary-jacob-timerfunc.
-> - all other content changes would be directly pushed to master
-> - keeps branching simple yet also effective
->   - we may not need the extra security checks of option 1 for a group and project this size
-> - by separating branches based on who is working on it and the task at hand, this allows every pair to work on their tasks simultaneously
-> - separating dev branches allows us to keep the repo up to date and track everyone's progress without waiting for one group to finish
-> - however, this can allow for issues to occur on the master branch since no security checks are available for non development content
->   - this probably won't be an issue since all group content decisions should be made during group meetings.
+> - Possibly might get cluttered as weeks go on
+>   - However this problem can be bypassed by archiving weekly sprints as we finish the tasks.
