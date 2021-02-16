@@ -22,7 +22,33 @@ so this decision is an attempt to provide structure for when we start developmen
 
 ## Considered Options
 
-> - [option 1]: Branching will be split up into three different parts:
+> - [Branching will be split up into dev branches, pipe, and other]
+> - [Only task-based dev branches will be created]
+
+## Decision Outcome
+
+> Chosen option: "[Only task-based dev branches will be created]", because
+> - for a project and group our size, we won't really need extra checks on any other content
+>   - all content outside of development should be done during group meetings
+>   - shouldn't have issues with master 
+>   - pipeline changes will not occur frequently, so a pipe branch probably isn't necessary
+> - branching per pair per task allows for continuous progress updates to the repo
+>   - pairs can and will commit any progress to their respective branches, allowing for an up to date repo
+
+### Positive Consequences <!-- optional -->
+
+> - keeps repo branches simple
+>   - having too many branches adds to complexity and this should limit the creation of too many branches
+> - allows for checks on development work
+
+### Negative Consequences <!-- optional -->
+
+> - simplicity may compromise repo organization if content is directly pushed to master incorrectly
+> - removes the extra layer of security provided by option 1
+
+## Pros and Cons of the Options <!-- optional -->
+
+### [Branching will be split up into dev branches, pipe, and other]
 >   - other
 >     - under the other branch, changes to the general repo (which consists mainly of admin/ and specs/) will be pushed here and pend review.
 >     - having this branch allows us to add another security check for repo content changes outside of development.
@@ -34,68 +60,14 @@ so this decision is an attempt to provide structure for when we start developmen
 >     - dev branches will be made per partner per task.
 >       - eg if gary and jackson are working on timer-functionality, the branch gary-jackson-timerfunc would contain these changes.
 >     - separation like this would allow for all groups to work on their individual tasks while keeping all progress updated on the repo.
-> - [option 2]
-> - [option 3]
 
-> * [MADR](https://adr.github.io/madr/) 2.1.0 - The Markdown Architectural Decision Records
-> * [Michael Nygard's template](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions) - The first incarnation of the term "ADR"
-> * [Sustainable Architectural Decisions](https://www.infoq.com/articles/sustainable-architectural-design-decisions) - The Y-Statements
-> * Other templates listed at <https://github.com/joelparkerhenderson/architecture_decision_record>
-> * Formless - No conventions for file format and structure
-
-## Decision Outcome
-
-Chosen option: "[option 1]", because [justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below)].
-> Chosen option: "MADR 2.1.0", because
->
-> * Implicit assumptions should be made explicit.
->  Design documentation is important to enable people understanding the decisions later on.
->  See also [A rational design process: How and why to fake it](https://doi.org/10.1109/TSE.1986.6312940).
-> * The MADR format is lean and fits our development style.
-> * The MADR structure is comprehensible and facilitates usage & maintenance.
-> * The MADR project is vivid.
-> * Version 2.1.0 is the latest one available when starting to document ADRs.
-
-### Positive Consequences <!-- optional -->
-
-* [e.g., improvement of quality attribute satisfaction, follow-up decisions required, …]
-* …
-
-### Negative Consequences <!-- optional -->
-
-* [e.g., compromising quality attribute, follow-up decisions required, …]
-* …
-
-## Pros and Cons of the Options <!-- optional -->
-
-### [option 1]
-
-[example | description | pointer to more information | …] <!-- optional -->
-
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
-
-### [option 2]
-
-[example | description | pointer to more information | …] <!-- optional -->
-
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
-
-### [option 3]
-
-[example | description | pointer to more information | …] <!-- optional -->
-
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
-
-## Links <!-- optional -->
-
-* [Link type] [Link to ADR] <!-- example: Refined by [ADR-0005](0005-example.md) -->
-* … <!-- numbers of links can vary -->
+### [Branching will be split up based on task and the people working on the task]
+> - branches will be created only for development, one per pair per task.
+>   - e.g: if gary and jacob are working on timer functionality, all progress would be pushed to gary-jacob-timerfunc.
+> - all other content changes would be directly pushed to master
+> - keeps branching simple yet also effective
+>   - we may not need the extra security checks of option 1 for a group and project this size
+> - by separating branches based on who is working on it and the task at hand, this allows every pair to work on their tasks simultaneously
+> - separating dev branches allows us to keep the repo up to date and track everyone's progress without waiting for one group to finish
+> - however, this can allow for issues to occur on the master branch since no security checks are available for non development content
+>   - this probably won't be an issue since all group content decisions should be made during group meetings.
