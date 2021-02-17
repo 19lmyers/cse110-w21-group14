@@ -1,25 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Pomodoro</title>
+	<title>Pomodoro</title>
 
-    <link rel="stylesheet" href="/source/css/main.css">
+	<link rel="stylesheet" href="/source/css/main.css">
 </head>
 
 <body>
-    
-    <!-- Testing timer start -->
-    <h1 id="timer"></h1>
-    <button type="button" id="work">Pomodoro</button>
-    <button type="button" id="short">Short Break</button>
-    <button type="button" id="long">Long Break</button>
 
-    <!-- Javascript scripts -->
-    <script src="/source/js/timer.js"></script>
-    <!-- Testing timer end -->
+	<header>
+		<h1>POMODORO</h1>
+	</header>
+
+
+	<main>
+		<!-- Timer splash screen -->
+		<aside>
+			<h1>POMODORO</h1>
+			<button>ENTER</button>
+		</aside>
+
+		<!-- Timer main app -->
+		<section>
+			<div>
+				<span>25:00</span>
+				<button>Start</button>
+			</div>
+
+			<progress></progress>
+		</section>
+
+	</main>
+
+	<footer>
+		<button>Reset</button>
+		<button>Settings</button>
+		<dialog open>
+			<form>
+				<fieldset>
+					<legend>Number of Pomodoros:</legend>
+
+					<label for="numPomos">Select:</label>
+					<input id="numPomos" name="numPomos" type="number" min="1" max="99" step="1">
+
+				</fieldset>
+				<fieldset>
+					<legend>Choose your Pomodoro style:</legend>
+
+					<div>
+						<input id="pomo1" name="pomo" type="radio" checked>
+						<label for="pomo1">25/5</label>
+					</div>
+
+					<div>
+						<input id="pomo2" name="pomo" type="radio">
+						<label for="pomo2">50/10</label>
+					</div>
+				</fieldset>
+
+				<button type="submit">Save</button>
+
+				<hr>
+				<h2>What is the Pomodoro Method?</h2>
+				<p>Pomodoro content</p>
+			</form>
+		</dialog>
+	</footer>
+
+	<!-- Javascript scripts -->
+	<script src="/source/js/timer.js"></script>
+	<!-- Testing timer end -->
 
 </body>
 
