@@ -15,14 +15,17 @@ class TimerButton extends HTMLElement {
   }
 
   connectedCallback() {
-    const button = this.shadowRoot.querySelector('button');
+    const shadow = this.shadowRoot;
+    const button = shadow.querySelector('button');
 
+    shadow.setAttribute
     button.addEventListener('click', this.toggleTimer);
   }
 
   toggleTimer() {
     // TODO: Trigger custom event that propogates into light DOM,
     //       Fetch state of timer either from app or as internal state
+    const state = 
   }
 
 }
