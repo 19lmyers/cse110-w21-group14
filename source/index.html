@@ -12,53 +12,58 @@
 
 <body>
 
+	<!-- Timer splash screen -->
+	<dialog id="timerSplash" open>
+		<h1>POMODORO</h1>
+		<button>ENTER</button>
+	</dialog>
+
 	<header>
 		<h1>POMODORO</h1>
 	</header>
 
-
 	<main>
-		<!-- Timer splash screen -->
-		<aside>
-			<h1>POMODORO</h1>
-			<button>ENTER</button>
-		</aside>
-
-		<!-- Timer main app -->
-		<section>
-			<div>
-				<span>25:00</span>
-				<button>Start</button>
+		<section id="timerApp">
+			<div id="timerCircle">
+				<span id="timerText">25:00</span>
+				<button id="timerButton">Start</button>
 			</div>
-
+		</section>
+		<section>
 			<progress></progress>
 		</section>
-
 	</main>
 
 	<footer>
 		<button>Reset</button>
 		<button>Settings</button>
-		<dialog open>
+		<dialog id="appSettings" open>
 			<form>
 				<fieldset>
-					<legend>Number of Pomodoros:</legend>
-
-					<label for="numPomos">Select:</label>
-					<input id="numPomos" name="numPomos" type="number" min="1" max="99" step="1">
-
+					<label for="pomoNumber">Number of Pomodoros:</label>
+					<div>
+						<input id="pomoNumber" name="pomoNumber" type="number" min="1" max="25" value="5">
+						<input id="pomoSlider" name="pomoSlider" type="range" min="1" max="25" value="5">
+					</div>
 				</fieldset>
 				<fieldset>
-					<legend>Choose your Pomodoro style:</legend>
+					<legend>Choose your Pomodoro lengths:</legend>
 
+					<label for="pomoLengthNumber">Length of Pomodoro (min):</label>
 					<div>
-						<input id="pomo1" name="pomo" type="radio" checked>
-						<label for="pomo1">25/5</label>
+						<input id="pomoLengthNumber" name="pomoLengthNumber" type="number" min="5" max="120" value="25">
+						<input id="pomoLengthSlider" name="pomoLengthSlider" type="range" min="5" max="120" value="25">
 					</div>
 
+					<label for="shortBreakNumber">Length of short break (min):</label>
 					<div>
-						<input id="pomo2" name="pomo" type="radio">
-						<label for="pomo2">50/10</label>
+						<input id="shortBreakNumber" name="shortBreakNumber" type="number" min="1" max="25" value="5">
+						<input id="shortBreakSlider" name="shortBreakSlider" type="range" min="1" max="25" value="5">
+					</div>
+					<label for="longBreakNumber">Length of long break (min):</label>
+					<div>
+						<input id="longBreakNumber" name="longBreakNumber" type="number" min="1" max="50" value="15">
+						<input id="longBreakSlider" name="longBreakSlider" type="range" min="1" max="50" value="15">
 					</div>
 				</fieldset>
 
@@ -70,6 +75,7 @@
 			</form>
 		</dialog>
 	</footer>
+
 
 	<!-- Javascript scripts -->
 	<script src="/source/js/timer.js"></script>
