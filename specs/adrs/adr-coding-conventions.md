@@ -27,6 +27,8 @@ Which standards should we set?
 >     - Stops lazy coding and also allows for meaningful distinction between runtime and compiletime variables.
 >   - lowerCamelCase
 >   - hungarian naming
+>   - arrays: do not use `new Array(1,2,3)` to initaite a new array.
+>     - instead, since java handles typecasting under the hood, just do `let variableName = [1, 2, 3];`.
 >   - use descriptive names. 
 >     - DO NOT ABBREVIATE unless you're proposing a group-wide abbreviation
 >       - prioritizes readability over horizontal space.
@@ -37,6 +39,8 @@ Which standards should we set?
 >       - E.G: const startCountdown = startCountDown('25') sets a constant pointer to the function, doesn't mean that the function cannot be changed.
 >   - No magic variables even within for loops.
 >     - If you're using a variable to iterate through a loop, name the variable according to what each iteration represents.
+>   - Declare variables as close as possible to when they are going to be used. remember to keep in mind the [TDZ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#temporal_dead_zone_tdz)
+
 > - **Class Names**:
 >   - UpperCamelCase
 >     - Allows us to differentiate a property from a class.
