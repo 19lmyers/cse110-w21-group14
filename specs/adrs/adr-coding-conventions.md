@@ -48,7 +48,6 @@ Which standards should we set?
 >   - Braces required after every control statement
 >   - Braces required for single line functions
 > - **Column limit**:
->   - 80
 >   - 100
 >   - Code wrapping:
 >     - Break at the highest operation possible.
@@ -60,7 +59,7 @@ Which standards should we set?
 >   - 1 line white space between logical groupings of properties within a function.
 > - **Function names**:
 >   - Action naming:
->     - E.G.: canReceive(), isStarted(), startCountdown
+>     - E.G.: canReceive(), isStarted(), startCountdown()
 >     - always use a verb as a *descriptive* prefix
 > - File separator
 
@@ -85,12 +84,39 @@ Which standards should we set?
 ## Decision Outcome
 
 We chose
+>   - lowerCamelCase
+> - **Column limit**:
+>   - 100
+>   - use descriptive names. 
+>     - DO NOT ABBREVIATE unless you're proposing a group-wide abbreviation
+>       - prioritizes readability over horizontal space.
+>       - can create annoying line-wrapping issues.
+>     - if so, propose an abbreviation inside the dev channel so other people can follow if accepted.
+>   - Constants declared in all caps
+>     - Note in javascript, just because you use `const` does not mean your variable is a constant
+>       - E.G: const startCountdown = startCountDown('25') sets a constant pointer to the function, doesn't mean that the function cannot be changed.
+>   - Use [google's whitespacing conventions](https://google.github.io/styleguide/jsguide.html#formatting-whitespace)
+> - **Function names**:
+>   - Action naming:
+>     - E.G.: canReceive(), isStarted(), startCountdown()
+>     - always use a verb as a *descriptive* prefix
+> - Have a file separator based on functionality/logical separation of files
+> - Class Naming:
+>   - UpperCamelCase
 
+> #### HTML
+> - Always use " instead of ' when creating attributes.
+> - Use kebab case
+> - Separate functionality (keep html file only html)
+> - always provide the `alt` attribute for media.
 
-### Positive Consequences <!-- optional -->
-
-> 
-
-### Negative Consequences <!-- optional -->
-
-> 
+> #### CSS:
+> - keep leading 0s in front of decimals (0.8)
+>   - will help maintain readability at a glance.
+> - use full caps hexadecimal for colors
+>   - colors ported from figma will be in this format
+> - Transparency:
+>   - use rgba
+> - Separate css rules aka `body { color: #FFFFFF }` and `html { background: #FFFFFF }` with 1 line of white space.
+> - use double quotes for property + selectors.
+> - [validate](https://jigsaw.w3.org/css-validator/) code.
