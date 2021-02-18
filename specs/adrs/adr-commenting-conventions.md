@@ -44,15 +44,19 @@ Which standards should we set?
 
 > **CSS**:
 > 
+
 ## Decision Outcome
 
 We chose
+> ## JavaScript:
+> - Always start JSDoc headers with `/**` and end with `*/` each on their own line
+>   - so no `/** @tag text` just `/**`
+> - All functions with parameters include an `@example` 
+> - After the closing curly brace of a function, end with `/* funcName */`
+>   - to allow for commenting out code if necessary while testing
+> - Function calls: parameters should be commented if passing in general or nondescriptive variables
+>   - For example: `startCountdown(25 /* timerLength */, true /* isCountEnabled */)`
 
+Questionable:
+- [Property comments](https://google.github.io/styleguide/jsguide.html#jsdoc-property-comments)
 
-### Positive Consequences <!-- optional -->
-
-> 
-
-### Negative Consequences <!-- optional -->
-
-> 
