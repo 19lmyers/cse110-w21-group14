@@ -84,30 +84,30 @@ Which standards should we set?
 ## Decision Outcome
 
 We chose
-> - ## Javascript
-> - #### Variables and Properties
->   - Identifiers should be written using lowerCamelCase
->   - Use descriptive names. 
->     - DO NOT ABBREVIATE unless you're proposing a group-wide abbreviation
->       - Group wide abbreviations:
->         - Number : num
->         - Pomodoro : pomo
->   - Constants declared in all caps
->     - Note in javascript, just because you use `const` does not mean your variable is a constant
->       - E.G: const startCountdown = startCountDown('25') sets a constant reference to the function, doesn't mean that the function cannot be changed so startCountdown really isn't a constant.
-> - #### Column Limit
->   - 100
-> - #### Whitespacing
->   - Use [google's whitespacing conventions](https://google.github.io/styleguide/jsguide.html#formatting-whitespace)
-> - #### Function Names
->   - Action naming:
->     - E.G.: canReceive(), isStarted(), startCountdown()
->     - Always use a verb as a *descriptive* prefix
-> - #### File Separation
-> - Have a file separator based on functionality/logical separation of files
->   - Use `\* -------------------------- *\` should be 100 characters long
-> - #### Class Naming
->   - Use UpperCamelCase for classes!
+> ## Javascript
+> #### Variables and Properties
+> - Identifiers should be written using lowerCamelCase
+> - Use descriptive names. 
+>   - DO NOT ABBREVIATE unless you're proposing a group-wide abbreviation
+>     - Group wide abbreviations:
+>       - Number : num
+>       - Pomodoro : pomo
+> - Constants declared in all caps
+>   - Note in javascript, just because you use `const` does not mean your variable is a constant
+>     - E.G: const startCountdown = startCountDown('25') sets a constant reference to the function, doesn't mean that the function cannot be changed so startCountdown really isn't a constant.
+> #### Column Limit
+> - 100
+> #### Whitespacing
+> - Use [google's whitespacing conventions](https://google.github.io/styleguide/jsguide.html#formatting-whitespace)
+> #### Function Names
+> - Action naming:
+>   - E.G.: canReceive(), isStarted(), startCountdown()
+>   - Always use a verb as a *descriptive* prefix
+> #### File Separation
+> Have a file separator based on functionality/logical separation of files
+> - Use `\* -------------------------- *\` should be 100 characters long
+> #### Class Naming
+>   Use UpperCamelCase for classes!
 
 > ## HTML
 > #### Double Quotes or Single Quotes:
@@ -120,17 +120,17 @@ We chose
 > - always provide the `alt` attribute for media.
 
 > #### CSS:
-> - #### Units
+> #### Units
 > - Keep leading 0s in front of decimals (0.8)
 >   - will help maintain readability at a glance.
-> - #### Colors
+> #### Colors
 > - Use full caps hexadecimal for colors
 >   - Colors ported from figma will be in this format
-> - #### Transparency
+> #### Transparency
 >   - Use rgba
-> - #### Double or Single Quotes
+> #### Double or Single Quotes
 > - Use double quotes for property + selectors.
 >   - To maintain consistency with HTML guidelines.
-> - #### General
+> #### General
 > - Separate css rules aka `body { color: #FFFFFF }` and `html { background: #FFFFFF }` with 1 line of white space.
 > - [validate](https://jigsaw.w3.org/css-validator/) code.
