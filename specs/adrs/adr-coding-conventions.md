@@ -119,7 +119,7 @@ We chose
 > - Separate functionality (keep html file only html)
 > - always provide the `alt` attribute for media.
 
-> #### CSS:
+> ## CSS:
 > #### Units
 > - Keep leading 0s in front of decimals (0.8)
 >   - will help maintain readability at a glance.
