@@ -21,7 +21,10 @@ Which standards should we set?
 
 ## Considered Options
 
-> - **Variable and Property Names**:
+> #### Javascript:
+> - **Variables and Properties**:
+>   - USE `const` BY DEFAULT unless value needs to be changeable then use `let`.
+>     - Stops lazy coding and also allows for meaningful distinction between runtime and compiletime variables.
 >   - lowerCamelCase
 >   - hungarian naming
 >   - use descriptive names. 
@@ -56,6 +59,24 @@ Which standards should we set?
 >     - E.G.: canReceive(), isStarted(), startCountdown
 >     - always use a verb as a *descriptive* prefix
 > - File separator
+
+> #### HTML
+> - Remove [optional tags](https://html.spec.whatwg.org/multipage/syntax.html#syntax-tag-omission)?
+> - Always use `"` instead of \` when creating attributes.
+> - **ID/Class Names**:
+>   - kebab-case
+> - never include inline css or javascript. keep html file solely for html.
+> - always provide the `alt` attribute for media.
+> - always use html elements for their original purpose. no html "hacking" for css.
+
+> #### CSS
+> - omit 0s in front of decimals (.8 vs 0.8)
+> - use full caps hexadecimal for colors
+>   - colors ported from figma will be in this format
+> - Separate css rules aka `body { color: #FFFFFF }` and `html { background: #FFFFFF }` with 1 line of white space.
+> - use single quotes instead of double quotes for property + selectors.
+> - do not include double quotes when using url.
+> - [validate](https://jigsaw.w3.org/css-validator/) code.
 
 ## Decision Outcome
 
