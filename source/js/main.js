@@ -1,27 +1,10 @@
-/**
- * COPY/PASTED FROM TIMER-TEST BRANCH
- * timerTest.js: A test for timer functionality that uses one button.
- * 
- * The current implementation uses the prototype pattern for a timer and timerButton to avoid
- * polluting the global namespace (ie. having startTimer, endTimer, handleStartTimer...) and
- * avoid using global variables (everything is decalared onLoad instead of as a global variable).
- * However, there are certain optimizations (listed below) that will help it comply with modern
- * JavaScript ES6 standards. One crititcal philosophy this follows (although not perfect, see below)
- * is that the button controls everything about the timer; the timer does not start of stop itself.
- * 
- * If you plan to use this for implementation, make sure to do the following changes:
- * - Change prototype declarations to class declarations (same browser coverage, better readability)
- * - Change innerHTML to textContent (better security)
- * - Use string literals (ie. `${var}`) in currentToString function
- * - timer.end() is currently called twice; can we reduce it to only once?
- *   - Relevant: Maybe separate timer.end() into timer.end() and timer.reset(), then make
- *               early into a variable for timer (eg. endedEarly)
- * 
- * More optimizations are probably possible.
- */
-
 /* TimerApp class */
 class TimerApp {
+  /**
+   * Contructs a TimerApp, which handles all the logic for the timer.
+   * @param {*} timerText is a TimerText object.
+   * @param {*} timerButton is a selector for the timer's primary start/stop button.
+   */
   constructor(timerText, timerButton) {
     this.timerText = timerText;
     this.timerButton = document.querySelector(timerButton);
@@ -31,6 +14,9 @@ class TimerApp {
     this.timerButton.addEventListener('click', this.toggleTimer.bind(this));
   }
 
+  /**
+   * Toggles the state of the timer.
+   */
   toggleTimer() {
     switch (this.status) {
       case 'ready':
@@ -45,6 +31,9 @@ class TimerApp {
     }
   }
 
+  /**
+   * Handles the start of the timer.
+   */
   handleStart() {
     if (this.timeoutId === null) {
       this.timerText.start();
@@ -56,6 +45,9 @@ class TimerApp {
     }
   }
 
+  /**
+   * Handles the end of the timer.
+   */
   handleEnd() {
     this.timerText.end();
     this.status = 'stopped';
@@ -66,6 +58,9 @@ class TimerApp {
     this.timeoutId = null;
   }
 
+  /**
+   * Handles resetting the timer back to its ready position.
+   */
   handleReset() {
     this.timerText.reset();
     this.status = 'ready';
@@ -76,6 +71,11 @@ class TimerApp {
 /* TimerText class */
 
 class TimerText {
+  /**
+   * Constructs a new TimerText class, which handles the internal timekeeping.
+   * @param {*} selector is the selector for the text.
+   * @param {*} time is the amount of time set for each iteration.
+   */
   constructor(selector, time) {
     this.element = document.querySelector(selector);
     this.current = time;
@@ -83,6 +83,9 @@ class TimerText {
     this.intervalId = null;
   }
 
+  /**
+   * Starts the timer.
+   */
   start() {
     if (this.intervalId === null) {
       this.element.textContent = this.timeString; // Change timer to full
@@ -90,21 +93,33 @@ class TimerText {
     }
   }
 
+  /**
+   * Ends the timer.
+   */
   end() {
     clearInterval(this.intervalId);
     this.intervalId = null;
   }
 
+  /**
+   * Resets the timer.
+   */
   reset() {
     this.current = this.time;
     this.element.textContent = this.timeString;
   }
 
+  /**
+   * Updates the timer's state.
+   */
   update() {
     this.current--;
     this.element.textContent = this.timeString;
   }
 
+  /**
+   * Gets the current time as a mm:ss string.
+   */
   get timeString() {
     let currentTime = Math.abs(this.current);
     let min = Math.floor(currentTime / 60);
