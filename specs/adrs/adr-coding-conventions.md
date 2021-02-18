@@ -1,8 +1,8 @@
-# Our GitHub Workflow
+# Coding Conventions
 
-* Status: Pending
-* Deciders: 
-* Updated: 2021-02-17
+* Status: Accepted
+* Deciders: Justin, Jackson, Gary, Jenny, Jacob
+* Updated: 2021-02-18
 
 #### Technical Story: 
 This week marks the beginning of our implementation. However, it's become apparent that we have no established conventions for our code so everyone is kind of doing their own thing.
@@ -84,39 +84,53 @@ Which standards should we set?
 ## Decision Outcome
 
 We chose
->   - lowerCamelCase
-> - **Column limit**:
->   - 100
->   - use descriptive names. 
+> - ## Javascript
+> - #### Variables and Properties
+>   - Identifiers should be written using lowerCamelCase
+>   - Use descriptive names. 
 >     - DO NOT ABBREVIATE unless you're proposing a group-wide abbreviation
->       - prioritizes readability over horizontal space.
->       - can create annoying line-wrapping issues.
->     - if so, propose an abbreviation inside the dev channel so other people can follow if accepted.
+>       - Group wide abbreviations:
+>         - Number : num
+>         - Pomodoro : pomo
 >   - Constants declared in all caps
 >     - Note in javascript, just because you use `const` does not mean your variable is a constant
->       - E.G: const startCountdown = startCountDown('25') sets a constant pointer to the function, doesn't mean that the function cannot be changed.
+>       - E.G: const startCountdown = startCountDown('25') sets a constant reference to the function, doesn't mean that the function cannot be changed so startCountdown really isn't a constant.
+> - #### Column Limit
+>   - 100
+> - #### Whitespacing
 >   - Use [google's whitespacing conventions](https://google.github.io/styleguide/jsguide.html#formatting-whitespace)
-> - **Function names**:
+> - #### Function Names
 >   - Action naming:
 >     - E.G.: canReceive(), isStarted(), startCountdown()
->     - always use a verb as a *descriptive* prefix
+>     - Always use a verb as a *descriptive* prefix
+> - #### File Separation
 > - Have a file separator based on functionality/logical separation of files
-> - Class Naming:
->   - UpperCamelCase
+>   - Use `\* -------------------------- *\` should be 100 characters long
+> - #### Class Naming
+>   - Use UpperCamelCase for classes!
 
-> #### HTML
+> ## HTML
+> #### Double Quotes or Single Quotes:
 > - Always use " instead of ' when creating attributes.
-> - Use kebab case
+>   - To maintain consistency with our CSS guidelines.
+> #### Properties and attributes
+> - Use kebab-case
+> #### General
 > - Separate functionality (keep html file only html)
 > - always provide the `alt` attribute for media.
 
 > #### CSS:
-> - keep leading 0s in front of decimals (0.8)
+> - #### Units
+> - Keep leading 0s in front of decimals (0.8)
 >   - will help maintain readability at a glance.
-> - use full caps hexadecimal for colors
->   - colors ported from figma will be in this format
-> - Transparency:
->   - use rgba
+> - #### Colors
+> - Use full caps hexadecimal for colors
+>   - Colors ported from figma will be in this format
+> - #### Transparency
+>   - Use rgba
+> - #### Double or Single Quotes
+> - Use double quotes for property + selectors.
+>   - To maintain consistency with HTML guidelines.
+> - #### General
 > - Separate css rules aka `body { color: #FFFFFF }` and `html { background: #FFFFFF }` with 1 line of white space.
-> - use double quotes for property + selectors.
 > - [validate](https://jigsaw.w3.org/css-validator/) code.
