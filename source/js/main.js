@@ -131,12 +131,25 @@ class TimerText {
 
 }
 
+class TimerButton {
+
+}
+
+class TimerSettings {
+
+}
+
+// WIP (progress bar and numPomos info?)
+class TimerInfo {
+
+}
+
 /* CONSTANTS */
 const MIN_25 = 60 * 25;
 const SEC_05 = 5; // For testing purposes only
-const TIMER_TEXT_SELECTOR = '#timerText';
-const TIMER_BUTTON_SELECTOR = '#timerButton';
-const TIMER_APP_SELECTOR = '#timerApp';
+const TIMER_TEXT_SELECTOR = '#timer-text';
+const TIMER_BUTTON_SELECTOR = '#timer-button';
+const TIMER_APP_SELECTOR = '#timer-app';
 
 /**
  * To be executed when the page loads.
