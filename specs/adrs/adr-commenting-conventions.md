@@ -1,8 +1,8 @@
-# Our GitHub Workflow
+# Commenting Conventions
 
-* Status: Pending
-* Deciders: 
-* Updated: 2021-02-17
+* Status: Accepted 
+* Deciders: Gary, Justin, Jacob, Jackson, and Jenny (Others couldn't attend meeting due to scheduling conflicts but were updated!)
+* Updated: 2021-02-18
 
 #### Technical Story: 
 This week marks the beginning of our implementation. However, it's become apparent that we have no established conventions for our code so everyone is kind of doing their own thing.
@@ -23,9 +23,8 @@ Which standards should we set?
 >   - This helps you think about what is being inputted and outputted from your code.
 >     - Usually leads to better, faster coding and since we're making commenting mandatory, it doesn't make sense to wait anyway.
 
-> **HTML**:
+> ## HTML:
 > - Use comments to describe structure where possible.
->   - Since our HTML file should be small, it shouldn't be too hard to comment/modify commenting standards later if necessary.
 
 > ## JavaScript:
 > - Include the `@fileoverview` comment at the top of every new file explaining precisely what the file is used for.
@@ -36,27 +35,32 @@ Which standards should we set?
 > - 1 tag per line for JSDocs
 > - All functions must be commented with [@param](https://jsdoc.app/tags-param.html) and [@returns](https://jsdoc.app/tags-returns.html) tags.
 > - Should all functions include an [@example](https://jsdoc.app/tags-example.html) tag?
-> - Refer to 
 > - After the closing curly brace of a function, end with `/* funcName */`
 >   - to allow for commenting out code if necessary while testing
 > - Function calls: parameters should be commented if passing in general or nondescriptive variables.
 >   - For example: `startCountdown(25 /* timerLength */, true /* isCountEnabled */)`
 
-> **CSS**:
-> 
+> ## CSS:
 
 ## Decision Outcome
 
 We chose
-> ## JavaScript:
-> - Always start JSDoc headers with `/**` and end with `*/` each on their own line
->   - so no `/** @tag text` just `/**`
-> - All functions with parameters include an `@example` 
-> - After the closing curly brace of a function, end with `/* funcName */`
->   - to allow for commenting out code if necessary while testing
-> - Function calls: parameters should be commented if passing in general or nondescriptive variables
->   - For example: `startCountdown(25 /* timerLength */, true /* isCountEnabled */)`
 
-Questionable:
+> ## HTML:
+> - Use comments to describe structure where possible.
+
+> ## JavaScript:
+> - #### JSDoc Commenting:
+>   - Always start JSDoc headers with `/**` and end with `*/` each on their own line
+>     - so no `/** @tag text` just `/**`
+>   - *All* functions with parameters include an `@example` tag
+> - #### Functions:
+>   - After the closing curly brace of a function, end with `/* funcName */`
+>     - to allow for commenting out code if necessary while testing
+> - #### Function Calls:
+>   - Function calls: parameters should be commented if passing in general or nondescriptive variables
+>     - For example: `startCountdown(25 /* timerLength */, true /* isCountEnabled */)`
+
+Consider for code base phase:
 - [Property comments](https://google.github.io/styleguide/jsguide.html#jsdoc-property-comments)
 
