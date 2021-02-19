@@ -281,3 +281,10 @@ window.addEventListener('DOMContentLoaded', function () {
   let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
   let timerApp = new TimerApp();
 });
+
+module.exports = {
+  SEC_01,
+  SEC_03,
+  SEC_05,
+  TimerApp
+}
