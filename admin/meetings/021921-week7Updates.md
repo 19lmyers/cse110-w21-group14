@@ -2,14 +2,21 @@
 Date: 02-19-2021, 02:00 - 03:00 p.m.  
 Location: Virtual through Zoom   
 Tools Used: Miro, Figma   
-Minutes prepared by: Harshi Agrawal
+Minutes prepared by: Harshi Agrawal & Luke Myers
 
 ## Attendance
 **Present**
--
+- Luke Myers
+- Jacob Khaliqi
+- Justin Sun
+- Gary Li
+- Mahkameh Torabi-goodarzi
+- Jenny Xin
 
 **Absent**
-- 
+- Mon Morera
+- Jackson Grenier
+- Harshi Agrawal
 
 ## Agenda and Meeting Notes
 ### Announcements
@@ -23,4 +30,4 @@ Minutes prepared by: Harshi Agrawal
 - Brief rundown of progress made from everyone
 
 ### Agenda for Next Week/Meeting
-- 
+- Prototype demonstration!
