@@ -1,28 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Pomodoro</title>
+	<title>Pomodoro</title>
 
-    <link rel="stylesheet" href="main.css">
+	<link rel="stylesheet" href="/source/css/main.css">
 </head>
 
 <body>
-    
-    <!-- Testing timer start -->
-    <h1 id="timer"></h1>
-    <button type="button" id="work">Pomodoro</button>
-    <button type="button" id="short">Short Break</button>
-    <button type="button" id="long">Long Break</button>
-    <audio id="endSound">
-        <source src="omg.mp3">
-    </audio>
 
-    <!-- Javascript scripts -->
-    <script src="script.js"></script>
-    <!-- Testing timer end -->
+	<!-- Timer splash screen -->
+	<div id="timer-splash">
+		<h1>POMODORO</h1>
+		<button id="timer-splash-button">ENTER</button>
+	</div>
+
+	<header>
+		<h1>POMODORO</h1>
+	</header>
+
+	<main>
+		<section id="timer-app">
+			<div id="timer-circle">
+				<span id="timer-text">25:00</span>
+				<button id="timer-button">Start</button>
+			</div>
+		</section>
+		<section id="timer-info">
+			<p><span id="timer-info-session">0</span> Pomodoros completed</p>
+			<progress id="timer-info-progress"></progress>
+		</section>
+	</main>
+
+	<footer>
+		<button id="timer-settings-button">Settings</button>
+		<div id="timer-settings" class="dialog">
+			<div class="dialog-content">
+				<form id="timer-settings-form">
+					<fieldset>
+						<label for="pomo-number">Number of Pomodoros:</label>
+						<div>
+							<input id="pomo-number" name="pomo-number" type="number" min="1" max="25" value="5">
+							<input id="pomo-slider" name="pomo-slider" type="range" min="1" max="25" value="5">
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend>Choose your Pomodoro lengths:</legend>
+
+						<label for="pomo-length-number">Length of Pomodoro (min):</label>
+						<div>
+							<input id="pomo-length-number" name="pomo-length-number" type="number" min="5" max="120" value="25">
+							<input id="pomo-length-slider" name="pomo-length-slider" type="range" min="5" max="120" value="25">
+						</div>
+
+						<label for="short-break-number">Length of short break (min):</label>
+						<div>
+							<input id="short-break-number" name="short-break-number" type="number" min="1" max="25" value="5">
+							<input id="short-break-slider" name="short-break-slider" type="range" min="1" max="25" value="5">
+						</div>
+						<label for="long-break-number">Length of long break (min):</label>
+						<div>
+							<input id="long-break-number" name="long-break-number" type="number" min="1" max="50" value="15">
+							<input id="long-break-slider" name="long-break-slider" type="range" min="1" max="50" value="15">
+						</div>
+					</fieldset>
+
+					<button id="timer-settings-close" type="button">Close</button>
+					<button id="timer-settings-save" type="submit">Save</button>
+
+				</form>
+				<hr>
+				<h2>What is the Pomodoro Method?</h2>
+				<p>Pomodoro content</p>
+			</div>
+		</div>
+	</footer>
+
+
+	<!-- Javascript scripts -->
+	<script src="/source/js/main.js"></script>
+	<!-- Testing timer end -->
 
 </body>
 
