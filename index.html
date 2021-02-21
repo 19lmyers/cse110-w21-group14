@@ -7,7 +7,9 @@
 
 	<title>Pomodoro</title>
 
-	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="styles/main.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -26,7 +28,7 @@
 		<section id="timer-app">
 			<div id="timer-circle">
 				<span id="timer-text">25:00</span>
-				<button id="timer-button">Start</button>
+				<button id="timer-button">START</button>
 			</div>
 		</section>
 		<section id="timer-info">
@@ -36,7 +38,9 @@
 	</main>
 
 	<footer>
-		<button id="timer-settings-button">Settings</button>
+	<!-- Timer Reset and Timer Settings Buttons -->
+		<button id="timer-reset-button"><img src="assets/reset-icon.svg" alt="Reset Button"></button>
+		<button id="timer-settings-button"><img src="assets/settings-icon.svg" alt="Settings Button"></button>
 		<div id="timer-settings" class="dialog">
 			<div class="dialog-content">
 				<form id="timer-settings-form">
@@ -81,7 +85,7 @@
 
 
 	<!-- Javascript scripts -->
-	<script src="js/main.js"></script>
+	<script src="scripts/main.js"></script>
 	<!-- Testing timer end -->
 
 </body>
