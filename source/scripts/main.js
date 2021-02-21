@@ -105,7 +105,7 @@ class TimerApp {
 
   cyclePhase() {
     if(this.currentPhase === 'pomodoro'){
-      documente.getElementById('timer-info-sessions').innerHTML++;
+      document.getElementById('timer-info-sessions').innerHTML = this.numPomodoros+1;
     }
     switch (this.currentPhase) {
       case 'pomodoro':
