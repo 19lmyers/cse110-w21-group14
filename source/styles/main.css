@@ -1,0 +1,143 @@
+/* TODO: Fix universal and read up on inheritance */
+* { 
+  font-family: "Montserrat";
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Default button attributes */
+button {
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Montserrat";
+  font-style: normal;
+
+  transition: background 250ms ease-in-out,
+                transform 150ms ease;
+  transition: box-shadow 250ms ease-in-out, transform 150ms ease;
+
+}
+
+button:hover {
+  box-shadow: inset 1px 4px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* TODO: Make everything below fill up the screen without overflowing 
+ * (might be because of vw/vh issues)
+ */
+
+.dialog {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.dialog-content {
+  padding: 1rem;
+  border: 2px solid black;
+  background-color: #FFFCF4;
+}
+
+/* Timer Splash */
+#timer-splash {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #FFFCF4;
+}
+
+#timer-splash h1 {
+  font-size: 180px;
+  font-weight: 800;
+  line-height: auto;
+  letter-spacing: 0.2em;
+
+  color: #024057;
+  text-shadow: 0px 8px 10px rgba(0, 0, 0, 0.35);
+}
+
+#timer-splash-button {
+  width: 248px;
+  height: 68px;
+
+  font-weight: 500;
+  font-size: 40px;
+  line-height: auto;
+  letter-spacing: 0.05em;
+
+  background: #0F7490;
+  border-radius: 30px;
+
+  color: #EBF7FD;
+}
+
+#timer-splash-button:hover {
+  background: #116880;
+  border-radius: 30px;
+}
+
+/* TODO: Style timer app */
+#timer-button {
+  /* TODO: change width and height to relative units */
+  width: 177.35px;
+  height: 63.34px;
+
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px; 
+
+  background: #FFFCF4;
+  box-shadow: 0px 4px 4px #000000;
+  border-radius: 30px;
+}
+
+#timer-text {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 60px;
+  text-align: center;
+  font-feature-settings: "tnum", "lnum";
+
+  color: #024057;
+
+  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Footer buttons */
+#timer-settings-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+
+  background: #366577;
+}
+
+#timer-reset-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+
+  background: #366577;
+}
+
