@@ -104,6 +104,9 @@ class TimerApp {
   } /* handleEnd */
 
   cyclePhase() {
+    if(this.currentPhase === 'pomodoro'){
+      documente.getElementById('timer-info-sessions').innerHTML++;
+    }
     switch (this.currentPhase) {
       case 'pomodoro':
         // Fourth pomodoro: long break
