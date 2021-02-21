@@ -101,14 +101,16 @@ class TimerApp {
   } /* handleEnd */
 
   cyclePhase() {
-    //set the amount of pomodoros
+    //set the amount of pomodoros on the screen
     if(this.currentPhase === 'pomodoro'){
       document.getElementById('timer-info-sessions').innerHTML = this.numPomodoros+1;
     }
+    //reset the amount of pomodoros on the screen and the existing count
+    //Does not work for the existinng count...
     let reset = document.getElementById('timer-reset-button');
     reset.addEventListener('click',zeroes)
     function zeroes() {
-      this.numPomodoros = 0;
+      this.numPomodoros = 0; //SHOULD CHANGE BUT THIS DOES NOT WORK....
       document.getElementById('timer-info-sessions').innerHTML=0
     }
     switch (this.currentPhase) {
