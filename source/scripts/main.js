@@ -25,8 +25,6 @@ class TimerApp {
    * @param {*} timerButton is a selector for the timer's primary start/stop button.
    */
   constructor() {
-
-    // Assign default values
     this.numPomodoros = 0;
     this.pomodoroLimit = DEFAULT_POMODORO_LIMIT;
     this.pomodoroTimes = {
@@ -100,12 +98,18 @@ class TimerApp {
         this.numPomodoros++;
       }
     }
-
   } /* handleEnd */
 
   cyclePhase() {
+    //set the amount of pomodoros
     if(this.currentPhase === 'pomodoro'){
       document.getElementById('timer-info-sessions').innerHTML = this.numPomodoros+1;
+    }
+    let reset = document.getElementById('timer-reset-button');
+    reset.addEventListener('click',zeroes)
+    function zeroes() {
+      this.numPomodoros = 0;
+      document.getElementById('timer-info-sessions').innerHTML=0
     }
     switch (this.currentPhase) {
       case 'pomodoro':
