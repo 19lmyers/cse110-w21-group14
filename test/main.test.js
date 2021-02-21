@@ -2,6 +2,7 @@ const {
   SEC_01,
   SEC_03,
   SEC_05,
+  TIMER_BUTTON_SELECTOR,
   TimerApp
 } = require('../source/js/main.js');
 
@@ -23,15 +24,36 @@ beforeEach(() => {
     '<button id="timer-settings-button">Settings</button>' + 
     '<div id="timer-settings" class="dialog"></div>' + 
     '<button id="timer-settings-close" type="button">Close</button>';
-});
 
-jest.useFakeTimers();
+    jest.useFakeTimers();
+});
 
 test('creates a new timer', () => {
   const timerApp = new TimerApp();
 
   expect(TimerApp).toBeTruthy();
   expect(timerApp.currentPhase).toBe('pomodoro');
+});
+
+test('timer button starts timer when stopped', () => {
+  const timerApp = new TimerApp();
+  const timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
+  const spy = jest.spyOn(timerApp, 'handleStart');
+
+  timerButton.click();
+
+  expect(spy).toHaveBeenCalledTimes(1);
+});
+
+test('timer button ends timer when running', () => {
+  const timerApp = new TimerApp();
+  const timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
+  const spy = jest.spyOn(timerApp, 'handleEnd');
+
+  timerApp.currentStatus = 'running';
+  timerButton.click();
+
+  expect(spy).toHaveBeenCalledTimes(1);
 });
 
 test('wait 5 seconds before ending pomo', () => {
@@ -81,4 +103,18 @@ test('schedules pomo after long break', () => {
 });
 
 // test('restarts timer after premature ending', () => {
+//   const timerApp = new TimerApp();
+//   const spy = jest.spyOn(timerApp, 'handleEnd');
+//   timerApp.numPomodoros = 2;
+//   timerApp.handleStart();
+
+//   jest.advanceTimersByTime(SEC_01 * 1000);
+
+//   timerApp.toggleTimer();
+  
+//   expect(spy).toHaveBeenCalledTimes(1);
+//   expect(spy).toHaveBeenLastCalledWith(true);
+
+//   expect(timerApp.numPomodoros).toBe(0);
+//   expect(timerApp.currentPhase).toBe('pomodoro');
 // });

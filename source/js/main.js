@@ -286,5 +286,6 @@ module.exports = {
   SEC_01,
   SEC_03,
   SEC_05,
-  TimerApp
+  TIMER_BUTTON_SELECTOR,
+  TimerApp,
 }
