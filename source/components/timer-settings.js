@@ -38,7 +38,6 @@ longBreakSlider.addEventListener("change", function(){ updateSlider(longBreakSli
  * @param {*} toUpdate the number or slider that should be updated to match
  */
 function updateSlider(updated, toUpdate){
-    console.log("updateSlider");
     const newValue = updated.value;
     toUpdate.value = newValue;
 }
