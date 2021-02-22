@@ -33,7 +33,14 @@
 		</section>
 		<section id="timer-info">
 			<p><span id="timer-info-sessions">0</span> Pomodoros completed</p>
-			<progress id="timer-info-progress"></progress>
+			<!-- Step progress bar -->
+			<ul id="progress-bar-container">
+				<li id="progress-step-1">Work Time</li>
+				<progress id="timer-info-work-progress" value=0.01></progress>
+				<li id="progress-step-2">Short Break</li>
+				<progress id="timer-info-break-progress" value=0.01></progress>
+				<li id="progress-step-3">Done!</li>
+			</ul>
 		</section>
 	</main>
 

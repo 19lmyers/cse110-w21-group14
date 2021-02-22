@@ -12,6 +12,7 @@ body {
 /* Default button attributes */
 button {
   border: 0;
+  outline: 0;
   -webkit-appearance: none;
   -moz-appearance: none;
 
@@ -141,3 +142,35 @@ button:hover {
   background: #366577;
 }
 
+#progress-bar-container {
+  display: flex;
+  list-style-type: none;
+  border: 1px solid black;
+}
+
+#progress-bar-container progress {
+  margin: 30px 0px;
+  height: 5px;
+}
+
+#progress-bar-container li {
+  margin: auto 0px;
+}
+#progress-bar-container li::before {
+  content: "";
+  font-size: 0;
+  line-height: 0;
+  letter-spacing: 0;
+  
+  text-align: center;
+  width: 0;
+  height: 0;
+  margin: auto 0px auto 0px;
+  border-width: 15px;
+  padding: 0;
+  display: block;
+  border-style: solid;
+  border-radius: 50%;
+
+  border-color: #366577;
+}
