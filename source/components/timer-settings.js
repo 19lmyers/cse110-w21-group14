@@ -1,4 +1,4 @@
-class TimerSettings extends HTMLElement {
+class TimerSettingsControl extends HTMLElement {
 
     constructor() {
         console.log("settings");
