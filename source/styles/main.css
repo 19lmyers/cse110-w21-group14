@@ -145,6 +145,7 @@ button:hover {
 #progress-bar-container {
   display: flex;
   list-style-type: none;
+  max-width: 400px;
   border: 1px solid black;
 }
 
