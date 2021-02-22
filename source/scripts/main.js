@@ -243,9 +243,9 @@ class TimerSettings {
     this.element = document.querySelector(settingsSelector);
     document.querySelector('#timer-settings-button').addEventListener('click', this.openSettings.bind(this));
     document.querySelector('#timer-settings-close').addEventListener('click', this.closeSettings.bind(this));
-    document.querySelector('#timer-settings-save').addEventListener('click', function(event){
+    document.querySelector('#timer-settings-save').addEventListener('click', (event)=>{
       event.preventDefault();
-      this.updateSettings.bind(this);
+      this.updateSettings();
     });
   }
 
