@@ -241,9 +241,10 @@ class TimerInfoProgress {
 class TimerSettings {
   constructor(settingsSelector) {
     this.element = document.querySelector(settingsSelector);
-
     document.querySelector('#timer-settings-button').addEventListener('click', this.openSettings.bind(this));
     document.querySelector('#timer-settings-close').addEventListener('click', this.closeSettings.bind(this));
+    document.querySelector('#timer-settings-save').addEventListener('click', this.updateSettings.bind(this));
+    Event.preventDefault();
   }
 
   openSettings() {
@@ -252,6 +253,16 @@ class TimerSettings {
 
   closeSettings() {
     this.element.style.visibility = 'hidden';
+  }
+
+  updateSettings() {
+    
+    this.pomodoroLimit = document.getElementById("pomo-number").value;
+    this.pomodoroTimes = {
+      pomodoro: document.getElementById("pomo-length-number").value,
+      shortBreak: document.getElementById("short-break-number").value,
+      longBreak: document.getElementById("long-break-number").value,
+    };
   }
 }
 
@@ -272,6 +283,7 @@ class TimerSplash {
 }
 
 /* -------------------------------------------------------------------------- */
+
 
 /**
  * To be executed when the page loads.

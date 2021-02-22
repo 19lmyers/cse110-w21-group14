@@ -21,6 +21,8 @@ const shortBreakSlider = document.getElementById("short-break-slider");
 const longBreakNumber = document.getElementById("long-break-number");
 const longBreakSlider = document.getElementById("long-break-slider");
 
+
+
 pomoNumber.addEventListener("input", function(){ updateSlider(pomoNumber,pomoSlider); });
 pomoSlider.addEventListener("input", function(){ updateSlider(pomoSlider, pomoNumber); });
 
@@ -33,6 +35,8 @@ shortBreakSlider.addEventListener("input", function(){ updateSlider(shortBreakSl
 longBreakNumber.addEventListener("input", function(){ updateSlider(longBreakNumber, longBreakSlider); });
 longBreakSlider.addEventListener("input", function(){ updateSlider(longBreakSlider, longBreakNumber); });
 
+
+
 /**
  * Will update a number to match the value on a slider or vice versa depending on the order of parameters
  * @param {*} updated is the number or slider that the user manually updated
@@ -42,3 +46,4 @@ function updateSlider(updated, toUpdate){
     const newValue = updated.value;
     toUpdate.value = newValue;
 }
+
