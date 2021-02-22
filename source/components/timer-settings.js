@@ -1,6 +1,7 @@
 class TimerSettings extends HTMLElement {
 
     constructor() {
+        console.log("settings");
         super();
 
         this.attachShadow({ mode: 'open' });
@@ -20,17 +21,17 @@ const shortBreakSlider = document.getElementById("short-break-slider");
 const longBreakNumber = document.getElementById("long-break-number");
 const longBreakSlider = document.getElementById("long-break-slider");
 
-pomoNumber.addEventListener("change", function(){ updateSlider(pomoNumber,pomoSlider); });
-pomoSlider.addEventListener("change", function(){ updateSlider(pomoSlider, pomoNumber); });
+pomoNumber.addEventListener("input", function(){ updateSlider(pomoNumber,pomoSlider); });
+pomoSlider.addEventListener("input", function(){ updateSlider(pomoSlider, pomoNumber); });
 
-pomoLengthNumber.addEventListener("change", function(){ updateSlider(pomoLengthNumber, pomoLengthSlider); });
-pomoLengthSlider.addEventListener("change", function(){ updateSlider(pomoLengthSlider, pomoLengthNumber); });
+pomoLengthNumber.addEventListener("input", function(){ updateSlider(pomoLengthNumber, pomoLengthSlider); });
+pomoLengthSlider.addEventListener("input", function(){ updateSlider(pomoLengthSlider, pomoLengthNumber); });
 
-shortBreakNumber.addEventListener("change", function(){ updateSlider(shortBreakNumber, shortBreakSlider); });
-shortBreakSlider.addEventListener("change", function(){ updateSlider(shortBreakSlider, shortBreakNumber); });
+shortBreakNumber.addEventListener("input", function(){ updateSlider(shortBreakNumber, shortBreakSlider); });
+shortBreakSlider.addEventListener("input", function(){ updateSlider(shortBreakSlider, shortBreakNumber); });
 
-longBreakNumber.addEventListener("change", function(){ updateSlider(longBreakNumber, longBreakSlider); });
-longBreakSlider.addEventListener("change", function(){ updateSlider(longBreakSlider, longBreakNumber); });
+longBreakNumber.addEventListener("input", function(){ updateSlider(longBreakNumber, longBreakSlider); });
+longBreakSlider.addEventListener("input", function(){ updateSlider(longBreakSlider, longBreakNumber); });
 
 /**
  * Will update a number to match the value on a slider or vice versa depending on the order of parameters
