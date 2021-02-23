@@ -47,9 +47,17 @@ class TimerApp {
       TIMER_INFO_BREAK_PROGRESS_SELECTOR, TIMER_INFO_SESSIONS_REMAINING_SELECTOR);
     this.timerSettings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
 
-    this.timerButton.element.addEventListener('buttonPressed', this.toggleTimer.bind(this));
-    document.querySelector('#timer-reset-button').addEventListener('click', this.resetPomodoros.bind(this));
-    this.timerSettings.element.addEventListener('settingsChanged', (event)=> {
+    this.timerButton.element.addEventListener('buttonPressed', () => {
+      if (this.currentStatus === 'stopped' || (this.currentStatus === 'running' && confirm('Are you sure you want to end this Pomodoro?'))) {
+        this.toggleTimer();
+      }
+    });
+    document.querySelector('#timer-reset-button').addEventListener('click', () => {
+      if (confirm('Are you sure you want to reset your Pomodoro count?')) {
+        this.resetPomodoros();
+      }
+    });
+    this.timerSettings.element.addEventListener('settingsChanged', (event) => {
       this.pomodoroLimit = event.detail.pomodoroLimit;
       this.pomodoroTimes = event.detail.pomodoroTimes;
       this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
@@ -65,7 +73,7 @@ class TimerApp {
         this.handleStart();
 
         //TODO: Add this functionality to handleStart()
-        /* Clear progress bar if starting from stopped state */ 
+        /* Clear progress bar if starting from stopped state */
         this.timerInfo.progressInfo.clearProgress();
         break;
       case 'running':
@@ -83,7 +91,7 @@ class TimerApp {
       this.currentStatus = 'running';
 
       //Progress bar: update progress
-      this.timerInfo.progressInfo.startProgress(this.currentPhase, 
+      this.timerInfo.progressInfo.startProgress(this.currentPhase,
         this.pomodoroTimes[this.currentPhase]);
 
       // Set natural timeout duration
@@ -106,6 +114,10 @@ class TimerApp {
     this.timeoutId = null;
 
     if (early) {
+      if (this.currentPhase !== 'pomodoro') {
+        this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
+      }
+      this.currentPhase = 'pomodoro';
       this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
       this.timerInfo.progressInfo.clearProgress(early);
     } else {
@@ -141,9 +153,7 @@ class TimerApp {
   }
 
   resetPomodoros() {
-    //reset the amount of pomodoros on the screen and the existing count
-    //Does not work for the existinng count...
-    this.numPomodoros = 0; //SHOULD CHANGE BUT THIS DOES NOT WORK....
+    this.numPomodoros = 0;
     this.timerInfo.sessionsInfo.sessionsText = 0;
   }
 }
@@ -249,11 +259,11 @@ class TimerInfo {
    * @param {*} sessionsRemainingSelector: selector for the sessions remaining element
    */
   constructor(sessionsSelector, workProgressSelector, breakProgressSelector,
-     sessionsRemainingSelector) {
-       this.sessionsInfo = new TimerInfoSessions(sessionsSelector);
-       this.progressInfo = new TimerInfoProgress(workProgressSelector, breakProgressSelector,
-        sessionsRemainingSelector);
-      }
+    sessionsRemainingSelector) {
+    this.sessionsInfo = new TimerInfoSessions(sessionsSelector);
+    this.progressInfo = new TimerInfoProgress(workProgressSelector, breakProgressSelector,
+      sessionsRemainingSelector);
+  }
 
 }
 
@@ -304,7 +314,7 @@ class TimerInfoProgress {
 
     this.intervalId = setInterval(this.updateProgress.bind(this), 1000);
   } /* startProgress(currentPhase, phaseTotalTime) */
-  
+
   /**
    * Updates the value of currentProgressBarElement based on current time
    */
@@ -352,7 +362,7 @@ class TimerSettings {
     this.element = document.querySelector(settingsSelector);
     document.querySelector('#timer-settings-button').addEventListener('click', this.openSettings.bind(this));
     document.querySelector('#timer-settings-close').addEventListener('click', this.closeSettings.bind(this));
-    document.querySelector('#timer-settings-save').addEventListener('click', (event)=>{
+    document.querySelector('#timer-settings-save').addEventListener('click', (event) => {
       event.preventDefault();
       this.updateSettings();
     });
@@ -377,7 +387,7 @@ class TimerSettings {
         }
       }
     });
-      this.element.dispatchEvent(settingsChangedEvent);
+    this.element.dispatchEvent(settingsChangedEvent);
   }
 }
 
