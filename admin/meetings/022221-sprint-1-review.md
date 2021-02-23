@@ -30,14 +30,14 @@ Minutes prepared by:
 
 2. Discuss and demonstrate the work.
 **Developers**    
-- Successes: 
+- Successes: Finished up core prototype functionality. Increment pomodoros ; resetted the pomodoros therefore the website is able to keep track of the amount of pomodoros a person completed and will also be able to reset if they click the reset button. Timer functionality. Implemented settings menu. Finished progress bar and sessions tracking JavaScript.
   - 
-- Pain points: 
+- Pain points: At the start was how to organize all the parts to that everything was nicely decomposed. how to organize all the parts to that everything was nicely decomposed .CSS Styling, but we are planning on finishing up styling next week. Everyone was especially swamped with midterms this week, most people weren't free until the weekends. Our entire team is fairly new to JavaScript and CSS, so there was quite a steep learning curve. 
   - 
 **Testers**
 - Successes: Setting up the basic task for the timer. Testing the timer functionality. 
   - 
-- Pain points: being sink with thw developers
+- Pain points: Being sink with thw developers
   - 
 **Pipeline Managers**
 - Successes: There was no issues with merging. 
@@ -50,6 +50,7 @@ Minutes prepared by:
 - Thoughts?
 
 4. Future plans for next sprint
+- CSS Styling
 - 
 
 ### New Business
