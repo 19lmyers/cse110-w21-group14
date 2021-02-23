@@ -53,7 +53,9 @@ Successes:
 - Setting up the basic task for the timer. 
   - Testing the timer functionality
 Pain points: 
-  - Being sink with the developers     
+  - Being sink with the developers    
+
+
 **Pipeline Managers**   
 Successes:    
 - There was no issues with merging. Tracking everyone's separate branches was good.   
