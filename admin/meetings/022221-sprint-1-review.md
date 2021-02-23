@@ -32,7 +32,8 @@ Minutes prepared by:
 **Developers**    
 - Successes: 
 - Finished up core prototype functionality. 
-- Increment pomodoros ; resetted the pomodoros therefore the website is able to keep track of the amount of pomodoros a person completed and will also be able to reset if they click the reset button. 
+- Increment pomodoros 
+   - resetted the pomodoros therefore the website is able to keep track of the amount of pomodoros a person completed and will also    be able to reset if they click the reset button. 
 - Timer functionality. 
 - Implemented settings menu. 
   - Finished progress bar and sessions tracking JavaScript.
