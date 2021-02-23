@@ -22,7 +22,7 @@ Minutes prepared by: Mahkemeh and Harshi
 ## Agenda and Meeting Notes
 ### Sprint 1 Review
 1. Review the Sprint's Results.
-   > Review product backlog. Check what was completed and explain any that weren't    
+   > Review product backlog. Check what was completed and explain any that weren't <   
 What was completed:
   - Established first phase styling and commenting guidelines   
   - Updating event modeling diagram
