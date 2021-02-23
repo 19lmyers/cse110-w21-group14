@@ -424,5 +424,8 @@ module.exports = {
   SEC_03,
   SEC_05,
   TIMER_BUTTON_SELECTOR,
+  PHASE_POMODORO,
+  PHASE_SHORT_BREAK,
+  PHASE_LONG_BREAK,
   TimerApp,
 }
