@@ -44,13 +44,13 @@ Minutes prepared by:
  
 **Testers**   
 - Successes: 
-- Setting up the basic task for the timer. 
-  - Testing the timer functionality
-- Pain points: 
-  - Being sink with thw developers
+   - Setting up the basic task for the timer. 
+    - Testing the timer functionality
+   - Pain points: 
+    - Being sink with thw developers
 **Pipeline Managers**
 - Successes:    
-- There was no issues with merging. Tracking everyone's separate branches was good.   
+   - There was no issues with merging. Tracking everyone's separate branches was good.   
  
 - Pain points:   
    - Still having build errors with ESlint.    
