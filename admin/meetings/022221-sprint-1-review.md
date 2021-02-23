@@ -30,23 +30,23 @@ Minutes prepared by:
 
 2. Discuss and demonstrate the work.
 **Developers**    
-- Successes
+- Successes: 
   - 
-- Pain points
+- Pain points: 
   - 
 **Testers**
-- Successes
+- Successes: Setting up the basic task for the timer. Testing the timer functionality. 
   - 
-- Pain points
+- Pain points: being sink with thw developers
   - 
 **Pipeline Managers**
-- Successes
+- Successes: There was no issues with merging. 
   - 
-- Pain points
+- Pain points: Still having build errors with ESlint. 
   - 
 
 3. Current status of the project
-- Demo project
+- Demo project: 
 - Thoughts?
 
 4. Future plans for next sprint
