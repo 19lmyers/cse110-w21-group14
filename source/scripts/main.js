@@ -50,6 +50,11 @@ class TimerApp {
     this.timerSettings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
 
     this.timerButton.element.addEventListener('buttonPressed', this.toggleTimer.bind(this));
+    this.timerSettings.element.addEventListener('settingsChanged', (event)=> {
+      this.pomodoroLimit = event.detail.pomodoroLimit;
+      this.pomodoroTimes = event.detail.pomodoroTimes;
+      this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
+    });
   } /* constructor */
 
   /**
@@ -352,13 +357,17 @@ class TimerSettings {
   }
 
   updateSettings() {
-    
-    this.pomodoroLimit = document.getElementById("pomo-number").value;
-    this.pomodoroTimes = {
-      pomodoro: document.getElementById("pomo-length-number").value,
-      shortBreak: document.getElementById("short-break-number").value,
-      longBreak: document.getElementById("long-break-number").value,
-    };
+    let settingsChangedEvent = new CustomEvent('settingsChanged', {
+      detail: {
+        pomodoroLimit: document.getElementById("pomo-number").value,
+        pomodoroTimes: {
+          pomodoro: document.getElementById("pomo-length-number").value * 60,
+          shortBreak: document.getElementById("short-break-number").value * 60,
+          longBreak: document.getElementById("long-break-number").value * 60,
+        }
+      }
+    });
+      this.element.dispatchEvent(settingsChangedEvent);
   }
 }
 
