@@ -2,7 +2,7 @@
 Date: 02-22-2021, 04:00 - 04:45 p.m.  
 Location: Virtual through Zoom   
 Tools Used: Miro  
-Minutes prepared by: 
+Minutes prepared by: Mahkemeh and Harshi
 
 ## Attendance
 **Present**
@@ -28,7 +28,7 @@ Minutes prepared by:
 - What wasn't and why:
   - 
 
-2. Discuss and demonstrate the work.
+2. Discuss and demonstrate the work.   
 **Developers**      
 - Successes:  
 - Finished up core prototype functionality.  
@@ -43,25 +43,25 @@ Minutes prepared by:
 - Our entire team is fairly new to JavaScript and CSS, so there was quite a steep learning curve.   
  
 **Testers**   
-- Successes: 
-   - Setting up the basic task for the timer. 
-    - Testing the timer functionality
-   - Pain points: 
-    - Being sink with thw developers
+Successes: 
+- Setting up the basic task for the timer. 
+  - Testing the timer functionality
+Pain points: 
+  - Being sink with thw developers
 **Pipeline Managers**
-- Successes:    
-   - There was no issues with merging. Tracking everyone's separate branches was good.   
+Successes:    
+- There was no issues with merging. Tracking everyone's separate branches was good.   
  
-- Pain points:   
+Pain points:   
    - Still having build errors with ESlint.    
 
 
 
 3. Current status of the project
-- Demo project: 
+Demo project: 
 
    We think our current status of the project is in a good place. We have the timer functionality working as it should, and got our settings option all set up.
-- Thoughts?
+Thoughts?
 
    We believe we are on the right track in terms of timing and finishing the project. We need to focus on CSS and the confirmation screen, but we believe we can get majority of it done by the end of this week.
 
