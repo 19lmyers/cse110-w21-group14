@@ -31,7 +31,7 @@ What was completed:
   - Basic CSS Styling
   - Settings Functionality
   - Prototype Implementation: Progress Bar functionality 
-  - Prototype Implementation: session tracking and reset button
+  - Prototype Implementation: session tracking and reset button   
 What wasn't and why:
   - Confirmation Card was not done because our other tasks took longer than we thought, and many people in our team had midterms this week.
 
