@@ -29,6 +29,7 @@ Minutes prepared by:
   - 
 
 2. Discuss and demonstrate the work.
+
 **Developers**    
 - Successes: 
 - Finished up core prototype functionality. 
