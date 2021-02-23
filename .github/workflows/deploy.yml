@@ -1,4 +1,4 @@
-name: Documentation
+name: Deploy
 on: 
   push:
     branches:
@@ -9,15 +9,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build
-        uses: andstor/jsdoc-action@v1
-        with:
-          source_dir: ./source
-          recurse: true
-          output_dir: ./docs
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
-          destination_dir: docs
+          publish_dir: ./source
