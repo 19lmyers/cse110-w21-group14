@@ -43,6 +43,8 @@ class TimerApp {
     this.timerSettings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
 
     this.timerButton.element.addEventListener('buttonPressed', this.toggleTimer.bind(this));
+
+    document.querySelector('#timer-reset-button').addEventListener('click', this.resetPomodoros.bind(this));
   } /* constructor */
 
   /**
@@ -95,24 +97,13 @@ class TimerApp {
         this.handleStart();
       } else {
         // Increment number of pomodoros completed after one cycle (pomo + break)
-        this.numPomodoros++;
+        this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
       }
     }
   } /* handleEnd */
 
   cyclePhase() {
     //set the amount of pomodoros on the screen
-    if(this.currentPhase === 'pomodoro'){
-      document.getElementById('timer-info-sessions').innerHTML = this.numPomodoros+1;
-    }
-    //reset the amount of pomodoros on the screen and the existing count
-    //Does not work for the existinng count...
-    let reset = document.getElementById('timer-reset-button');
-    reset.addEventListener('click',zeroes)
-    function zeroes() {
-      this.numPomodoros = 0; //SHOULD CHANGE BUT THIS DOES NOT WORK....
-      document.getElementById('timer-info-sessions').innerHTML=0
-    }
     switch (this.currentPhase) {
       case 'pomodoro':
         // Fourth pomodoro: long break
@@ -128,6 +119,13 @@ class TimerApp {
         break;
     }
     return this.currentPhase;
+  }
+
+  resetPomodoros() {
+    //reset the amount of pomodoros on the screen and the existing count
+    //Does not work for the existinng count...
+    this.numPomodoros = 0; //SHOULD CHANGE BUT THIS DOES NOT WORK....
+    this.timerInfo.sessionsInfo.sessionsText = 0;
   }
 }
 
@@ -238,6 +236,10 @@ class TimerInfo {
 class TimerInfoSessions {
   constructor(selector) {
     this.element = document.querySelector(selector);
+  }
+
+  set sessionsText(numPomodoros) {
+    this.element.textContent = numPomodoros;
   }
 }
 
