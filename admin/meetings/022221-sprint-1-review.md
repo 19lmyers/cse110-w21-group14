@@ -23,10 +23,17 @@ Minutes prepared by: Mahkemeh and Harshi
 ### Sprint 1 Review
 1. Review the Sprint's Results.
    > Review product backlog. Check what was completed and explain any that weren't.
-- What was completed:
-  - 
-- What wasn't and why:
-  - 
+What was completed:
+  - Established first phase styling and commenting guidelines   
+  - Updating event modeling diagram
+  - Implementing timer functionality
+  - Created HTML File
+  - Basic CSS Styling
+  - Settings Functionality
+  - Prototype Implementation: Progress Bar functionality 
+  - Prototype Implementation: session tracking and reset button
+What wasn't and why:
+  - Confirmation Card was not done because our other tasks took longer than we thought, and many people in our team had midterms this week.
 
 2. Discuss and demonstrate the work.   
 **Developers**      
@@ -50,7 +57,7 @@ Pain points:
   - Being sink with thw developers
 **Pipeline Managers**
 Successes:    
-   - There was no issues with merging. Tracking everyone's separate branches was good.   
+- There was no issues with merging. Tracking everyone's separate branches was good.   
  
 Pain points:   
    - Still having build errors with ESlint.    
