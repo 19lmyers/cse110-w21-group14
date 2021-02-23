@@ -29,8 +29,6 @@ class TimerApp {
    * @param {*} timerButton is a selector for the timer's primary start/stop button.
    */
   constructor() {
-
-    // Assign default values
     this.numPomodoros = 0;
     this.pomodoroLimit = DEFAULT_POMODORO_LIMIT;
     this.pomodoroTimes = {
@@ -50,6 +48,12 @@ class TimerApp {
     this.timerSettings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
 
     this.timerButton.element.addEventListener('buttonPressed', this.toggleTimer.bind(this));
+    document.querySelector('#timer-reset-button').addEventListener('click', this.resetPomodoros.bind(this));
+    this.timerSettings.element.addEventListener('settingsChanged', (event)=> {
+      this.pomodoroLimit = event.detail.pomodoroLimit;
+      this.pomodoroTimes = event.detail.pomodoroTimes;
+      this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
+    });
   } /* constructor */
 
   /**
@@ -112,13 +116,13 @@ class TimerApp {
         this.handleStart();
       } else {
         // Increment number of pomodoros completed after one cycle (pomo + break)
-        this.numPomodoros++;
+        this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
       }
     }
-
   } /* handleEnd */
 
   cyclePhase() {
+    //set the amount of pomodoros on the screen
     switch (this.currentPhase) {
       case PHASE_POMODORO:
         // Fourth pomodoro: long break
@@ -134,6 +138,13 @@ class TimerApp {
         break;
     }
     return this.currentPhase;
+  }
+
+  resetPomodoros() {
+    //reset the amount of pomodoros on the screen and the existing count
+    //Does not work for the existinng count...
+    this.numPomodoros = 0; //SHOULD CHANGE BUT THIS DOES NOT WORK....
+    this.timerInfo.sessionsInfo.sessionsText = 0;
   }
 }
 
@@ -250,6 +261,10 @@ class TimerInfoSessions {
   constructor(selector) {
     this.element = document.querySelector(selector);
   }
+
+  set sessionsText(numPomodoros) {
+    this.element.textContent = numPomodoros;
+  }
 }
 
 /* <--------------------------------------------------------------------------------------------> */
@@ -352,13 +367,17 @@ class TimerSettings {
   }
 
   updateSettings() {
-    
-    this.pomodoroLimit = document.getElementById("pomo-number").value;
-    this.pomodoroTimes = {
-      pomodoro: document.getElementById("pomo-length-number").value,
-      shortBreak: document.getElementById("short-break-number").value,
-      longBreak: document.getElementById("long-break-number").value,
-    };
+    let settingsChangedEvent = new CustomEvent('settingsChanged', {
+      detail: {
+        pomodoroLimit: document.getElementById("pomo-number").value,
+        pomodoroTimes: {
+          pomodoro: document.getElementById("pomo-length-number").value * 60,
+          shortBreak: document.getElementById("short-break-number").value * 60,
+          longBreak: document.getElementById("long-break-number").value * 60,
+        }
+      }
+    });
+      this.element.dispatchEvent(settingsChangedEvent);
   }
 }
 
