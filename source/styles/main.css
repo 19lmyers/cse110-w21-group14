@@ -17,8 +17,8 @@ button {
   -moz-appearance: none;
 
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-family: "Montserrat";
-  font-style: normal;
+ /*  font-family: "Montserrat";
+  font-style: normal; */
 
   transition: background 250ms ease-in-out,
                 transform 150ms ease;
@@ -28,6 +28,13 @@ button {
 
 button:hover {
   box-shadow: inset 1px 4px 4px rgba(0, 0, 0, 0.6);
+}
+
+progress {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
 }
 
 /* TODO: Make everything below fill up the screen without overflowing 
@@ -55,6 +62,7 @@ button:hover {
 }
 
 /* Timer Splash */
+/* <--------------------------------------------------------------------------------------------> */
 #timer-splash {
   position: fixed;
   display: flex;
@@ -97,6 +105,7 @@ button:hover {
 }
 
 /* TODO: Style timer app */
+/* <--------------------------------------------------------------------------------------------> */
 #timer-button {
   /* TODO: change width and height to relative units */
   width: 177.35px;
@@ -110,6 +119,10 @@ button:hover {
   background: #FFFCF4;
   box-shadow: 0px 4px 4px #000000;
   border-radius: 30px;
+}
+
+#timer-button:hover {
+  box-shadow: inset 0px 4px 4px rgba(0,0,0,0.5);
 }
 
 #timer-text {
@@ -126,6 +139,7 @@ button:hover {
 }
 
 /* Footer buttons */
+/* <--------------------------------------------------------------------------------------------> */
 #timer-settings-button {
   width: 60px;
   height: 60px;
@@ -142,36 +156,58 @@ button:hover {
   background: #366577;
 }
 
+/* Progress Bar  */
+/* <--------------------------------------------------------------------------------------------> */
 #progress-bar-container {
   display: flex;
   list-style-type: none;
-  max-width: 400px;
-  border: 1px solid black;
+  min-width: 400px;
+ /*  border: 1px solid black; */
+}
+
+progress::-webkit-progress-bar {
+  background-color: #BDE1E9;
+  box-shadow: inset 0px 2px 1px rgba(0, 0, 0, 0.25);
+}
+
+progress[value]::-webkit-progress-value {
+  background-color: #243D51;
+  border-radius: 1px;
 }
 
 #progress-bar-container progress {
   margin: 30px 0px;
-  height: 5px;
+  height: 4px;
+}
+
+#progress-bar-container label {
+ /*  border: 1px solid black; */
+  text-align: center;
+  min-width: fit-content;
 }
 
 #progress-bar-container li {
   margin: auto 0px;
-}
-#progress-bar-container li::before {
-  content: "";
   font-size: 0;
   line-height: 0;
   letter-spacing: 0;
-  
-  text-align: center;
-  width: 0;
-  height: 0;
-  margin: auto 0px auto 0px;
-  border-width: 15px;
-  padding: 0;
-  display: block;
-  border-style: solid;
+
+  width: 30px;
+  height: 30px;
+  background-color: #BDE1E9;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 50%;
 
-  border-color: #366577;
 }
+
+/* Sessions Remaining counter */
+#timer-info-sessions-remaining {
+  font-family: inherit;
+  font-style: inherit;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.05em;
+
+  color: #7DBAC8;
+}
+/* <--------------------------------------------------------------------------------------------> */
