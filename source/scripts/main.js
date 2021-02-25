@@ -309,11 +309,11 @@ class TimerInfoProgress {
     this.time = phaseTotalTime;
     this.totalTime = phaseTotalTime;
 
-    //Selects currentProgressBarElemetn based on currentPhase
+    //Selects currentProgressBarElement based on currentPhase
     if (this.currentPhase == PHASE_POMODORO) {
       this.currentProgressBarElement = this.workProgressElement;
     }
-    else if (this.currentPhase == PHASE_SHORT_BREAK || this.curerntPhase == PHASE_LONG_BREAK) {
+    else if (this.currentPhase == PHASE_SHORT_BREAK || this.currentPhase == PHASE_LONG_BREAK) {
       this.currentProgressBarElement = this.breakProgressElement;
     }
     else {
@@ -460,25 +460,3 @@ window.addEventListener('DOMContentLoaded', function () {
   let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
   let timerApp = new TimerApp();
 });
-
-module.exports = {
-  SEC_01,
-  SEC_03,
-  SEC_05,
-  TIMER_TEXT_SELECTOR,
-  TIMER_BUTTON_SELECTOR,
-  TIMER_INFO_WORK_PROGRESS_SELECTOR,
-  TIMER_INFO_BREAK_PROGRESS_SELECTOR,
-  TIMER_INFO_SESSIONS_REMAINING_SELECTOR,
-  TIMER_SETTINGS_SELECTOR,
-  TIMER_SPLASH_SELECTOR,
-  TIMER_SPLASH_BUTTON_SELECTOR,
-  PHASE_POMODORO,
-  PHASE_SHORT_BREAK,
-  PHASE_LONG_BREAK,
-  TimerText,
-  TimerSettings,
-  TimerSplash,
-  TimerInfoProgress,
-  TimerApp
-}
