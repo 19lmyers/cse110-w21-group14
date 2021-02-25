@@ -11,5 +11,31 @@
         "sourceType": "module"
     },
     "rules": {
+        "brace-style": ["error", "stroustrup", {
+            "allowSingleLine": true
+        }],
+        "indent": ["error", 4],
+        "max-len": ["error", {
+            "code": 100,
+            "tabWidth": 4,
+            "ignoreComments": true,
+            "ignoreUrls": true
+        }],
+        "padded-blocks": "off",
+        "prefer-const": "off",
+        "quotes": ["error", "single", {
+            "avoidEscape": true,
+            "allowTemplateLiterals": true
+        }],
+        "require-jsdoc": ["error", {
+            "require": {
+                "FunctionDeclaration": true,
+                "ClassDeclaration": false,
+                "MethodDefinition": false,
+                "ArrowFunctionExpression": false,
+                "FunctionExpression": true
+            }
+        }]
+        
     }
 }
