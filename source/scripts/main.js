@@ -370,7 +370,7 @@ class TimerSettings {
     this.element = document.querySelector(settingsSelector);
     document.querySelector('#timer-settings-button').addEventListener('click', this.openSettings.bind(this));
     document.querySelector('#timer-settings-close').addEventListener('click', this.closeSettings.bind(this));
-    document.querySelector('#timer-settings-save').addEventListener('click', (event) => {
+    document.querySelector('#timer-settings-form').addEventListener('submit', (event) => {
       event.preventDefault();
       this.updateSettings();
     });
@@ -471,6 +471,10 @@ module.exports = {
   TIMER_INFO_BREAK_PROGRESS_SELECTOR,
   TIMER_INFO_SESSIONS_REMAINING_SELECTOR,
   TIMER_SETTINGS_SELECTOR,
+  POMO_NUMBER_SELECTOR,
+  POMO_LENGTH_NUMBER_SELECTOR,
+  SHORT_BREAK_NUMBER_SELECTOR,
+  LONG_BREAK_NUMBER_SELECTOR,
   TIMER_SPLASH_SELECTOR,
   TIMER_SPLASH_BUTTON_SELECTOR,
   PHASE_POMODORO,

@@ -8,6 +8,10 @@ const {
   TIMER_INFO_BREAK_PROGRESS_SELECTOR,
   TIMER_INFO_SESSIONS_REMAINING_SELECTOR,
   TIMER_SETTINGS_SELECTOR,
+  POMO_NUMBER_SELECTOR,
+  POMO_LENGTH_NUMBER_SELECTOR,
+  SHORT_BREAK_NUMBER_SELECTOR,
+  LONG_BREAK_NUMBER_SELECTOR,
   TIMER_SPLASH_SELECTOR,
   TIMER_SPLASH_BUTTON_SELECTOR,
   PHASE_POMODORO,
@@ -492,10 +496,10 @@ describe('settings', () => {
   test('save button updates settings', () => {
     const timerApp = new TimerApp();
     const saveButton = document.querySelector('#timer-settings-save');
-    document.querySelector('#pomo-number').value = 50;
-    document.querySelector('#pomo-length-number').value = 20;
-    document.querySelector('#short-break-number').value = 10;
-    document.querySelector('#long-break-number').value = 30;
+    document.querySelector(POMO_NUMBER_SELECTOR).value = 50;
+    document.querySelector(POMO_LENGTH_NUMBER_SELECTOR).value = 20;
+    document.querySelector(SHORT_BREAK_NUMBER_SELECTOR).value = 10;
+    document.querySelector(LONG_BREAK_NUMBER_SELECTOR).value = 30;
 
     saveButton.click();
 
@@ -505,6 +509,54 @@ describe('settings', () => {
       shortBreak: 600,
       longBreak: 1800
     })
+  });
+
+  test('error thrown when pomo text input outside of range', () => {
+    const settingsForm = document.querySelector('#timer-settings-form');
+
+    document.querySelector(POMO_NUMBER_SELECTOR).value = -5;
+    settingsForm.dispatchEvent(new Event('submit'));
+    expect(getComputedStyle(document.querySelector('input:invalid'))).toBeTruthy();
+
+    document.querySelector(POMO_NUMBER_SELECTOR).value = 30;
+    settingsForm.dispatchEvent(new Event('submit'));
+    expect(getComputedStyle(document.querySelector('input:invalid'))).toBeTruthy();
+  });
+
+  test('error thrown when pomo length text input outside of range', () => {
+    const settingsForm = document.querySelector('#timer-settings-form');
+
+    document.querySelector(POMO_LENGTH_NUMBER_SELECTOR).value = -5;
+    settingsForm.dispatchEvent(new Event('submit'));
+    expect(getComputedStyle(document.querySelector('input:invalid'))).toBeTruthy();
+
+    document.querySelector(POMO_LENGTH_NUMBER_SELECTOR).value = 150;
+    settingsForm.dispatchEvent(new Event('submit'));
+    expect(getComputedStyle(document.querySelector('input:invalid'))).toBeTruthy();
+  });
+
+  test('error thrown when short break text input outside of range', () => {
+    const settingsForm = document.querySelector('#timer-settings-form');
+
+    document.querySelector(SHORT_BREAK_NUMBER_SELECTOR).value = -5;
+    settingsForm.dispatchEvent(new Event('submit'));
+    expect(getComputedStyle(document.querySelector('input:invalid'))).toBeTruthy();
+
+    document.querySelector(SHORT_BREAK_NUMBER_SELECTOR).value = 30;
+    settingsForm.dispatchEvent(new Event('submit'));
+    expect(getComputedStyle(document.querySelector('input:invalid'))).toBeTruthy();
+  });
+
+  test('error thrown when long break text input outside of range', () => {
+    const settingsForm = document.querySelector('#timer-settings-form');
+
+    document.querySelector(LONG_BREAK_NUMBER_SELECTOR).value = -5;
+    settingsForm.dispatchEvent(new Event('submit'));
+    expect(getComputedStyle(document.querySelector('input:invalid'))).toBeTruthy();
+
+    document.querySelector(LONG_BREAK_NUMBER_SELECTOR).value = 100;
+    settingsForm.dispatchEvent(new Event('submit'));
+    expect(getComputedStyle(document.querySelector('input:invalid'))).toBeTruthy();
   });
 
   test('pomo text input changes slider pomo value', () => {
