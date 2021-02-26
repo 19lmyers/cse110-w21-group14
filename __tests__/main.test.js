@@ -39,9 +39,9 @@ beforeEach(() => {
       '<p><span id="timer-info-sessions">0</span> Pomodoros completed</p>' +
       '<ul id="progress-bar-container">' +
         '<li id="progress-step-1"></li>' +
-        '<progress id="timer-info-work-progress" value=0.01></progress>' +
+        '<progress id="timer-info-work-progress" value=0></progress>' +
         '<li id="progress-step-2"></li>' +
-        '<progress id="timer-info-break-progress" value=0.01></progress>' +
+        '<progress id="timer-info-break-progress" value=0></progress>' +
         '<li id="progress-step-3"></li>' +
         '<p id="timer-info-sessions-remaining">x1</p>' +
       '</ul>' +
@@ -630,4 +630,49 @@ describe('settings', () => {
 
     expect(settings.longBreakNumber).toHaveProperty('value', '50');
   });
+});
+
+test('initializes timer page', () => {
+  const timerApp = new TimerApp();
+
+  expect(TimerText).toBeTruthy();
+  expect(TimerSettings).toBeTruthy();
+  expect(TimerSplash).toBeTruthy();
+  expect(TimerInfoProgress).toBeTruthy();
+  expect(TimerApp).toBeTruthy();
+
+  expect(timerApp.timerButton.element).toHaveProperty('textContent', 'START');
+  expect(timerApp.timerText.element).toHaveProperty('textContent', '00:05');
+  expect(timerApp.timerInfo.sessionsInfo.element).toHaveProperty('textContent', '0');
+  expect(timerApp.timerInfo.progressInfo.workProgressElement).toHaveProperty('value', 0);
+  expect(timerApp.timerInfo.progressInfo.breakProgressElement).toHaveProperty('value', 0);
+});
+
+test('updates timer page', () => {
+  const timerApp = new TimerApp();
+
+  timerApp.toggleTimer();
+  jest.advanceTimersByTime(SEC_01 * 1000);
+
+  expect(timerApp.timerButton.element).toHaveProperty('textContent', 'END');
+  expect(timerApp.timerText.element).toHaveProperty('textContent', '00:04');
+  expect(timerApp.timerInfo.sessionsInfo.element).toHaveProperty('textContent', '0');
+  expect(timerApp.timerInfo.progressInfo.workProgressElement).toHaveProperty('value', 0.2);
+  expect(timerApp.timerInfo.progressInfo.breakProgressElement).toHaveProperty('value', 0);
+
+  jest.advanceTimersByTime(SEC_05 * 1000);
+
+  expect(timerApp.timerButton.element).toHaveProperty('textContent', 'END');
+  expect(timerApp.timerText.element).toHaveProperty('textContent', '00:02');
+  expect(timerApp.timerInfo.sessionsInfo.element).toHaveProperty('textContent', '0');
+  expect(timerApp.timerInfo.progressInfo.workProgressElement).toHaveProperty('value', 1);
+  expect(timerApp.timerInfo.progressInfo.breakProgressElement).toHaveProperty('value', (1/3));
+
+  jest.advanceTimersByTime(2 * 1000);
+
+  expect(timerApp.timerButton.element).toHaveProperty('textContent', 'START');
+  expect(timerApp.timerText.element).toHaveProperty('textContent', '00:05');
+  expect(timerApp.timerInfo.sessionsInfo.element).toHaveProperty('textContent', '1');
+  expect(timerApp.timerInfo.progressInfo.workProgressElement).toHaveProperty('value', 1);
+  expect(timerApp.timerInfo.progressInfo.breakProgressElement).toHaveProperty('value', 1);
 });
