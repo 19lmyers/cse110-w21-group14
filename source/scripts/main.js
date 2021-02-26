@@ -448,11 +448,21 @@ function del() {
 }
 
 /**
- * Fills out the tasks the user want to complete
+ * Local storage
  */
+if(window.localStorage.getItem("list") == null){
+  var list = [];
+  window.localStorage.setItem("list", JSON.stringify(list));
+}
+
+var taskList = JSON.parse(localStorage.getItem("list"));
 
 let contain = document.querySelector('.item-list');
- class Task {
+/**
+ * Fills out the tasks the user want to complete
+ * And shows them on screen as a list
+ */
+class Task {
   constructor (name) {
     this.createTask(name);
   }
@@ -489,6 +499,9 @@ let contain = document.querySelector('.item-list');
 
     deleteButton.addEventListener('click', () => {
       contain.removeChild(myList);
+      let index = taskList.indexOf(name);
+      taskList.splice(index,1);
+      window.localStorage.setItem("list",JSON.stringify(taskList));
     })
 
   }
@@ -496,12 +509,24 @@ let contain = document.querySelector('.item-list');
 
 var addButton = document.getElementById('add-button');
 addButton.addEventListener('click', insert);
-
+/**
+ * User creates a task and clicks + button then the task will show
+ */
 function insert() {
   event.preventDefault();
   let insert = document.getElementById('input-value');
   if(insert.value != "") {
     new Task(insert.value);
+    taskList.push(insert.value);
+    window.localStorage.setItem("list", JSON.stringify(taskList));
   }
+}
+
+
+/**
+ * Local Storage elements
+ */
+for(let i = 0; i < taskList.length; i++){
+  new Task(taskList[i]);
 }
 
