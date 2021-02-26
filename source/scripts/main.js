@@ -418,3 +418,28 @@ window.addEventListener('DOMContentLoaded', function () {
   let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
   let timerApp = new TimerApp();
 });
+
+
+
+/* Task List */
+/* -------------------------------------------------------------------------- */
+function del() {
+  event.preventDefault();
+  let hide = document.querySelectorAll('#del');
+  for(let i = 0; i < hide.length;i++ ){
+    if(hide[i].style.visibility === 'hidden'){
+      document.getElementById('task-button').innerHTML="Task List"
+      hide[i].style.visibility = 'visible';
+      document.getElementById('task-list').style.visibility='hidden';
+    }
+    else {
+      document.getElementById('task-button').innerHTML="Back to Pomodoro";
+      hide[i].style.visibility='hidden';
+      document.getElementById('task-list').style.visibility='visible';
+    }
+  }
+}
+
+
+
+

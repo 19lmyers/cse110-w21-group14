@@ -20,11 +20,11 @@
 		<button id="timer-splash-button">ENTER</button>
 	</div>
 
-	<header>
+	<header id='del'>
 		<h1>POMODORO</h1>
 	</header>
 
-	<main>
+	<main id='del'>
 		<section id="timer-app">
 			<div id="timer-circle">
 				<span id="timer-text">25:00</span>
@@ -54,7 +54,7 @@
 		</section>
 	</main>
 
-	<footer>
+	<footer id='del'>
 	<!-- Timer Reset and Timer Settings Buttons -->
 		<button id="timer-reset-button"><img src="assets/reset-icon.svg" alt="Reset Button"></button>
 		<button id="timer-settings-button"><img src="assets/settings-icon.svg" alt="Settings Button"></button>
@@ -92,13 +92,31 @@
 					<button id="timer-settings-close" type="button">Close</button>
 					<button id="timer-settings-save" type="submit">Save</button>
 
-				</form>
 				<hr>
 				<h2>What is the Pomodoro Method?</h2>
 				<p>Pomodoro content</p>
 			</div>
 		</div>
 	</footer>
+
+
+	<button id='task-button' onclick="del()"> Task List</button>
+	<main id='task-list'>
+			<h1>Task List</h1>
+			<input type="text" placeholder="Tasks To Complete...">
+			<button id='add-button'>+</button>
+			<div>
+				<!-- <input id='input' type="text" disabled>
+				<button id="edit">Edit</button>
+				<button id="remove">Remove</button> -->
+				<li><input id='input' type="text" disabled><button id="edit">Edit</button><button id="remove">Remove</button></li>
+				<li><input id='input' type="text" disabled><button id="edit">Edit</button><button id="remove">Remove</button></li>
+				<li><input id='input' type="text" disabled><button id="edit">Edit</button><button id="remove">Remove</button></li>
+
+			</div>
+
+	</main>
+
 
 
 	<!-- Javascript scripts -->
