@@ -507,11 +507,75 @@ describe('settings', () => {
     })
   });
 
-  test('text input changes slider value', () => {
-    
+  test('pomo text input changes slider pomo value', () => {
+    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    settings.pomoNumber.value = 10;
+
+    settings.pomoNumber.dispatchEvent(new Event('input'));
+
+    expect(settings.pomoSlider).toHaveProperty('value', '10');
   });
 
-  test('slider input changes text value', () => {
-    
+  test('pomo slider input changes pomo text value', () => {
+    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    settings.pomoSlider.value = 10;
+
+    settings.pomoSlider.dispatchEvent(new Event('input'));
+
+    expect(settings.pomoNumber).toHaveProperty('value', '10');
+  });
+
+  test('pomo length text input changes slider pomo length value', () => {
+    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    settings.pomoLengthNumber.value = 15;
+
+    settings.pomoLengthNumber.dispatchEvent(new Event('input'));
+
+    expect(settings.pomoLengthSlider).toHaveProperty('value', '15');
+  });
+
+  test('pomo slider input changes pomo text value', () => {
+    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    settings.pomoLengthSlider.value = 15;
+
+    settings.pomoLengthSlider.dispatchEvent(new Event('input'));
+
+    expect(settings.pomoLengthNumber).toHaveProperty('value', '15');
+  });
+
+  test('short break text input changes slider short break value', () => {
+    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    settings.shortBreakNumber.value = 20;
+
+    settings.shortBreakNumber.dispatchEvent(new Event('input'));
+
+    expect(settings.shortBreakSlider).toHaveProperty('value', '20');
+  });
+
+  test('short break slider input changes short break text value', () => {
+    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    settings.shortBreakSlider.value = 20;
+
+    settings.shortBreakSlider.dispatchEvent(new Event('input'));
+
+    expect(settings.shortBreakNumber).toHaveProperty('value', '20');
+  });
+
+  test('long break text input changes slider long break value', () => {
+    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    settings.longBreakNumber.value = 50;
+
+    settings.longBreakNumber.dispatchEvent(new Event('input'));
+
+    expect(settings.longBreakSlider).toHaveProperty('value', '50');
+  });
+
+  test('long break slider input changes long break text value', () => {
+    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    settings.longBreakSlider.value = 50;
+
+    settings.longBreakSlider.dispatchEvent(new Event('input'));
+
+    expect(settings.longBreakNumber).toHaveProperty('value', '50');
   });
 });
