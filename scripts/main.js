@@ -14,6 +14,14 @@ const TIMER_INFO_WORK_PROGRESS_SELECTOR = '#timer-info-work-progress';
 const TIMER_INFO_BREAK_PROGRESS_SELECTOR = '#timer-info-break-progress';
 const TIMER_INFO_SESSIONS_REMAINING_SELECTOR = "#timer-info-sesions-remaining"
 const TIMER_SETTINGS_SELECTOR = '#timer-settings';
+const POMO_NUMBER_SELECTOR = '#pomo-number';
+const POMO_SLIDER_SELECTOR = '#pomo-slider';
+const POMO_LENGTH_NUMBER_SELECTOR = '#pomo-length-number';
+const POMO_LENGTH_SLIDER_SELECTOR = '#pomo-length-slider';
+const SHORT_BREAK_NUMBER_SELECTOR = '#short-break-number';
+const SHORT_BREAK_SLIDER_SELECTOR = '#short-break-slider';
+const LONG_BREAK_NUMBER_SELECTOR = '#long-break-number';
+const LONG_BREAK_SLIDER_SELECTOR = '#long-break-slider';
 const TIMER_SPLASH_SELECTOR = '#timer-splash';
 const TIMER_SPLASH_BUTTON_SELECTOR = '#timer-splash-button';
 const PHASE_POMODORO = "pomodoro";
@@ -301,11 +309,11 @@ class TimerInfoProgress {
     this.time = phaseTotalTime;
     this.totalTime = phaseTotalTime;
 
-    //Selects currentProgressBarElemetn based on currentPhase
+    //Selects currentProgressBarElement based on currentPhase
     if (this.currentPhase == PHASE_POMODORO) {
       this.currentProgressBarElement = this.workProgressElement;
     }
-    else if (this.currentPhase == PHASE_SHORT_BREAK || this.curerntPhase == PHASE_LONG_BREAK) {
+    else if (this.currentPhase == PHASE_SHORT_BREAK || this.currentPhase == PHASE_LONG_BREAK) {
       this.currentProgressBarElement = this.breakProgressElement;
     }
     else {
@@ -366,6 +374,40 @@ class TimerSettings {
       event.preventDefault();
       this.updateSettings();
     });
+
+    this.pomoNumber = document.querySelector(POMO_NUMBER_SELECTOR);
+    this.pomoSlider = document.querySelector(POMO_SLIDER_SELECTOR);
+
+    this.pomoLengthNumber = document.querySelector(POMO_LENGTH_NUMBER_SELECTOR);
+    this.pomoLengthSlider = document.querySelector(POMO_LENGTH_SLIDER_SELECTOR);
+
+    this.shortBreakNumber = document.querySelector(SHORT_BREAK_NUMBER_SELECTOR);
+    this.shortBreakSlider = document.querySelector(SHORT_BREAK_SLIDER_SELECTOR);
+
+    this.longBreakNumber = document.querySelector(LONG_BREAK_NUMBER_SELECTOR);
+    this.longBreakSlider = document.querySelector(LONG_BREAK_SLIDER_SELECTOR);
+
+    this.pomoNumber.addEventListener("input", this.updateSlider.bind(this, POMO_NUMBER_SELECTOR,POMO_SLIDER_SELECTOR));
+    this.pomoSlider.addEventListener("input", this.updateSlider.bind(this, POMO_SLIDER_SELECTOR, POMO_NUMBER_SELECTOR));
+
+    this.pomoLengthNumber.addEventListener("input", this.updateSlider.bind(this, POMO_LENGTH_NUMBER_SELECTOR, POMO_LENGTH_SLIDER_SELECTOR));
+    this.pomoLengthSlider.addEventListener("input", this.updateSlider.bind(this, POMO_LENGTH_SLIDER_SELECTOR, POMO_LENGTH_NUMBER_SELECTOR));
+
+    this.shortBreakNumber.addEventListener("input", this.updateSlider.bind(this, SHORT_BREAK_NUMBER_SELECTOR, SHORT_BREAK_SLIDER_SELECTOR));
+    this.shortBreakSlider.addEventListener("input", this.updateSlider.bind(this, SHORT_BREAK_SLIDER_SELECTOR, SHORT_BREAK_NUMBER_SELECTOR));
+
+    this.longBreakNumber.addEventListener("input", this.updateSlider.bind(this, LONG_BREAK_NUMBER_SELECTOR, LONG_BREAK_SLIDER_SELECTOR));
+    this.longBreakSlider.addEventListener("input", this.updateSlider.bind(this, LONG_BREAK_SLIDER_SELECTOR, LONG_BREAK_NUMBER_SELECTOR));
+  }
+
+  /**
+   * Will update a number to match the value on a slider or vice versa depending on the order of parameters
+   * @param {*} updated is the number or slider that the user manually updated
+   * @param {*} toUpdate the number or slider that should be updated to match
+   */
+  updateSlider(updated, toUpdate){
+    const newValue = document.querySelector(updated).value;
+    document.querySelector(toUpdate).value = newValue;
   }
 
   openSettings() {
@@ -379,11 +421,11 @@ class TimerSettings {
   updateSettings() {
     let settingsChangedEvent = new CustomEvent('settingsChanged', {
       detail: {
-        pomodoroLimit: document.getElementById("pomo-number").value,
+        pomodoroLimit: document.querySelector(POMO_NUMBER_SELECTOR).value,
         pomodoroTimes: {
-          pomodoro: document.getElementById("pomo-length-number").value * 60,
-          shortBreak: document.getElementById("short-break-number").value * 60,
-          longBreak: document.getElementById("long-break-number").value * 60,
+          pomodoro: document.querySelector(POMO_LENGTH_NUMBER_SELECTOR).value * 60,
+          shortBreak: document.querySelector(SHORT_BREAK_NUMBER_SELECTOR).value * 60,
+          longBreak: document.querySelector(LONG_BREAK_NUMBER_SELECTOR).value * 60,
         }
       }
     });
