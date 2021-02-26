@@ -224,6 +224,7 @@ class TimerText {
     let sec = currentTime % 60;
     let minString = min < 10 ? '0' + min : '' + min;
     let secString = sec < 10 ? '0' + sec : '' + sec;
+    document.title = this.time < 0 ? `-${minString}:${secString}` : `${minString}:${secString}`; //Title now counts down as well..
     return this.time < 0 ? `-${minString}:${secString}` : `${minString}:${secString}`;
   } /* timeString */
 
@@ -503,10 +504,4 @@ function insert() {
     new Task(insert.value);
   }
 }
-
-
-
-
-
-
 
