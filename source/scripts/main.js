@@ -497,9 +497,11 @@ var addButton = document.getElementById('add-button');
 addButton.addEventListener('click', insert);
 
 function insert() {
-  let insert = document.getElementById('input-value');
   event.preventDefault();
-  new Task(insert.value);
+  let insert = document.getElementById('input-value');
+  if(insert.value != "") {
+    new Task(insert.value);
+  }
 }
 
 
