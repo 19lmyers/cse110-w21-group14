@@ -247,4 +247,15 @@ progress[value]::-webkit-progress-value {
 }
 
 
+#edit {
+	background-color: green;
+	cursor: pointer;
+}
+
+#delete {
+  background-color: red;
+  cursor: pointer;
+}
+
+
 /* <--------------------------------------------------------------------------------------------> */

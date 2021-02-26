@@ -423,6 +423,12 @@ window.addEventListener('DOMContentLoaded', function () {
 
 /* Task List */
 /* -------------------------------------------------------------------------- */
+
+
+/**
+ * Task list button pressed it goes to task list screen
+ * Changes to back to Pomodoro button and takes you back to the timer
+ */
 function del() {
   event.preventDefault();
   let hide = document.querySelectorAll('#del');
@@ -439,6 +445,65 @@ function del() {
     }
   }
 }
+
+/**
+ * Fills out the tasks the user want to complete
+ */
+
+let contain = document.querySelector('.item-list');
+ class Task {
+  constructor (name) {
+    this.createTask(name);
+  }
+
+  createTask(name) {
+    let myList = document.createElement('li');
+    
+    let input = document.createElement('input');
+    input.value= name;
+    input.type= "text";
+    input.disabled= true;
+
+    let editButton = document.createElement('button');
+    editButton.id='edit';
+    editButton.innerHTML="Edit";
+    
+    let deleteButton = document.createElement('button');
+    deleteButton.id="delete";
+    deleteButton.innerHTML="Delete";
+
+    contain.appendChild(myList);
+    myList.appendChild(input);
+    myList.appendChild(editButton);
+    myList.appendChild(deleteButton);
+
+    editButton.addEventListener('click', () => {
+      if(input.disabled == true){
+        input.disabled = !input.disabled;
+      }
+      else{
+        input.disabled = true;
+      }
+    })
+
+    deleteButton.addEventListener('click', () => {
+      contain.removeChild(myList);
+    })
+
+  }
+}
+
+var addButton = document.getElementById('add-button');
+addButton.addEventListener('click', insert);
+
+function insert() {
+  let insert = document.getElementById('input-value');
+  event.preventDefault();
+  new Task(insert.value);
+}
+
+
+
 
 
 
