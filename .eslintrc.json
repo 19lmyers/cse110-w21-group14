@@ -21,6 +21,10 @@
             "ignoreComments": true,
             "ignoreUrls": true
         }],
+        "no-trailing-spaces": {
+            "skipBlankLines": true,
+            "ignoreComments": true
+        },
         "padded-blocks": "off",
         "prefer-const": "off",
         "quotes": ["error", "single", {
@@ -35,7 +39,9 @@
                 "ArrowFunctionExpression": false,
                 "FunctionExpression": true
             }
+        }],
+        "spaced-comment": ["error", "always", {
+            "exceptions": ["-", "+", "*"]
         }]
-        
     }
 }
