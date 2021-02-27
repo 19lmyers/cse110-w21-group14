@@ -7,7 +7,7 @@ const SEC_03 = 3; // For testing purposes only
 const SEC_05 = 5; // For testing purposes only
 const DEFAULT_POMODORO_LIMIT = 5;
 const TIMER_TEXT_SELECTOR = '#timer-text';
-const TIMER_BUTTON_SELECTOR = '#timer-button';
+const TIMER_BUTTON_SELECTOR = 'timer-button';
 const TIMER_APP_SELECTOR = '#timer-app';
 const TIMER_INFO_SESSIONS_SELECTOR = '#timer-info-sessions';
 const TIMER_INFO_WORK_PROGRESS_SELECTOR = '#timer-info-work-progress';
@@ -43,13 +43,13 @@ class TimerApp {
 
     // Initialize components
     this.timerText = new TimerText(TIMER_TEXT_SELECTOR, this.pomodoroTimes.pomodoro);
-    this.timerButton = new TimerButton(TIMER_BUTTON_SELECTOR);
+    this.timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
     this.timerInfo = new TimerInfo(TIMER_INFO_SESSIONS_SELECTOR, TIMER_INFO_WORK_PROGRESS_SELECTOR,
       TIMER_INFO_BREAK_PROGRESS_SELECTOR, TIMER_INFO_SESSIONS_REMAINING_SELECTOR);
     this.timerSettings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
 
     // Event listener for toggling the timer via button
-    this.timerButton.element.addEventListener('buttonPressed', () => {
+    this.timerButton.addEventListener('buttonPressed', () => {
       if (this.currentStatus === STATUS_RUNNING) {
         let skip = this.currentPhase !== PHASE_POMODORO;
         this.confirmEnd(skip);
@@ -94,7 +94,7 @@ class TimerApp {
 
       // Set natural timeout duration
       this.timeoutId = setTimeout(this.handleEnd.bind(this), this.timerText.time * 1000, false);
-      this.timerButton.buttonText = "END";
+      this.timerButton.setAttribute('data-text', 'END');
     }
   } /* handleStart */
 
@@ -107,7 +107,7 @@ class TimerApp {
       this.timerText.end();
       this.timerInfo.progressInfo.stopProgress();
       this.currentStatus = 'stopped';
-      this.timerButton.buttonText = "START";
+      this.timerButton.setAttribute('data-text', 'START');
 
       // Clear natural duration and reset ID
       clearTimeout(this.timeoutId);
@@ -319,26 +319,6 @@ class TimerText {
     let secString = sec < 10 ? '0' + sec : '' + sec;
     return this.time < 0 ? `-${minString}:${secString}` : `${minString}:${secString}`;
   } /* timeString */
-
-}
-
-class TimerButton {
-  /**
-   * Constructs a TimerButton object, which propogates presses and can be set.
-   * @param {} selector 
-   */
-  constructor(selector) {
-    this.element = document.querySelector(selector);
-
-    this.element.addEventListener('click', () => {
-      let buttonPressedEvent = new Event('buttonPressed');
-      this.element.dispatchEvent(buttonPressedEvent);
-    });
-  }
-
-  set buttonText(text) {
-    this.element.textContent = text;
-  }
 
 }
 
