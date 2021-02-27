@@ -25,7 +25,7 @@ class TimerButton extends HTMLElement {
   toggleTimer() {
     // TODO: Trigger custom event that propogates into light DOM,
     //       Fetch state of timer either from app or as internal state
-    const state = 
+    //const state = 
   }
 
 }
