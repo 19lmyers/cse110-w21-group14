@@ -14,6 +14,7 @@ const TIMER_INFO_PROGRESS_SELECTOR = '#timer-info-progress';
 const TIMER_SETTINGS_SELECTOR = '#timer-settings';
 const TIMER_SPLASH_SELECTOR = '#timer-splash';
 const TIMER_SPLASH_BUTTON_SELECTOR = '#timer-splash-button';
+const TIMER_COMPLETE_SOUND = document.getElementById('pomo-complete-sound');
 
 /* -------------------------------------------------------------------------- */
 
@@ -91,6 +92,7 @@ class TimerApp {
       this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
     } else {
       // Keep cycling through phases until break is finished
+      TIMER_COMPLETE_SOUND.play();
       this.timerText.setTime(this.pomodoroTimes[this.cyclePhase()]);
 
       if (this.currentPhase !== 'pomodoro') {
