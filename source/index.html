@@ -55,7 +55,7 @@
 	</main>
 
 	<footer id='del'>
-	<!-- Timer Reset and Timer Settings Buttons -->
+		<!-- Timer Reset and Timer Settings Buttons -->
 		<button id="timer-reset-button"><img src="assets/reset-icon.svg" alt="Reset Button"></button>
 		<button id="timer-settings-button"><img src="assets/settings-icon.svg" alt="Settings Button"></button>
 		<div id="timer-settings" class="dialog">
@@ -92,21 +92,61 @@
 					<button id="timer-settings-close" type="button">Close</button>
 					<button id="timer-settings-save" type="submit">Save</button>
 
-				<hr>
-				<h2>What is the Pomodoro Method?</h2>
-				<p>Pomodoro content</p>
+					<hr>
+					<h2>What is the Pomodoro Method?</h2>
+					<p>Pomodoro content</p>
 			</div>
 		</div>
+
+		<template id="confirm-dialog-template">
+			<style>
+				.dialog {
+					position: fixed;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					width: 100vw;
+					height: 100vh;
+					top: 0;
+					left: 0;
+					background-color: rgba(0, 0, 0, 0.2);
+				}
+
+				.dialog-content {
+					padding: 1rem;
+					border: 2px solid black;
+					background-color: #FFFCF4;
+				}
+			</style>
+			<div class="dialog">
+				<div class="dialog-content">
+					<h2>
+						<slot name="header">Dialog header</slot>
+					</h2>
+					<p>
+						<slot name="text">Dialog text</slot>
+					</p>
+					<menu>
+						<button class="cancel-button">Cancel</button>
+						<button class="confirm-button">
+							<slot name="confirm-button-text">Confirm</slot>
+						</button>
+					</menu>
+				</div>
+			</div>
+		</template>
+
 	</footer>
 
 
 	<button id='task-button' onclick="del()"> Task List</button>
 	<main id='task-list'>
-			<h1>Task List</h1>
-			<input id="input-value" type="text" placeholder="Tasks To Complete...">
-			<button id='add-button'>+</button>
-			<div class='item-list'>
-				<!-- <li>
+		<h1>Task List</h1>
+		<input id="input-value" type="text" placeholder="Tasks To Complete...">
+		<button id='add-button'>+</button>
+		<div class='item-list'>
+			<!-- <li>
 					<input id='input' type="text" disabled>
 					<button id="edit">Edit</button>
 					<button id="remove">Remove</button>
@@ -116,7 +156,7 @@
 					<button id="edit">Edit</button>
 					<button id="delete">Delete</button>
 				</li> -->
-			</div>
+		</div>
 	</main>
 
 
@@ -124,6 +164,7 @@
 	<!-- Javascript scripts -->
 	<script src="scripts/main.js"></script>
 	<script src="components/timer-settings.js"></script>
+	<script src="components/confirm-dialog.js"></script>
 	<!-- Testing timer end -->
 
 </body>

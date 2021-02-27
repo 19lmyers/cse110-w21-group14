@@ -13,20 +13,21 @@ const TIMER_INFO_SESSIONS_SELECTOR = '#timer-info-sessions';
 const TIMER_INFO_WORK_PROGRESS_SELECTOR = '#timer-info-work-progress';
 const TIMER_INFO_BREAK_PROGRESS_SELECTOR = '#timer-info-break-progress';
 const TIMER_INFO_SESSIONS_REMAINING_SELECTOR = "#timer-info-sesions-remaining"
+const TIMER_RESET_BUTTON_SELECTOR = '#timer-reset-button';
 const TIMER_SETTINGS_SELECTOR = '#timer-settings';
 const TIMER_SPLASH_SELECTOR = '#timer-splash';
 const TIMER_SPLASH_BUTTON_SELECTOR = '#timer-splash-button';
 const PHASE_POMODORO = "pomodoro";
 const PHASE_SHORT_BREAK = "shortBreak";
-const PHASE_LONG_BREAK = "longBreak"
+const PHASE_LONG_BREAK = "longBreak";
+const STATUS_STOPPED = "stopped";
+const STATUS_RUNNING = "running";
 /* -------------------------------------------------------------------------- */
 
 /* TimerApp class */
 class TimerApp {
   /**
    * Contructs a TimerApp, which handles all the logic for the timer.
-   * @param {*} timerText is a TimerText object.
-   * @param {*} timerButton is a selector for the timer's primary start/stop button.
    */
   constructor() {
     this.numPomodoros = 0;
@@ -36,8 +37,8 @@ class TimerApp {
       [PHASE_SHORT_BREAK]: SEC_03,
       [PHASE_LONG_BREAK]: SEC_05,
     };
-    this.currentStatus = 'stopped';
-    this.currentPhase = 'pomodoro';
+    this.currentStatus = STATUS_STOPPED;
+    this.currentPhase = PHASE_POMODORO;
     this.timeoutId = null;
 
     // Initialize components
@@ -47,16 +48,22 @@ class TimerApp {
       TIMER_INFO_BREAK_PROGRESS_SELECTOR, TIMER_INFO_SESSIONS_REMAINING_SELECTOR);
     this.timerSettings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
 
+    // Event listener for toggling the timer via button
     this.timerButton.element.addEventListener('buttonPressed', () => {
-      if (this.currentStatus === 'stopped' || (this.currentStatus === 'running' && confirm('Are you sure you want to end this Pomodoro?'))) {
-        this.toggleTimer();
+      if (this.currentStatus === STATUS_RUNNING) {
+        let skip = this.currentPhase !== PHASE_POMODORO;
+        this.confirmEnd(skip);
+      } else {
+        this.handleStart();
       }
     });
-    document.querySelector('#timer-reset-button').addEventListener('click', () => {
-      if (confirm('Are you sure you want to reset your Pomodoro count?')) {
-        this.resetPomodoros();
-      }
+
+    // Event listener for resetting Pomodoros via button
+    document.querySelector(TIMER_RESET_BUTTON_SELECTOR).addEventListener('click', () => {
+      this.confirmReset();
     });
+
+    // Event listener for changing settings via dialog
     this.timerSettings.element.addEventListener('settingsChanged', (event) => {
       this.pomodoroLimit = event.detail.pomodoroLimit;
       this.pomodoroTimes = event.detail.pomodoroTimes;
@@ -65,32 +72,15 @@ class TimerApp {
   } /* constructor */
 
   /**
-   * Toggles the state of the timer.
-   */
-  toggleTimer() {
-    switch (this.currentStatus) {
-      case 'stopped':
-        this.handleStart();
-
-        //TODO: Add this functionality to handleStart()
-        /* Clear progress bar if starting from stopped state */
-        this.timerInfo.progressInfo.clearProgress();
-        break;
-      case 'running':
-        this.handleEnd(true);
-        break;
-    }
-  } /* toggleTimer */
-
-  /**
    * Handles the start of the timer.
    */
   handleStart() {
-    if (this.currentStatus === 'stopped') {
+    if (this.currentStatus === STATUS_STOPPED) {
       this.timerText.start();
-      this.currentStatus = 'running';
+      this.currentStatus = STATUS_RUNNING;
 
       //Progress bar: update progress
+      this.timerInfo.progressInfo.clearProgress();
       this.timerInfo.progressInfo.startProgress(this.currentPhase,
         this.pomodoroTimes[this.currentPhase]);
 
@@ -101,40 +91,50 @@ class TimerApp {
   } /* handleStart */
 
   /**
-   * Handles the end of the timer.
+   * Handles the end of a Pomodoro session.
+   * @param {boolean} early indicates whether the Pomodoro was ended early.
    */
   handleEnd(early) {
-    this.timerText.end();
-    this.timerInfo.progressInfo.stopProgress();
-    this.currentStatus = 'stopped';
-    this.timerButton.buttonText = "START";
+    if (this.currentStatus === STATUS_RUNNING) {
+      this.timerText.end();
+      this.timerInfo.progressInfo.stopProgress();
+      this.currentStatus = 'stopped';
+      this.timerButton.buttonText = "START";
 
-    // Clear natural duration and reset ID
-    clearTimeout(this.timeoutId);
-    this.timeoutId = null;
+      // Clear natural duration and reset ID
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
 
-    if (early) {
-      if (this.currentPhase !== 'pomodoro') {
-        this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
-      }
-      this.currentPhase = 'pomodoro';
-      this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
-      this.timerInfo.progressInfo.clearProgress(early);
-    } else {
-      // Keep cycling through phases until break is finished
-      this.timerText.setTime(this.pomodoroTimes[this.cyclePhase()]);
+      // Set document title back to Pomodoro
+      document.title = 'Pomodoro';
 
-      if (this.currentPhase !== 'pomodoro') {
-        this.handleStart();
+      if (early) {
+        if (this.currentPhase !== 'pomodoro') {
+          this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
+        }
+        this.currentPhase = 'pomodoro';
+        this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
+        this.timerInfo.progressInfo.clearProgress(early);
       } else {
-        // Increment number of pomodoros completed after one cycle (pomo + break)
-        this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
+        // Keep cycling through phases until break is finished
+        this.timerText.setTime(this.pomodoroTimes[this.cyclePhase()]);
+
+        if (this.currentPhase !== 'pomodoro') {
+          this.handleStart();
+        } else {
+          // Increment number of pomodoros completed after one cycle (pomo + break)
+          this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
+        }
       }
     }
   } /* handleEnd */
 
+  /**
+   * Cycles the pomodoro to the next phase, taking into account
+   * long and short break cycles. 
+   * @returns the next phase of the cycle.
+   */
   cyclePhase() {
-    //set the amount of pomodoros on the screen
     switch (this.currentPhase) {
       case PHASE_POMODORO:
         // Fourth pomodoro: long break
@@ -150,12 +150,91 @@ class TimerApp {
         break;
     }
     return this.currentPhase;
-  }
+  } /* cyclePhase */
 
+  /**
+   * Resets the number of pomodoros completed.
+   */
   resetPomodoros() {
     this.numPomodoros = 0;
     this.timerInfo.sessionsInfo.sessionsText = 0;
-  }
+  } /* resetPomodoros */
+
+  /**
+   * Handles the logic of confirming ending the session early, including showing
+   * the dialog and handling an early end or skip if confirmed.
+   * @param {boolean} skip indicates whether the confirm dialog should show 
+   * end text (abrupt end during Pomodoro) or skip text (during a break).
+   */
+  confirmEnd(skip) {
+    // Constants for dialog text
+    const END_TEXT = "Are you sure you want to end this pomodoro session? Your current \
+    Pomodoro will not be saved.";
+    const SKIP_TEXT = "Are you sure you want to end this break? You will still complete \
+    your pomodoro session, but skipping breaks is not advised.";
+
+    let confirmDialog = document.createElement('confirm-dialog');
+
+    // Fill slot header
+    let dialogHeader = document.createElement('span');
+    dialogHeader.setAttribute('slot', 'header');
+    dialogHeader.textContent = 'End Pomodoro Session';
+    confirmDialog.appendChild(dialogHeader);
+
+    // Fill slot text
+    let dialogText = document.createElement('span');
+    dialogText.setAttribute('slot', 'text');
+    dialogText.textContent = skip ? SKIP_TEXT : END_TEXT;
+    confirmDialog.appendChild(dialogText);
+
+    // Fill slot confirm-button-text
+    let dialogConfirm = document.createElement('span');
+    dialogConfirm.setAttribute('slot', 'confirm-button-text');
+    dialogConfirm.textContent = 'End';
+    confirmDialog.appendChild(dialogConfirm);
+
+    // Set confirm action
+    confirmDialog.addEventListener('confirmPressed', () => {
+      this.handleEnd(true);
+    });
+
+    document.body.appendChild(confirmDialog);
+  } /* confirmEnd */
+
+  /**
+   * Handles the logic of confirming the reset of all completed Pomodoros.
+   */
+  confirmReset() {
+    const RESET_TEXT = "Are you sure you want to reset your Pomodoro count? \
+    You won't be able to get them back.";
+
+    let confirmDialog = document.createElement('confirm-dialog');
+
+    // Fill slot header
+    let dialogHeader = document.createElement('span');
+    dialogHeader.setAttribute('slot', 'header');
+    dialogHeader.textContent = 'Reset Pomodoros';
+    confirmDialog.appendChild(dialogHeader);
+
+    // Fill slot text
+    let dialogText = document.createElement('span');
+    dialogText.setAttribute('slot', 'text');
+    dialogText.textContent = RESET_TEXT;
+    confirmDialog.appendChild(dialogText);
+
+    // Fill slot confirm-button-text
+    let dialogConfirm = document.createElement('span');
+    dialogConfirm.setAttribute('slot', 'confirm-button-text');
+    dialogConfirm.textContent = 'Reset';
+    confirmDialog.appendChild(dialogConfirm);
+
+    // Set confirm action
+    confirmDialog.addEventListener('confirmPressed', () => {
+      this.resetPomodoros();
+    });
+
+    document.body.appendChild(confirmDialog);
+  } /* confirmReset */
 }
 
 /* TimerText class */
@@ -184,6 +263,9 @@ class TimerText {
   start() {
     if (this.intervalId === null) {
       this.intervalId = setInterval(this.update.bind(this), 1000);
+
+      // Set document title to current time
+      document.title = `Pomodoro - ${this.timeString}`;
     }
   } /* start */
 
@@ -193,6 +275,9 @@ class TimerText {
   update() {
     this.time--;
     this.element.textContent = this.timeString;
+
+    // Set document title to current time
+    document.title = `Pomodoro - ${this.timeString}`;
   } /* update */
 
 
@@ -224,7 +309,6 @@ class TimerText {
     let sec = currentTime % 60;
     let minString = min < 10 ? '0' + min : '' + min;
     let secString = sec < 10 ? '0' + sec : '' + sec;
-    document.title = this.time < 0 ? `-${minString}:${secString}` : `${minString}:${secString}`; //Title now counts down as well..
     return this.time < 0 ? `-${minString}:${secString}` : `${minString}:${secString}`;
   } /* timeString */
 
@@ -433,16 +517,16 @@ window.addEventListener('DOMContentLoaded', function () {
 function del() {
   event.preventDefault();
   let hide = document.querySelectorAll('#del');
-  for(let i = 0; i < hide.length;i++ ){
-    if(hide[i].style.visibility === 'hidden'){
-      document.getElementById('task-button').innerHTML="Task List"
+  for (let i = 0; i < hide.length; i++) {
+    if (hide[i].style.visibility === 'hidden') {
+      document.getElementById('task-button').innerHTML = "Task List"
       hide[i].style.visibility = 'visible';
-      document.getElementById('task-list').style.visibility='hidden';
+      document.getElementById('task-list').style.visibility = 'hidden';
     }
     else {
-      document.getElementById('task-button').innerHTML="Back to Pomodoro";
-      hide[i].style.visibility='hidden';
-      document.getElementById('task-list').style.visibility='visible';
+      document.getElementById('task-button').innerHTML = "Back to Pomodoro";
+      hide[i].style.visibility = 'hidden';
+      document.getElementById('task-list').style.visibility = 'visible';
     }
   }
 }
@@ -450,7 +534,7 @@ function del() {
 /**
  * Local storage
  */
-if(window.localStorage.getItem("list") == null){
+if (window.localStorage.getItem("list") == null) {
   var list = [];
   window.localStorage.setItem("list", JSON.stringify(list));
 }
@@ -463,25 +547,25 @@ let contain = document.querySelector('.item-list');
  * And shows them on screen as a list
  */
 class Task {
-  constructor (name) {
+  constructor(name) {
     this.createTask(name);
   }
 
   createTask(name) {
     let myList = document.createElement('li');
-    
+
     let input = document.createElement('input');
-    input.value= name;
-    input.type= "text";
-    input.disabled= true;
+    input.value = name;
+    input.type = "text";
+    input.disabled = true;
 
     let editButton = document.createElement('button');
-    editButton.id='edit';
-    editButton.innerHTML="Edit";
-    
+    editButton.id = 'edit';
+    editButton.innerHTML = "Edit";
+
     let deleteButton = document.createElement('button');
-    deleteButton.id="delete";
-    deleteButton.innerHTML="Delete";
+    deleteButton.id = "delete";
+    deleteButton.innerHTML = "Delete";
 
     contain.appendChild(myList);
     myList.appendChild(input);
@@ -489,10 +573,10 @@ class Task {
     myList.appendChild(deleteButton);
 
     editButton.addEventListener('click', () => {
-      if(input.disabled == true){
+      if (input.disabled == true) {
         input.disabled = !input.disabled;
       }
-      else{
+      else {
         input.disabled = true;
       }
     })
@@ -500,8 +584,8 @@ class Task {
     deleteButton.addEventListener('click', () => {
       contain.removeChild(myList);
       let index = taskList.indexOf(name);
-      taskList.splice(index,1);
-      window.localStorage.setItem("list",JSON.stringify(taskList));
+      taskList.splice(index, 1);
+      window.localStorage.setItem("list", JSON.stringify(taskList));
     })
 
   }
@@ -515,7 +599,7 @@ addButton.addEventListener('click', insert);
 function insert() {
   event.preventDefault();
   let insert = document.getElementById('input-value');
-  if(insert.value != "") {
+  if (insert.value != "") {
     new Task(insert.value);
     taskList.push(insert.value);
     window.localStorage.setItem("list", JSON.stringify(taskList));
@@ -526,7 +610,7 @@ function insert() {
 /**
  * Local Storage elements
  */
-for(let i = 0; i < taskList.length; i++){
+for (let i = 0; i < taskList.length; i++) {
   new Task(taskList[i]);
 }
 
