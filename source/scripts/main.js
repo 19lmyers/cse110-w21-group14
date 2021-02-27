@@ -69,6 +69,14 @@ class TimerApp {
       this.pomodoroTimes = event.detail.pomodoroTimes;
       this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
     });
+
+    // Event listener for page warning
+    window.addEventListener('beforeunload', event => {
+      if (this.currentStatus === STATUS_RUNNING) {
+        event.preventDefault();
+        event.returnValue = '';
+      }
+    });
   } /* constructor */
 
   /**
@@ -390,7 +398,7 @@ class TimerInfoProgress {
     if (this.currentPhase == PHASE_POMODORO) {
       this.currentProgressBarElement = this.workProgressElement;
     }
-    else if (this.currentPhase == PHASE_SHORT_BREAK || this.curerntPhase == PHASE_LONG_BREAK) {
+    else if (this.currentPhase == PHASE_SHORT_BREAK || this.currentPhase == PHASE_LONG_BREAK) {
       this.currentProgressBarElement = this.breakProgressElement;
     }
     else {
