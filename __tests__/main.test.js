@@ -377,29 +377,29 @@ describe('timer buttons', () => {
     expect(timerApp).toHaveProperty('numPomodoros', 3);
   });
 
-  test('reset button resets timer after confirmed', () => {
-    const timerApp = new TimerApp();
-    const resetButton = document.querySelector('#timer-reset-button');
-    window.confirm = jest.fn(() => true)
+  // test('reset button resets timer after confirmed', () => {
+  //   const timerApp = new TimerApp();
+  //   const resetButton = document.querySelector('#timer-reset-button');
+  //   window.confirm = jest.fn(() => true)
     
-    timerApp.handleStart();
-    jest.advanceTimersByTime(SEC_01 * 1000);
-    resetButton.click();
+  //   timerApp.handleStart();
+  //   jest.advanceTimersByTime(SEC_01 * 1000);
+  //   resetButton.click();
 
-    expect(timerApp.timerText).toHaveProperty('time', SEC_05);
-  });
+  //   expect(timerApp.timerText).toHaveProperty('time', SEC_05);
+  // });
 
-  test('reset button does not reset timer after cancelled', () => {
-    const timerApp = new TimerApp();
-    const resetButton = document.querySelector('#timer-reset-button');
-    window.confirm = jest.fn(() => false)
+  // test('reset button does not reset timer after cancelled', () => {
+  //   const timerApp = new TimerApp();
+  //   const resetButton = document.querySelector('#timer-reset-button');
+  //   window.confirm = jest.fn(() => false)
     
-    timerApp.handleStart();
-    jest.advanceTimersByTime(SEC_01 * 1000);
-    resetButton.click();
+  //   timerApp.handleStart();
+  //   jest.advanceTimersByTime(SEC_01 * 1000);
+  //   resetButton.click();
 
-    expect(timerApp.timerText).toHaveProperty('time', 4);
-  });
+  //   expect(timerApp.timerText).toHaveProperty('time', 4);
+  // });
 });
 
 describe('progress bar', () => {
@@ -651,7 +651,7 @@ test('initializes timer page', () => {
 test('updates timer page', () => {
   const timerApp = new TimerApp();
 
-  timerApp.toggleTimer();
+  timerApp.handleStart();
   jest.advanceTimersByTime(SEC_01 * 1000);
 
   expect(timerApp.timerButton.element).toHaveProperty('textContent', 'END');
