@@ -23,8 +23,8 @@
 
 /* TIMER CLASS */
 
+/*
 class Timer extends HTMLElement {
-  /*
   constructor() {
     super();
 
@@ -32,8 +32,8 @@ class Timer extends HTMLElement {
 
 
   }
-  */
 }
+*/
 
 /**
  * Constructor for Timer object.
