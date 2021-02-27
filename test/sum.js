@@ -1,9 +1,9 @@
 /**
  * @param {number} a
  * @param {number} b
- * @returns {number}
+ * @return {number}
  */
 function sum(a, b) {
-  return a + b;
+    return a + b;
 }
 module.exports = sum;
