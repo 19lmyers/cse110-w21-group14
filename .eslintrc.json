@@ -41,7 +41,7 @@
             }
         }],
         "spaced-comment": ["error", "always", {
-            "exceptions": ["-", "+", "*"]
+            "exceptions": ["-", "+", "*", "/"]
         }]
     }
 }
