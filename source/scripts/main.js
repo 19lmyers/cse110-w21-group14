@@ -12,7 +12,7 @@ const TIMER_APP_SELECTOR = '#timer-app';
 const TIMER_INFO_SESSIONS_SELECTOR = '#timer-info-sessions';
 const TIMER_INFO_WORK_PROGRESS_SELECTOR = '#timer-info-work-progress';
 const TIMER_INFO_BREAK_PROGRESS_SELECTOR = '#timer-info-break-progress';
-const TIMER_INFO_SESSIONS_REMAINING_SELECTOR = "#timer-info-sesions-remaining"
+const TIMER_INFO_SESSIONS_REMAINING_SELECTOR = '#timer-info-sesions-remaining';
 const TIMER_RESET_BUTTON_SELECTOR = '#timer-reset-button';
 const TIMER_SETTINGS_SELECTOR = '#timer-settings';
 const POMO_NUMBER_SELECTOR = '#pomo-number';
@@ -25,11 +25,11 @@ const LONG_BREAK_NUMBER_SELECTOR = '#long-break-number';
 const LONG_BREAK_SLIDER_SELECTOR = '#long-break-slider';
 const TIMER_SPLASH_SELECTOR = '#timer-splash';
 const TIMER_SPLASH_BUTTON_SELECTOR = '#timer-splash-button';
-const PHASE_POMODORO = "pomodoro";
-const PHASE_SHORT_BREAK = "shortBreak";
-const PHASE_LONG_BREAK = "longBreak";
-const STATUS_STOPPED = "stopped";
-const STATUS_RUNNING = "running";
+const PHASE_POMODORO = 'pomodoro';
+const PHASE_SHORT_BREAK = 'shortBreak';
+const PHASE_LONG_BREAK = 'longBreak';
+const STATUS_STOPPED = 'stopped';
+const STATUS_RUNNING = 'running';
 /* -------------------------------------------------------------------------- */
 
 /* TimerApp class */
@@ -52,8 +52,8 @@ class TimerApp {
     // Initialize components
     this.timerText = new TimerText(TIMER_TEXT_SELECTOR, this.pomodoroTimes.pomodoro);
     this.timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
-    this.timerInfo = new TimerInfo(TIMER_INFO_SESSIONS_SELECTOR, 
-      TIMER_INFO_WORK_PROGRESS_SELECTOR, TIMER_INFO_BREAK_PROGRESS_SELECTOR, 
+    this.timerInfo = new TimerInfo(TIMER_INFO_SESSIONS_SELECTOR,
+      TIMER_INFO_WORK_PROGRESS_SELECTOR, TIMER_INFO_BREAK_PROGRESS_SELECTOR,
       TIMER_INFO_SESSIONS_REMAINING_SELECTOR);
     this.timerSettings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
 
@@ -61,8 +61,8 @@ class TimerApp {
     this.timerButton.addEventListener('buttonPressed', () => {
       if (this.currentStatus === STATUS_RUNNING) {
         let skip = this.currentPhase !== PHASE_POMODORO;
-          this.confirmEnd(skip);
-      } 
+        this.confirmEnd(skip);
+      }
       else {
         this.handleStart();
       }
@@ -81,7 +81,7 @@ class TimerApp {
     });
 
     // Event listener for page warning
-    window.addEventListener('beforeunload', event => {
+    window.addEventListener('beforeunload', (event) => {
       if (this.currentStatus === STATUS_RUNNING) {
         event.preventDefault();
         event.returnValue = '';
@@ -97,7 +97,7 @@ class TimerApp {
       this.timerText.start();
       this.currentStatus = STATUS_RUNNING;
 
-      //Progress bar: update progress
+      // Progress bar: update progress
       this.timerInfo.progressInfo.clearProgress();
       this.timerInfo.progressInfo.startProgress(this.currentPhase,
         this.pomodoroTimes[this.currentPhase]);
@@ -133,14 +133,14 @@ class TimerApp {
         this.currentPhase = 'pomodoro';
         this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
         this.timerInfo.progressInfo.clearProgress(early);
-      } 
+      }
       else {
         // Keep cycling through phases until break is finished
         this.timerText.setTime(this.pomodoroTimes[this.cyclePhase()]);
 
         if (this.currentPhase !== 'pomodoro') {
           this.handleStart();
-        } 
+        }
         else {
           // Increment number of pomodoros completed after one cycle (pomo + break)
           this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
@@ -152,7 +152,7 @@ class TimerApp {
   /**
    * Cycles the pomodoro to the next phase, taking into account
    * long and short break cycles. 
-   * @returns the next phase of the cycle.
+   * @return {string} the next phase of the cycle.
    */
   cyclePhase() {
     switch (this.currentPhase) {
@@ -189,10 +189,10 @@ class TimerApp {
    */
   confirmEnd(skip) {
     // Constants for dialog text
-    const END_TEXT = "Are you sure you want to end this pomodoro session? Your current \
-    Pomodoro will not be saved.";
-    const SKIP_TEXT = "Are you sure you want to end this break? You will still complete \
-    your pomodoro session, but skipping breaks is not advised.";
+    const END_TEXT = `Are you sure you want to end this pomodoro session? Your current 
+      Pomodoro will not be saved.`;
+    const SKIP_TEXT = `Are you sure you want to end this break? You will still complete 
+      your pomodoro session, but skipping breaks is not advised`;
 
     let confirmDialog = document.createElement('confirm-dialog');
 
@@ -226,8 +226,8 @@ class TimerApp {
    * Handles the logic of confirming the reset of all completed Pomodoros.
    */
   confirmReset() {
-    const RESET_TEXT = "Are you sure you want to reset your Pomodoro count? \
-    You won't be able to get them back.";
+    const RESET_TEXT = `Are you sure you want to reset your Pomodoro count? \
+    You won't be able to get them back.`;
 
     let confirmDialog = document.createElement('confirm-dialog');
 
@@ -313,6 +313,7 @@ class TimerText {
   /**
    * Sets the timer to the desired value (in seconds).
    * Only works if the timer is stopped.
+   * @param newTime
    */
   setTime(newTime) {
     if (this.intervalId === null) {
@@ -386,7 +387,7 @@ class TimerInfoProgress {
     this.time = phaseTotalTime;
     this.totalTime = phaseTotalTime;
 
-    //Selects currentProgressBarElemetn based on currentPhase
+    // Selects currentProgressBarElemetn based on currentPhase
     if (this.currentPhase == PHASE_POMODORO) {
       this.currentProgressBarElement = this.workProgressElement;
     }
@@ -394,7 +395,7 @@ class TimerInfoProgress {
       this.currentProgressBarElement = this.breakProgressElement;
     }
     else {
-      console.log("Error occured during TimerInfoProgress.updateProgress()")
+      console.log('Error occured during TimerInfoProgress.updateProgress()');
     }
 
     this.intervalId = setInterval(this.updateProgress.bind(this), 1000);
@@ -452,8 +453,8 @@ class TimerSettings {
       .addEventListener('click', this.closeSettings.bind(this));
     document.querySelector('#timer-settings-save')
       .addEventListener('click', (event) => {
-      event.preventDefault();
-      this.updateSettings();
+        event.preventDefault();
+        this.updateSettings();
     });
 
     this.pomoNumber = document.querySelector(POMO_NUMBER_SELECTOR);
@@ -468,24 +469,24 @@ class TimerSettings {
     this.longBreakNumber = document.querySelector(LONG_BREAK_NUMBER_SELECTOR);
     this.longBreakSlider = document.querySelector(LONG_BREAK_SLIDER_SELECTOR);
 
-    this.pomoNumber.addEventListener('input', this.updateSlider.bind(this, 
+    this.pomoNumber.addEventListener('input', this.updateSlider.bind(this,
       POMO_NUMBER_SELECTOR, POMO_SLIDER_SELECTOR));
-    this.pomoSlider.addEventListener('input', this.updateSlider.bind(this, 
+    this.pomoSlider.addEventListener('input', this.updateSlider.bind(this,
       POMO_SLIDER_SELECTOR, POMO_NUMBER_SELECTOR));
 
-    this.pomoLengthNumber.addEventListener('input', this.updateSlider.bind(this, 
+    this.pomoLengthNumber.addEventListener('input', this.updateSlider.bind(this,
       POMO_LENGTH_NUMBER_SELECTOR, POMO_LENGTH_SLIDER_SELECTOR));
-    this.pomoLengthSlider.addEventListener('input', this.updateSlider.bind(this, 
+    this.pomoLengthSlider.addEventListener('input', this.updateSlider.bind(this,
       POMO_LENGTH_SLIDER_SELECTOR, POMO_LENGTH_NUMBER_SELECTOR));
 
-    this.shortBreakNumber.addEventListener('input', this.updateSlider.bind(this, 
+    this.shortBreakNumber.addEventListener('input', this.updateSlider.bind(this,
       SHORT_BREAK_NUMBER_SELECTOR, SHORT_BREAK_SLIDER_SELECTOR));
-    this.shortBreakSlider.addEventListener('input', this.updateSlider.bind(this, 
+    this.shortBreakSlider.addEventListener('input', this.updateSlider.bind(this,
       SHORT_BREAK_SLIDER_SELECTOR, SHORT_BREAK_NUMBER_SELECTOR));
 
-    this.longBreakNumber.addEventListener('input', this.updateSlider.bind(this, 
+    this.longBreakNumber.addEventListener('input', this.updateSlider.bind(this,
       LONG_BREAK_NUMBER_SELECTOR, LONG_BREAK_SLIDER_SELECTOR));
-    this.longBreakSlider.addEventListener('input', this.updateSlider.bind(this, 
+    this.longBreakSlider.addEventListener('input', this.updateSlider.bind(this,
       LONG_BREAK_SLIDER_SELECTOR, LONG_BREAK_NUMBER_SELECTOR));
   }
 
@@ -541,7 +542,6 @@ class TimerSplash {
 
 /* -------------------------------------------------------------------------- */
 
-
 /**
  * To be executed when the page loads.
  * Currently initializes the timer and button.
@@ -551,11 +551,8 @@ window.addEventListener('DOMContentLoaded', function() {
   let timerApp = new TimerApp();
 });
 
-
-
 /* Task List */
 /* -------------------------------------------------------------------------- */
-
 
 /**
  * Task list button pressed it goes to task list screen
@@ -566,12 +563,12 @@ function del() {
   let hide = document.querySelectorAll('#del');
   for (let i = 0; i < hide.length; i++) {
     if (hide[i].style.visibility === 'hidden') {
-      document.getElementById('task-button').innerHTML = "Task List"
+      document.getElementById('task-button').innerHTML = 'Task List';
       hide[i].style.visibility = 'visible';
       document.getElementById('task-list').style.visibility = 'hidden';
     }
     else {
-      document.getElementById('task-button').innerHTML = "Back to Pomodoro";
+      document.getElementById('task-button').innerHTML = 'Back to Pomodoro';
       hide[i].style.visibility = 'hidden';
       document.getElementById('task-list').style.visibility = 'visible';
     }
@@ -581,12 +578,12 @@ function del() {
 /**
  * Local storage
  */
-if (window.localStorage.getItem("list") == null) {
-  var list = [];
-  window.localStorage.setItem("list", JSON.stringify(list));
+if (window.localStorage.getItem('list') == null) {
+  let list = [];
+  window.localStorage.setItem('list', JSON.stringify(list));
 }
 
-var taskList = JSON.parse(localStorage.getItem("list"));
+let taskList = JSON.parse(localStorage.getItem('list'));
 
 let contain = document.querySelector('.item-list');
 /**
@@ -603,16 +600,16 @@ class Task {
 
     let input = document.createElement('input');
     input.value = name;
-    input.type = "text";
+    input.type = 'text';
     input.disabled = true;
 
     let editButton = document.createElement('button');
     editButton.id = 'edit';
-    editButton.innerHTML = "Edit";
+    editButton.innerHTML = 'Edit';
 
     let deleteButton = document.createElement('button');
-    deleteButton.id = "delete";
-    deleteButton.innerHTML = "Delete";
+    deleteButton.id = 'delete';
+    deleteButton.innerHTML = 'Delete';
 
     contain.appendChild(myList);
     myList.appendChild(input);
@@ -626,19 +623,19 @@ class Task {
       else {
         input.disabled = true;
       }
-    })
+    });
 
     deleteButton.addEventListener('click', () => {
       contain.removeChild(myList);
       let index = taskList.indexOf(name);
       taskList.splice(index, 1);
-      window.localStorage.setItem("list", JSON.stringify(taskList));
-    })
+      window.localStorage.setItem('list', JSON.stringify(taskList));
+    });
 
   }
 }
 
-var addButton = document.getElementById('add-button');
+let addButton = document.getElementById('add-button');
 addButton.addEventListener('click', insert);
 /**
  * User creates a task and clicks + button then the task will show
@@ -646,10 +643,10 @@ addButton.addEventListener('click', insert);
 function insert() {
   event.preventDefault();
   let insert = document.getElementById('input-value');
-  if (insert.value != "") {
+  if (insert.value != '') {
     new Task(insert.value);
     taskList.push(insert.value);
-    window.localStorage.setItem("list", JSON.stringify(taskList));
+    window.localStorage.setItem('list', JSON.stringify(taskList));
   }
 }
 
