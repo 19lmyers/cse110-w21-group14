@@ -1,6 +1,6 @@
 describe('Timer Tests', () => {
     beforeEach(() => {
-        cy.visit('http://127.0.0.1:5500/');
+        cy.visit('https://19lmyers.github.io/cse110-w21-group14/');
     });
   
     it('First Test', () => {
