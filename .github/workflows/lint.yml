@@ -14,4 +14,4 @@ jobs:
     - name: Install dependencies
       run: yarn
     - name: Run ESLint
-      run: yarn run eslint . --ext .js,.jsx,.ts,.tsx
+      run: yarn run eslint ./source --ext .js,.jsx,.ts,.tsx

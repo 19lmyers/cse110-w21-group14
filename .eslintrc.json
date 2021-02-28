@@ -21,7 +21,7 @@
             "ignoreComments": true,
             "ignoreUrls": true
         }],
-        "no-trailing-spaces": ["error" {
+        "no-trailing-spaces": ["error", {
             "skipBlankLines": true,
             "ignoreComments": true
         }],
@@ -41,7 +41,7 @@
             }
         }],
         "spaced-comment": ["error", "always", {
-            "exceptions": ["-", "+", "*"]
+            "exceptions": ["-", "+", "*", "/"]
         }]
     }
 }
