@@ -1,4 +1,4 @@
-name: Unit Testing with Jest
+name: Integration Testing with Cypress
 on:  
   push:
     branches:
@@ -11,7 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: yarn
-    - name: Run jest unit tests
-      run: yarn test
+    - uses: cypress-io/github-action@v2
