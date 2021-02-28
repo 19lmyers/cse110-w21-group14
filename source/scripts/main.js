@@ -553,108 +553,127 @@ window.addEventListener('DOMContentLoaded', function() {
 
 /* Task List */
 /* -------------------------------------------------------------------------- */
+class TimerSplash {
+  constructor(splashSelector, splashButtonSelector) {
+    this.element = document.querySelector(splashSelector);
+    this.show();
+    document.querySelector(splashButtonSelector).addEventListener('click', this.close.bind(this));
+  }
 
-/**
- * Task list button pressed it goes to task list screen
- * Changes to back to Pomodoro button and takes you back to the timer
- */
-function del() {
-  event.preventDefault();
-  let hide = document.querySelectorAll('#del');
-  for (let i = 0; i < hide.length; i++) {
-    if (hide[i].style.visibility === 'hidden') {
-      document.getElementById('task-button').innerHTML = 'Task List';
-      hide[i].style.visibility = 'visible';
-      document.getElementById('task-list').style.visibility = 'hidden';
-    }
-    else {
-      document.getElementById('task-button').innerHTML = 'Back to Pomodoro';
-      hide[i].style.visibility = 'hidden';
-      document.getElementById('task-list').style.visibility = 'visible';
-    }
+  show() {
+    this.element.style.visibility = 'visible';
+  }
+
+  close() {
+    this.element.style.visibility = 'hidden';
   }
 }
 
+/* -------------------------------------------------------------------------- */
+
+
 /**
- * Local storage
+ * To be executed when the page loads.
+ * Currently initializes the timer and button.
  */
-if (window.localStorage.getItem('list') == null) {
-  let list = [];
-  window.localStorage.setItem('list', JSON.stringify(list));
+window.addEventListener('DOMContentLoaded', function () {
+  let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
+  let timerApp = new TimerApp();
+});
+
+
+
+/* Task List */
+/* -------------------------------------------------------------------------- */
+class TaskList {
+  /**
+   * TaskList(): constructs the task list
+   */
+  constructor() {
+    this.loadTaskList();
+
+  }
+
+  /**
+   * loadTaskList(): loads task list from local storage.
+   */
+  loadTaskList() {
+
+  }
+
+  /**
+   * toggleTaskList(): toggles visibility of task list
+   */
+  toggleTaskList() {
+
+  }
+
+  /**
+   * createTask(): creates a new task
+   */
+  createTask(taskName, pomoEstimate, pomoActual, isTaskDone) {
+
+  }
+
+  /**
+   * editTask(): edits an existing task
+   */
+  editTask() {
+    //Update tasks 
+    this.storeTask();
+  }
+  
+  /**
+   * storeTask(): handles task storage in local storage
+   */
+  storeTask() {
+
+  }
+
+  /**
+   * deleteTask(): deletes an existing task from local storage and task list.
+   */
+  deleteTask() {
+
+  }
+
 }
 
-let taskList = JSON.parse(localStorage.getItem('list'));
-
-let contain = document.querySelector('.item-list');
-/**
- * Fills out the tasks the user want to complete
- * And shows them on screen as a list
- */
 class Task {
-  constructor(name) {
-    this.createTask(name);
+  /**
+   * Task(taskName, pomoEstimate, pomoActual):
+   * @param {string} taskName: name of task being constructed.
+   * @param {integer} pomoEstimate: estimated pomos for task being constructed.
+   * @param {integer} pomoActual: pomos used for task being constructed.
+   * @param {boolean} isTaskDone: true if task done, false if not.
+   */
+  constructor(taskName, pomoEstimate, pomoActual, isTaskDone) {
+    this.taskName = taskName;
+    this.pomoEstimate = pomoEstimate;
+
+    this.pomoActual = 0;
   }
 
-  createTask(name) {
-    let myList = document.createElement('li');
+  /**
+   * setTaskName(): sets the name of the task
+   * @param {string} taskName: name of the task
+   */
+  setTaskName(taskName) {
+    this.taskName = taskName;
+  }
 
-    let input = document.createElement('input');
-    input.value = name;
-    input.type = 'text';
-    input.disabled = true;
-
-    let editButton = document.createElement('button');
-    editButton.id = 'edit';
-    editButton.innerHTML = 'Edit';
-
-    let deleteButton = document.createElement('button');
-    deleteButton.id = 'delete';
-    deleteButton.innerHTML = 'Delete';
-
-    contain.appendChild(myList);
-    myList.appendChild(input);
-    myList.appendChild(editButton);
-    myList.appendChild(deleteButton);
-
-    editButton.addEventListener('click', () => {
-      if (input.disabled == true) {
-        input.disabled = !input.disabled;
-      }
-      else {
-        input.disabled = true;
-      }
-    });
-
-    deleteButton.addEventListener('click', () => {
-      contain.removeChild(myList);
-      let index = taskList.indexOf(name);
-      taskList.splice(index, 1);
-      window.localStorage.setItem('list', JSON.stringify(taskList));
-    });
-
+  /**
+   * setTaskPomoEstimate(): sets the estimated number of pomos for this task.
+   * @param {integer} pomoEstimate: number of estimated pomos for this task
+   */
+  setPomoEstimate(pomoEstimate) {
+    this.pomoEstimate = pomoEstimate;
+  }
+  /**
+   * setTaskPomoActual() 
+   * @param pomoActual: number of pomos actually being used for this task
+   */
+  setTaskPomoActual(pomoActual) {
+    this.pomoActual = pomoActual;
   }
 }
-
-let addButton = document.getElementById('add-button');
-addButton.addEventListener('click', insert);
-/**
- * User creates a task and clicks + button then the task will show
- */
-function insert() {
-  event.preventDefault();
-  let insert = document.getElementById('input-value');
-  if (insert.value != '') {
-    new Task(insert.value);
-    taskList.push(insert.value);
-    window.localStorage.setItem('list', JSON.stringify(taskList));
-  }
-}
-
-
-/**
- * Local Storage elements
- */
-for (let i = 0; i < taskList.length; i++) {
-  new Task(taskList[i]);
-}
-
