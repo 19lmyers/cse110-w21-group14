@@ -109,42 +109,66 @@ class TimerApp {
   } /* handleStart */
 
   /**
+   * Handles pausing the timer.
+   */
+  handlePause() {
+    this.timerText.end();
+    this.timerInfo.progressInfo.stopProgress();
+    this.currentStatus = STATUS_STOPPED;
+
+    // Clear natural duration and reset ID
+    clearTimeout(this.timeoutId);
+    this.timeoutId = null;
+  }
+
+  /**
+   * Handles continuing the timer.
+   */
+  handleContinue() {
+    if (this.currentStatus === STATUS_STOPPED) {
+      this.timerText.start();
+      this.currentStatus = STATUS_RUNNING;
+
+      // Set natural timeout duration
+      this.timeoutId = setTimeout(this.handleEnd.bind(this), this.timerText.time * 1000, false);
+    }
+  }
+
+  /**
    * Handles the end of a Pomodoro session.
    * @param {boolean} early indicates whether the Pomodoro was ended early.
    */
   handleEnd(early) {
-    if (this.currentStatus === STATUS_RUNNING) {
-      this.timerText.end();
-      this.timerInfo.progressInfo.stopProgress();
-      this.currentStatus = 'stopped';
-      this.timerButton.setAttribute('data-text', 'START');
+    this.timerText.end();
+    this.timerInfo.progressInfo.stopProgress();
+    this.currentStatus = STATUS_STOPPED;
+    this.timerButton.setAttribute('data-text', 'START');
 
-      // Clear natural duration and reset ID
-      clearTimeout(this.timeoutId);
-      this.timeoutId = null;
+    // Clear natural duration and reset ID
+    clearTimeout(this.timeoutId);
+    this.timeoutId = null;
 
-      // Set document title back to Pomodoro
-      document.title = 'Pomodoro';
+    // Set document title back to Pomodoro
+    document.title = 'Pomodoro';
 
-      if (early) {
-        if (this.currentPhase !== 'pomodoro') {
-          this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
-        }
-        this.currentPhase = 'pomodoro';
-        this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
-        this.timerInfo.progressInfo.clearProgress(early);
+    if (early) {
+      if (this.currentPhase !== 'pomodoro') {
+        this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
+      }
+      this.currentPhase = 'pomodoro';
+      this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
+      this.timerInfo.progressInfo.clearProgress(early);
+    }
+    else {
+      // Keep cycling through phases until break is finished
+      this.timerText.setTime(this.pomodoroTimes[this.cyclePhase()]);
+
+      if (this.currentPhase !== 'pomodoro') {
+        this.handleStart();
       }
       else {
-        // Keep cycling through phases until break is finished
-        this.timerText.setTime(this.pomodoroTimes[this.cyclePhase()]);
-
-        if (this.currentPhase !== 'pomodoro') {
-          this.handleStart();
-        }
-        else {
-          // Increment number of pomodoros completed after one cycle (pomo + break)
-          this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
-        }
+        // Increment number of pomodoros completed after one cycle (pomo + break)
+        this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
       }
     }
   } /* handleEnd */
@@ -188,6 +212,8 @@ class TimerApp {
    * end text (abrupt end during Pomodoro) or skip text (during a break).
    */
   confirmEnd(skip) {
+    this.handlePause();
+
     // Constants for dialog text
     const END_TEXT = `Are you sure you want to end this pomodoro session? Your current 
       Pomodoro will not be saved.`;
@@ -218,6 +244,10 @@ class TimerApp {
     confirmDialog.addEventListener('confirmPressed', () => {
       this.handleEnd(true);
     });
+
+    confirmDialog.addEventListener('cancelPressed', () => {
+      this.handleContinue();
+    })
 
     document.body.appendChild(confirmDialog);
   } /* confirmEnd */
@@ -267,7 +297,7 @@ class TimerText {
    * @param {*} time is the initial time for the TimerText to display.
    */
   constructor(selector, time) {
-  // Initialize intervalId for timeout functions
+    // Initialize intervalId for timeout functions
     this.intervalId = null;
 
     // Store arguments
@@ -455,7 +485,7 @@ class TimerSettings {
       .addEventListener('click', (event) => {
         event.preventDefault();
         this.updateSettings();
-    });
+      });
 
     this.pomoNumber = document.querySelector(POMO_NUMBER_SELECTOR);
     this.pomoSlider = document.querySelector(POMO_SLIDER_SELECTOR);
@@ -546,7 +576,7 @@ class TimerSplash {
  * To be executed when the page loads.
  * Currently initializes the timer and button.
  */
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', function () {
   let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
   let timerApp = new TimerApp();
 });

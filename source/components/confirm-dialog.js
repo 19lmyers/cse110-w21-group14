@@ -4,7 +4,7 @@ class ConfirmDialog extends HTMLElement {
 
     const template = document.querySelector('#confirm-dialog-template').content;
 
-    const shadowRoot = this.attachShadow({mode: 'open'})
+    const shadowRoot = this.attachShadow({ mode: 'open' })
       .appendChild(template.cloneNode(true));
 
     let shadow = this.shadowRoot;
@@ -15,6 +15,7 @@ class ConfirmDialog extends HTMLElement {
     });
 
     shadow.querySelector('.cancel-button').addEventListener('click', () => {
+      this.dispatchEvent(new Event('cancelPressed'));
       this.remove();
     });
   }
