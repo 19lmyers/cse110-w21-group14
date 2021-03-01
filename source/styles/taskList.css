@@ -1,0 +1,31 @@
+#task-name-input {
+    border-radius: 25px;
+    height: 20px;
+}
+
+#task-button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    height: 60px;
+    border-radius: 50%;
+    width: 60px;
+    font-size: 30px;
+    text-align: center;
+    background-color: green;
+    color: black;
+}
+#task-add-button{
+    border-radius: 10px;
+    height: 25px;
+    background-color: green;
+}
+
+.task-edit-button {
+    background-color: green;
+}
+
+.task-save-button {
+    background-color: green;
+}
+

@@ -8,6 +8,7 @@
 	<title>Pomodoro</title>
 
 	<link rel="stylesheet" href="styles/main.css">
+	<link rel="stylesheet" href="styles/taskList.css">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;800&display=swap" rel="stylesheet">
 </head>
@@ -54,9 +55,38 @@
 		</section>
 	</main>
 
-	<footer id='del'>
-		<!-- Timer Reset and Timer Settings Buttons -->
-		<button id="timer-reset-button"><img src="assets/reset-icon.svg" alt="Reset Button"></button>
+	<footer>
+		<!-- Task List Button -->
+		<button id='task-button'>+</button>
+		<div id='task-list' >
+				<h1>Task List</h1>
+				<!-- <div id="task-input">
+					<input id="input-value" type="text" placeholder="Tasks To Complete...">
+					<label for="estimated-count">Estimated Count</label>
+					<input id="estimated-count" type="number" min="1" max="4">
+					<button id='add-button'>+</button>
+				</div>
+				<div class='task-list'>
+					<li>
+						<input id="task-is-done" type="checkbox"></input>
+						<input id="task-input" type="text" disabled>
+						<label for="task-estimated"> est </label>
+						<input id="task-estimated" type="number" min="1" max="4" disabled>
+						<button id="task-edit">Edit</button>
+						<button id="task-remove">Remove</button>
+					</li>
+					<li>
+						<input id="task-is-done" type="checkbox"></input>
+						<input id="task-input" type="text" disabled>
+						<input id="task-estimated" type="number" min="1" max="4" disabled>
+						<button id="task-edit">Edit</button>
+						<button id="task-remove">Remove</button>
+					</li>
+				</div> -->
+			</div>
+		</div>
+
+		<!-- Timer Settings Buttons -->
 		<button id="timer-settings-button"><img src="assets/settings-icon.svg" alt="Settings Button"></button>
 		<div id="timer-settings" class="dialog">
 			<div class="dialog-content">
@@ -140,24 +170,6 @@
 	</footer>
 
 
-	<button id='task-button' onclick="del()"> Task List</button>
-	<main id='task-list'>
-		<h1>Task List</h1>
-		<input id="input-value" type="text" placeholder="Tasks To Complete...">
-		<button id='add-button'>+</button>
-		<div class='item-list'>
-			<!-- <li>
-					<input id='input' type="text" disabled>
-					<button id="edit">Edit</button>
-					<button id="remove">Remove</button>
-				</li>
-				<li>
-					<input id='input' type="text" disabled>
-					<button id="edit">Edit</button>
-					<button id="delete">Delete</button>
-				</li> -->
-		</div>
-	</main>
 
 
 

@@ -9,10 +9,14 @@ const DEFAULT_POMODORO_LIMIT = 5;
 const TIMER_TEXT_SELECTOR = '#timer-text';
 const TIMER_BUTTON_SELECTOR = 'timer-button';
 const TIMER_APP_SELECTOR = '#timer-app';
+
+/* Timer Info */
 const TIMER_INFO_SESSIONS_SELECTOR = '#timer-info-sessions';
 const TIMER_INFO_WORK_PROGRESS_SELECTOR = '#timer-info-work-progress';
 const TIMER_INFO_BREAK_PROGRESS_SELECTOR = '#timer-info-break-progress';
 const TIMER_INFO_SESSIONS_REMAINING_SELECTOR = '#timer-info-sesions-remaining';
+
+/* Task and Settings Buttons */
 const TIMER_RESET_BUTTON_SELECTOR = '#timer-reset-button';
 const TIMER_SETTINGS_SELECTOR = '#timer-settings';
 const POMO_NUMBER_SELECTOR = '#pomo-number';
@@ -25,9 +29,13 @@ const LONG_BREAK_NUMBER_SELECTOR = '#long-break-number';
 const LONG_BREAK_SLIDER_SELECTOR = '#long-break-slider';
 const TIMER_SPLASH_SELECTOR = '#timer-splash';
 const TIMER_SPLASH_BUTTON_SELECTOR = '#timer-splash-button';
+
+/* Timer Phases */
 const PHASE_POMODORO = 'pomodoro';
 const PHASE_SHORT_BREAK = 'shortBreak';
 const PHASE_LONG_BREAK = 'longBreak';
+
+/* Timer Statuses */
 const STATUS_STOPPED = 'stopped';
 const STATUS_RUNNING = 'running';
 /* -------------------------------------------------------------------------- */
@@ -69,9 +77,6 @@ class TimerApp {
     });
 
     // Event listener for resetting Pomodoros via button
-    document.querySelector(TIMER_RESET_BUTTON_SELECTOR).addEventListener('click', () => {
-      this.confirmReset();
-    });
 
     // Event listener for changing settings via dialog
     this.timerSettings.element.addEventListener('settingsChanged', (event) => {
@@ -540,57 +545,64 @@ class TimerSplash {
   }
 }
 
-/* -------------------------------------------------------------------------- */
-
-/**
- * To be executed when the page loads.
- * Currently initializes the timer and button.
- */
-window.addEventListener('DOMContentLoaded', function() {
-  let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
-  let timerApp = new TimerApp();
-});
-
 /* Task List */
-/* -------------------------------------------------------------------------- */
-class TimerSplash {
-  constructor(splashSelector, splashButtonSelector) {
-    this.element = document.querySelector(splashSelector);
-    this.show();
-    document.querySelector(splashButtonSelector).addEventListener('click', this.close.bind(this));
-  }
-
-  show() {
-    this.element.style.visibility = 'visible';
-  }
-
-  close() {
-    this.element.style.visibility = 'hidden';
-  }
-}
-
-/* -------------------------------------------------------------------------- */
-
-
-/**
- * To be executed when the page loads.
- * Currently initializes the timer and button.
- */
-window.addEventListener('DOMContentLoaded', function () {
-  let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
-  let timerApp = new TimerApp();
-});
-
-
-
-/* Task List */
-/* -------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
 class TaskList {
   /**
-   * TaskList(): constructs the task list
+   * TaskList(taskButtonElement, taskListContainerElement): Constructs the task list using the task
+   * button and the task list container.
+   * @param {*} taskButtonSelector: the selector for the show task list button
+   * @param {*} taskListContainerSelector: selector for the task list revealed by task button element
    */
-  constructor() {
-    this.loadTaskList();
+  constructor(taskButtonSelector, taskListContainerSelector) {
+    /* 
+     * Needs to hold task list button selector
+     * Task list div
+     * Input fields (for taskName, taskEstimatedPomos)
+     */
+
+    //Task List Button
+    //TODO: change to shadow dom element when using components
+    this.taskButtonElement = document.querySelector(taskButtonSelector);
+    this.taskButtonElement.addEventListener("click", (event) => {
+      event.preventDefault();
+      this.toggleTaskList();
+    });
+
+    //TODO: change to shadow dom element when using components
+    this.taskListContainerElement = document.querySelector(taskListContainerSelector);
+
+    //load any stored tasks and append to task list
+
+    this.taskInputElement = document.createElement("div");
+    
+    this.taskNameInput = document.createElement("input");
+    this.taskNameInput.id = "task-name-input";
+    this.taskNameInput.type = "text";
+    this.taskNameInput.placeholder = "What task are you working on?";
+
+    this.taskPomoEstimateInput = document.createElement("input");
+    this.taskPomoEstimateInput.id = "task-pomo-estimate-input";
+    this.taskPomoEstimateInput.type = "number";
+
+    this.taskAddButton = document.createElement("button");
+    this.taskAddButton.id = "task-add-button"; 
+    this.taskAddButton.textContent = "Add Task";
+    
+    this.taskInputElement.appendChild(this.taskNameInput);
+    this.taskInputElement.appendChild(this.taskPomoEstimateInput);
+    this.taskInputElement.appendChild(this.taskAddButton);
+    this.taskListContainerElement.appendChild(this.taskInputElement);
+   
+    this.taskAddButton.addEventListener("click", (event) => {
+        this.createTask(this.taskNameInput.value, this.taskPomoEstimateInput.value);
+        
+        //Clear values after creating task
+        this.taskNameInput.value = ""; //TODO: check this
+        this.taskPomoEstimateInput.value = "";
+      }
+    );
+
 
   }
 
@@ -605,29 +617,136 @@ class TaskList {
    * toggleTaskList(): toggles visibility of task list
    */
   toggleTaskList() {
-
+    if (this.taskListContainerElement.style.visibility == "visible") {
+      this.taskListContainerElement.style.visibility = "hidden";
+    } else {
+      this.taskListContainerElement.style.visibility = "visible";
+    }
   }
 
   /**
    * createTask(): creates a new task
    */
-  createTask(taskName, pomoEstimate, pomoActual, isTaskDone) {
+  createTask(taskName, pomoEstimate) {
+    if (taskName == "") {
+      //Encourage user to give tasks accurate descriptions
+    } else if (pomoEstimate > 4) {
+      //Prompt user to consider breaking down tasks into smaller more manageable chunks
+    }
+    else {
+      const newTask = new Task(taskName, pomoEstimate, 0, false);
+      newTask.appendTask(this.taskListContainerElement);
+    }
+  }
 
+}
+
+class Task {
+  /* 
+   * Styling: 
+   * single-task, focus-task, and task-done, task-not-done, task-save-button, task-edit-button
+   */
+  /**
+   * Task(taskName, pomoEstimate, pomoActual):
+   * @param {string} taskName: name of task being constructed.
+   * @param {number} pomoEstimate: estimated pomos for task being constructed.
+   * @param {number} pomoActual: pomos used for task being constructed.
+   * @param {boolean} isTaskDone: true if task done, false if not.
+   */
+  constructor(taskName, pomoEstimate, pomoActual, isTaskDone) {
+    //create task container
+    this.taskContainerElement = document.createElement("div");
+    this.taskContainerElement.className = "single-task"
+
+    this.taskEditButton = document.createElement("button");
+    this.taskEditButton.innerHTML="Edit"; //TODO: use pictures
+    this.taskEditButton.className = "task-edit-button";
+
+    this.taskRemoveButton = document.createElement("button");
+    this.taskRemoveButton.innerHTML="Delete"; //TODO: use pictures
+
+    this.taskNameField = document.createElement("input");
+    this.taskNameField.type = "text";
+    this.taskNameField.value = taskName;
+
+    this.taskPomoEstimateValue = document.createElement("input");
+    this.taskPomoEstimateValue.type = "number";
+    this.taskPomoEstimateValue.value = pomoEstimate;
+
+    this.taskPomoActualValue = document.createElement("p");
+    this.taskPomoActualValue.innerHTML = pomoActual; //Default actual pomo used when created is 0
+
+    this.taskIsDone = document.createElement("input");
+    this.taskIsDone.type = "checkbox";
+    if (isTaskDone == true) {
+      this.taskIsDone.value = "checked";
+      this.taskContainerElement.className = "single-task task-done";
+    } else {
+      this.taskIsDone.value = "unchecked";
+      this.taskContainerElement.className = "single-task task-not-done";
+    }
+
+    //Append to task container
+    this.taskContainerElement.appendChild(this.taskIsDone);
+    this.taskContainerElement.appendChild(this.taskNameField);
+    this.taskContainerElement.appendChild(this.taskPomoEstimateValue);
+    this.taskContainerElement.appendChild(this.taskPomoActualValue);
+    this.taskContainerElement.appendChild(this.taskEditButton);
+    this.taskContainerElement.appendChild(this.taskRemoveButton);
+
+    //Disable fields
+    this.taskPomoEstimateValue.setAttribute("disabled", "true");
+    this.taskNameField.setAttribute("disabled", "true");
+    
+    console.log(this.taskPomoEstimateValue);
+
+    //Add event listeners
+    //TODO: Check if listener for check boxes update styling correctly
+    this.taskIsDone.addEventListener("input", (event) => {
+      if (event.target.value = "checked") {
+        this.taskContainerElement.className = "single-task task-done";
+      } else {
+        this.taskContainerElement.className = "single-task task-not-done"
+      }
+    })
+  
+    //TODO: Disable task edit button if has class "focus-task"
+    this.taskEditButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      this.editTask()
+    });
   }
 
   /**
-   * editTask(): edits an existing task
+   * appendTask(taskListContainerElement): Appends a task to a task list container 
+   * @param {*} taskListContainerElement: element of task list container.
+   */
+  appendTask(taskListContainerElement) {
+    taskListContainerElement.appendChild(this.taskContainerElement);
+  }
+
+  /**
+   * editTask(): toggles editing of task
    */
   editTask() {
-    //Update tasks 
-    this.storeTask();
+    //TODO: If can't style with only classes, manually switch images.
+    if (this.taskNameField.hasAttribute("disabled")) {
+      this.taskNameField.removeAttribute("disabled");
+      this.taskEditButton.className = "task-save-button";
+      this.taskEditButton.textContent = "Save";
+      //TODO: Handle updating stored tasks;
+    } else {
+      this.taskNameField.setAttribute("disabled", "true");
+      this.taskEditButton.className = "task-edit-button";
+      this.taskEditButton.textContent = "Edit";
+    }
   }
-  
+
   /**
    * storeTask(): handles task storage in local storage
    */
   storeTask() {
-
+    
   }
 
   /**
@@ -639,41 +758,17 @@ class TaskList {
 
 }
 
-class Task {
-  /**
-   * Task(taskName, pomoEstimate, pomoActual):
-   * @param {string} taskName: name of task being constructed.
-   * @param {integer} pomoEstimate: estimated pomos for task being constructed.
-   * @param {integer} pomoActual: pomos used for task being constructed.
-   * @param {boolean} isTaskDone: true if task done, false if not.
-   */
-  constructor(taskName, pomoEstimate, pomoActual, isTaskDone) {
-    this.taskName = taskName;
-    this.pomoEstimate = pomoEstimate;
+/* -------------------------------------------------------------------------- */
 
-    this.pomoActual = 0;
-  }
+/**
+ * To be executed when the page loads.
+ * Currently initializes the timer and button.
+ */
+window.addEventListener('DOMContentLoaded', function () {
+  let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
+  let timerApp = new TimerApp();
+  let taskList = new TaskList("#task-button", "#task-list");
+});
 
-  /**
-   * setTaskName(): sets the name of the task
-   * @param {string} taskName: name of the task
-   */
-  setTaskName(taskName) {
-    this.taskName = taskName;
-  }
 
-  /**
-   * setTaskPomoEstimate(): sets the estimated number of pomos for this task.
-   * @param {integer} pomoEstimate: number of estimated pomos for this task
-   */
-  setPomoEstimate(pomoEstimate) {
-    this.pomoEstimate = pomoEstimate;
-  }
-  /**
-   * setTaskPomoActual() 
-   * @param pomoActual: number of pomos actually being used for this task
-   */
-  setTaskPomoActual(pomoActual) {
-    this.pomoActual = pomoActual;
-  }
-}
+
