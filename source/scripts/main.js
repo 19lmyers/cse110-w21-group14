@@ -635,8 +635,8 @@ class Task {
   }
 }
 
-let addButton = document.getElementById('add-button');
-addButton.addEventListener('click', insert);
+// let addButton = document.getElementById('add-button');
+// addButton.addEventListener('click', insert);
 /**
  * User creates a task and clicks + button then the task will show
  */
@@ -650,7 +650,6 @@ function insert() {
   }
 }
 
-
 /**
  * Local Storage elements
  */
@@ -658,3 +657,31 @@ for (let i = 0; i < taskList.length; i++) {
   new Task(taskList[i]);
 }
 
+module.exports = {
+  SEC_01,
+  SEC_03,
+  SEC_05,
+  TIMER_TEXT_SELECTOR,
+  TIMER_BUTTON_SELECTOR,
+  TIMER_INFO_WORK_PROGRESS_SELECTOR,
+  TIMER_INFO_BREAK_PROGRESS_SELECTOR,
+  TIMER_INFO_SESSIONS_REMAINING_SELECTOR,
+  TIMER_RESET_BUTTON_SELECTOR,
+  TIMER_SETTINGS_SELECTOR,
+  POMO_NUMBER_SELECTOR,
+  POMO_LENGTH_NUMBER_SELECTOR,
+  SHORT_BREAK_NUMBER_SELECTOR,
+  LONG_BREAK_NUMBER_SELECTOR,
+  TIMER_SPLASH_SELECTOR,
+  TIMER_SPLASH_BUTTON_SELECTOR,
+  PHASE_POMODORO,
+  PHASE_SHORT_BREAK,
+  PHASE_LONG_BREAK,
+  STATUS_STOPPED,
+  STATUS_RUNNING,
+  TimerText,
+  TimerSettings,
+  TimerSplash,
+  TimerInfoProgress,
+  TimerApp
+}
