@@ -1,19 +1,28 @@
 #task-name-input {
     border-radius: 25px;
-    height: 20px;
+    width: 20em;
+}
+#task-pomo-estimate-input {
+    width:2em;
 }
 
+.single-task {
+    display: block;
+}
+.single-task * {
+    display: inline-block;
+}
+.single-task input[type="text"] {
+   width: 20em; 
+}
+
+.single-task input[type="number"]{
+    width: 2em;
+}
 #task-button {
-    cursor: pointer;
-    outline: none;
-    border: none;
     height: 60px;
-    border-radius: 50%;
     width: 60px;
-    font-size: 30px;
-    text-align: center;
-    background-color: green;
-    color: black;
+    background-color: #366577;
 }
 #task-add-button{
     border-radius: 10px;
