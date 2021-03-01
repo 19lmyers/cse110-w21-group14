@@ -7,6 +7,7 @@ const {
   TIMER_INFO_WORK_PROGRESS_SELECTOR,
   TIMER_INFO_BREAK_PROGRESS_SELECTOR,
   TIMER_INFO_SESSIONS_REMAINING_SELECTOR,
+  TIMER_RESET_BUTTON_SELECTOR,
   TIMER_SETTINGS_SELECTOR,
   POMO_NUMBER_SELECTOR,
   POMO_LENGTH_NUMBER_SELECTOR,
@@ -17,6 +18,8 @@ const {
   PHASE_POMODORO,
   PHASE_SHORT_BREAK,
   PHASE_LONG_BREAK,
+  STATUS_STOPPED,
+  STATUS_RUNNING,
   TimerText,
   TimerSettings,
   TimerSplash,
@@ -32,7 +35,7 @@ beforeEach(() => {
     '<section id="timer-app">' +
       '<div id="timer-circle">' +
         '<span id="timer-text">25:00</span>' +
-        '<button id="timer-button">START</button>' +
+        '<timer-button data-text="START"></timer-button>' +
       '</div>' +
     '</section>' +
     '<section id="timer-info">' +
@@ -63,7 +66,14 @@ beforeEach(() => {
           '<button id="timer-settings-save" type="submit">Save</button>' +
         '</form>' +
       '</div>' +
-    '</div>';
+    '</div>' + 
+    '<button id="task-button" onclick="del()"> Task List</button>' + 
+	  '<main id="task-list">' +
+      '<input id="input-value" type="text" placeholder="Tasks To Complete...">' +
+      '<button id="add-button">+</button>' +
+      '<div class="item-list">' +
+      '</div>' +
+    '</main>';
 
     jest.useFakeTimers();
 });
@@ -107,6 +117,7 @@ describe('timer app', () => {
   test('when timer runs out, stop progress bar', () => {
     const timerApp = new TimerApp();
     const spy = jest.spyOn(timerApp.timerInfo.progressInfo, 'stopProgress');
+    timerApp.handleStart();
 
     timerApp.handleEnd();
 
@@ -116,6 +127,7 @@ describe('timer app', () => {
   test('when timer ends early, clear progress bar', () => {
     const timerApp = new TimerApp();
     const spy = jest.spyOn(timerApp.timerInfo.progressInfo, 'clearProgress');
+    timerApp.handleStart();
 
     timerApp.handleEnd(true);
 
@@ -129,6 +141,24 @@ describe('timer app', () => {
 
     expect(setTimeout).toHaveBeenCalled();
     expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), SEC_05 * 1000, false);
+  });
+
+  test('ignores end timer if not running', () => {
+    const timerApp = new TimerApp();
+    timerApp.currentStatus = STATUS_STOPPED;
+
+    timerApp.handleEnd();
+
+    expect(clearTimeout).not.toHaveBeenCalled();
+  });
+
+  test('warns before leaving app', () => {
+    const event = new Event('beforeunload');
+    Object.assign(event, {preventDefault: jest.fn()});
+
+    window.dispatchEvent(event);
+
+    expect(event.preventDefault).toHaveBeenCalled();
   });
 });
 
@@ -233,7 +263,7 @@ describe('timer text', () => {
   test('ignores start timer if already running', () => {
     const timerApp = new TimerApp();
     const spy = jest.spyOn(timerApp.timerText, 'start');
-    timerApp.currentStatus = 'running';
+    timerApp.currentStatus = STATUS_RUNNING;
 
     timerApp.handleStart();
 
@@ -310,6 +340,15 @@ describe('pomo counting', () => {
     
     expect(timerApp).toHaveProperty('numPomodoros', 0);
   });
+
+  test('resets pomos', () => {
+    const timerApp = new TimerApp();
+    timerApp.numPomodoros = 3;
+
+    timerApp.resetPomodoros();
+    
+    expect(timerApp).toHaveProperty('numPomodoros', 0);
+  });
 });
 
 describe('timer buttons', () => {
@@ -318,88 +357,31 @@ describe('timer buttons', () => {
     const timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
     const spy = jest.spyOn(timerApp, 'handleStart');
 
-    timerButton.click();
+    timerButton.dispatchEvent(new Event('buttonPressed'));
 
     expect(spy).toHaveBeenCalled();
   });
 
-  test('end button restarts timer after confirmed', () => {
+  test('end button triggers end confirmation', () => {
     const timerApp = new TimerApp();
     const timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
-    const spy = jest.spyOn(timerApp, 'handleEnd');
-    window.confirm = jest.fn(() => true)
+    const spy = jest.spyOn(timerApp, 'confirmEnd');
     
     timerApp.handleStart();
-    jest.advanceTimersByTime(SEC_01 * 1000);
-    timerButton.click();
+    timerButton.dispatchEvent(new Event('buttonPressed'));    
 
     expect(spy).toHaveBeenCalled();
-    expect(timerApp).toHaveProperty('currentPhase', 'pomodoro');
   });
 
-  test('end button does not restart timer after cancelled', () => {
+  test('reset button triggers reset confirmation', () => {
     const timerApp = new TimerApp();
-    const timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
-    const spy = jest.spyOn(timerApp, 'handleEnd');
-    window.confirm = jest.fn(() => false)
-    
-    timerApp.handleStart();
-    jest.advanceTimersByTime(SEC_01 * 1000);
-    timerButton.click();
-
-    expect(spy).not.toHaveBeenCalled();
-    expect(timerApp).toHaveProperty('currentPhase', 'pomodoro');
-  });
-
-  test('reset button resets pomo count after confirmed', () => {
-    const timerApp = new TimerApp();
-    const resetButton = document.querySelector('#timer-reset-button');
-    const spy = jest.spyOn(timerApp, 'resetPomodoros');
-    timerApp.numPomodoros = 3;
-    window.confirm = jest.fn(() => true)
+    const resetButton = document.querySelector(TIMER_RESET_BUTTON_SELECTOR);
+    const spy = jest.spyOn(timerApp, 'confirmReset');
 
     resetButton.click();
 
     expect(spy).toHaveBeenCalled();
-    expect(timerApp).toHaveProperty('numPomodoros', 0);
   });
-
-  test('reset button does not reset pomo count after cancelled', () => {
-    const timerApp = new TimerApp();
-    const resetButton = document.querySelector('#timer-reset-button');
-    const spy = jest.spyOn(timerApp, 'resetPomodoros');
-    timerApp.numPomodoros = 3;
-    window.confirm = jest.fn(() => false)
-
-    resetButton.click();
-
-    expect(spy).not.toHaveBeenCalled();
-    expect(timerApp).toHaveProperty('numPomodoros', 3);
-  });
-
-  // test('reset button resets timer after confirmed', () => {
-  //   const timerApp = new TimerApp();
-  //   const resetButton = document.querySelector('#timer-reset-button');
-  //   window.confirm = jest.fn(() => true)
-    
-  //   timerApp.handleStart();
-  //   jest.advanceTimersByTime(SEC_01 * 1000);
-  //   resetButton.click();
-
-  //   expect(timerApp.timerText).toHaveProperty('time', SEC_05);
-  // });
-
-  // test('reset button does not reset timer after cancelled', () => {
-  //   const timerApp = new TimerApp();
-  //   const resetButton = document.querySelector('#timer-reset-button');
-  //   window.confirm = jest.fn(() => false)
-    
-  //   timerApp.handleStart();
-  //   jest.advanceTimersByTime(SEC_01 * 1000);
-  //   resetButton.click();
-
-  //   expect(timerApp.timerText).toHaveProperty('time', 4);
-  // });
 });
 
 describe('progress bar', () => {
@@ -463,6 +445,32 @@ describe('progress bar', () => {
     expect(breakProgressElement).toHaveProperty('value', 0);
   });
  });
+
+ describe('confirmation cards', () => {
+  test('confirmation ends pomo session', () => {
+    const timerApp = new TimerApp();
+  
+    timerApp.confirmEnd(true);
+    
+    const confirmDialog = document.querySelector('confirm-dialog');
+    confirmDialog.dispatchEvent(new Event('confirmPressed'));
+  
+    expect(clearTimeout).toHaveBeenCalled;
+  });
+
+  test('confirmation resets pomo count', () => {
+    const timerApp = new TimerApp();
+    timerApp.numPomodoros = 3;
+  
+    timerApp.confirmReset();
+    
+    const confirmDialog = document.querySelector('confirm-dialog');
+    confirmDialog.dispatchEvent(new Event('confirmPressed'));
+  
+    expect(timerApp).toHaveProperty('numPomodoros', 0);
+  
+  });
+ })
 
 describe('settings', () => {
   test('settings button opens settings', () => {
@@ -641,7 +649,7 @@ test('initializes timer page', () => {
   expect(TimerInfoProgress).toBeTruthy();
   expect(TimerApp).toBeTruthy();
 
-  expect(timerApp.timerButton.element).toHaveProperty('textContent', 'START');
+  expect(timerApp.timerButton.getAttribute('data-text')).toBe('START');
   expect(timerApp.timerText.element).toHaveProperty('textContent', '00:05');
   expect(timerApp.timerInfo.sessionsInfo.element).toHaveProperty('textContent', '0');
   expect(timerApp.timerInfo.progressInfo.workProgressElement).toHaveProperty('value', 0);
@@ -654,7 +662,7 @@ test('updates timer page', () => {
   timerApp.handleStart();
   jest.advanceTimersByTime(SEC_01 * 1000);
 
-  expect(timerApp.timerButton.element).toHaveProperty('textContent', 'END');
+  expect(timerApp.timerButton.getAttribute('data-text')).toBe('END');
   expect(timerApp.timerText.element).toHaveProperty('textContent', '00:04');
   expect(timerApp.timerInfo.sessionsInfo.element).toHaveProperty('textContent', '0');
   expect(timerApp.timerInfo.progressInfo.workProgressElement).toHaveProperty('value', 0.2);
@@ -662,17 +670,17 @@ test('updates timer page', () => {
 
   jest.advanceTimersByTime(SEC_05 * 1000);
 
-  expect(timerApp.timerButton.element).toHaveProperty('textContent', 'END');
+  expect(timerApp.timerButton.getAttribute('data-text')).toBe('END');
   expect(timerApp.timerText.element).toHaveProperty('textContent', '00:02');
   expect(timerApp.timerInfo.sessionsInfo.element).toHaveProperty('textContent', '0');
-  expect(timerApp.timerInfo.progressInfo.workProgressElement).toHaveProperty('value', 1);
+  expect(timerApp.timerInfo.progressInfo.workProgressElement).toHaveProperty('value', 0);
   expect(timerApp.timerInfo.progressInfo.breakProgressElement).toHaveProperty('value', (1/3));
 
   jest.advanceTimersByTime(2 * 1000);
 
-  expect(timerApp.timerButton.element).toHaveProperty('textContent', 'START');
+  expect(timerApp.timerButton.getAttribute('data-text')).toBe('START');
   expect(timerApp.timerText.element).toHaveProperty('textContent', '00:05');
   expect(timerApp.timerInfo.sessionsInfo.element).toHaveProperty('textContent', '1');
-  expect(timerApp.timerInfo.progressInfo.workProgressElement).toHaveProperty('value', 1);
+  expect(timerApp.timerInfo.progressInfo.workProgressElement).toHaveProperty('value', 0);
   expect(timerApp.timerInfo.progressInfo.breakProgressElement).toHaveProperty('value', 1);
 });

@@ -367,6 +367,7 @@
   "resolved" "https://registry.yarnpkg.com/cli-table3/-/cli-table3-0.6.0.tgz"
   "version" "0.6.0"
   dependencies:
+    "colors" "^1.1.2"
     "object-assign" "^4.1.0"
     "string-width" "^4.2.0"
   optionalDependencies:
@@ -1152,6 +1153,7 @@
   "resolved" "https://registry.yarnpkg.com/jsonfile/-/jsonfile-6.1.0.tgz"
   "version" "6.1.0"
   dependencies:
+    "graceful-fs" "^4.1.6"
     "universalify" "^2.0.0"
   optionalDependencies:
     "graceful-fs" "^4.1.6"
