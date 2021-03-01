@@ -595,15 +595,26 @@ class TaskList {
     this.taskListContainerElement.appendChild(this.taskInputElement);
    
     this.taskAddButton.addEventListener("click", (event) => {
-        this.createTask(this.taskNameInput.value, this.taskPomoEstimateInput.value);
+        this.createTask(
+          this.taskNameInput.value, 
+          this.taskPomoEstimateInput.value, 
+          this.taskListContainerElement);
         
         //Clear values after creating task
         this.taskNameInput.value = ""; //TODO: check this
         this.taskPomoEstimateInput.value = "";
       }
     );
+    //TODO: Delete this
+    this.storeTaskList();
 
+  }
 
+  storeTaskList() {
+    let tasksToBeStored = {};
+    Array.from(this.taskListContainerElement.getElementsByClassName("single-task")).forEach(task => {
+      console.log(task);
+    })
   }
 
   /**
@@ -627,18 +638,19 @@ class TaskList {
   /**
    * createTask(): creates a new task
    */
-  createTask(taskName, pomoEstimate) {
+  createTask(taskName, pomoEstimate, taskListContainerElement) {
     if (taskName == "") {
       //Encourage user to give tasks accurate descriptions
     } else if (pomoEstimate > 4) {
       //Prompt user to consider breaking down tasks into smaller more manageable chunks
     }
     else {
-      const newTask = new Task(taskName, pomoEstimate, 0, false);
+      const newTask = new Task(taskName, pomoEstimate, 0, false, taskListContainerElement);
       newTask.appendTask(this.taskListContainerElement);
+      //TODO: Delete thids
+      this.storeTaskList();
     }
   }
-
 }
 
 class Task {
@@ -652,9 +664,12 @@ class Task {
    * @param {number} pomoEstimate: estimated pomos for task being constructed.
    * @param {number} pomoActual: pomos used for task being constructed.
    * @param {boolean} isTaskDone: true if task done, false if not.
+   * @param {*} taskListContainerElement: container that hosts the entire list of tasks
    */
-  constructor(taskName, pomoEstimate, pomoActual, isTaskDone) {
+  constructor(taskName, pomoEstimate, pomoActual, isTaskDone, taskListContainerElement) {
     //create task container
+    this.taskListContainerElement = taskListContainerElement;
+
     this.taskContainerElement = document.createElement("div");
     this.taskContainerElement.className = "single-task"
 
@@ -698,15 +713,15 @@ class Task {
     this.taskPomoEstimateValue.setAttribute("disabled", "true");
     this.taskNameField.setAttribute("disabled", "true");
     
-    console.log(this.taskPomoEstimateValue);
-
     //Add event listeners
     //TODO: Check if listener for check boxes update styling correctly
     this.taskIsDone.addEventListener("input", (event) => {
-      if (event.target.value = "checked") {
+      if (event.target.value == "unchecked") {
         this.taskContainerElement.className = "single-task task-done";
+        event.target.value = "checked"; 
       } else {
         this.taskContainerElement.className = "single-task task-not-done"
+        event.target.value = "unchecked"; 
       }
     })
   
@@ -715,6 +730,12 @@ class Task {
       event.preventDefault();
       this.editTask()
     });
+
+    this.taskRemoveButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      this.removeTask();
+    })
+    
   }
 
   /**
@@ -750,14 +771,27 @@ class Task {
   }
 
   /**
-   * deleteTask(): deletes an existing task from local storage and task list.
+   * removeTask(): deletes an existing task from local storage and task list.
    */
-  deleteTask() {
-
+  removeTask() {
+    this.taskListContainerElement.removeChild(this.taskContainerElement);
   }
 
 }
 
+/* class taskStorage {
+  constructor() {
+    this.storedTaskList = JSON.parse(localStorage.getItem("storedTaskList"));
+    console.log(this.storedTaskList);
+
+    let taskList = {
+      0: {name: "hi",
+      isDone: false,
+      pomoEstimate: "2",
+      pomoActual: "3",},
+    };
+  }
+} */
 /* -------------------------------------------------------------------------- */
 
 /**
@@ -769,6 +803,4 @@ window.addEventListener('DOMContentLoaded', function () {
   let timerApp = new TimerApp();
   let taskList = new TaskList("#task-button", "#task-list");
 });
-
-
 
