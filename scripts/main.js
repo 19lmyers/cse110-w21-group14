@@ -455,7 +455,7 @@ class TimerSettings {
       .addEventListener('click', (event) => {
         event.preventDefault();
         this.updateSettings();
-      });
+    });
 
     this.pomoNumber = document.querySelector(POMO_NUMBER_SELECTOR);
     this.pomoSlider = document.querySelector(POMO_SLIDER_SELECTOR);
@@ -684,4 +684,4 @@ module.exports = {
   TimerSplash,
   TimerInfoProgress,
   TimerApp
-};
+}
