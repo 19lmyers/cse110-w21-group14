@@ -701,15 +701,19 @@ class FocusTask {
     this.focusTaskName = document.createElement("p");
     this.focusTaskName.textContent = "Choose a focus task";
     this.focusTaskName.id = "focus-task-name";
-    this.focusTaskName.className = "no-focus-task";
 
     this.focusTaskPomoActual = document.createElement("p");
-    this.focusTaskPomoActual.textcontent = 0;
+    this.focusTaskPomoActual.textContent = 0;
     this.focusTaskPomoActual.id = "focus-task-pomo-actual";
 
     this.focusTaskPomoEstimate = document.createElement("p");
-    this.focusTaskPomoEstimate.textcontent = 0;
+    this.focusTaskPomoEstimate.textContent = 0;
     this.focusTaskPomoEstimate.id = "focus-task-pomo-estimate";
+
+    this.focusTaskContainer.appendChild(this.focusTaskIsDone);
+    this.focusTaskContainer.appendChild(this.focusTaskName);
+    this.focusTaskContainer.appendChild(this.focusTaskPomoActual);
+    this.focusTaskContainer.appendChild(this.focusTaskPomoEstimate);
 
   }
 
@@ -722,10 +726,13 @@ class FocusTask {
   }
   
   /**
-   * removeFocusTask(): clears the focus task values
+   * clearFocusTask(): clears the focus task values
    */
-  removeFocusTask() {
-
+  clearFocusTask() {
+    this.focusTaskName.textContent = ""; 
+    this.focusTaskPomoActual.textContent = 0;
+    this.focusTaskPomoEstimate.textContent = 0;
+    this.focusTaskIsDone.value = "unchecked";
   }
 
   constructFocusTaskTemplate() { 
