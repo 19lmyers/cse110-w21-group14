@@ -1,9 +1,14 @@
 name: Unit Testing with Jest
-on: [push, pull_request, workflow_dispatch] 
+on:  
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
