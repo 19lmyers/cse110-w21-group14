@@ -34,23 +34,7 @@
 		<section id="timer-info">
 			<p><span id="timer-info-sessions">0</span> Pomodoros completed</p>
 			<!-- Step progress bar -->
-			<ul id="progress-bar-container">
-				<!-- Work step -->
-				<label for="progress-step-1">Work Time</label>
-				<li id="progress-step-1"></li>
-				<!-- Work progress bar -->
-				<progress id="timer-info-work-progress" value=0.01></progress>
-				<!-- Break step -->
-				<label for="progress-step-2">Short Break</label>
-				<li id="progress-step-2"></li>
-				<!-- Break progress bar -->
-				<progress id="timer-info-break-progress" value=0.01></progress>
-				<!-- Done or next cycle step -->
-				<label for="progress-step-3">Done!</label>
-				<li id="progress-step-3"></li>
-				<!-- Sessions remaining tracker -->
-				<p id="timer-info-sessions-remaining">x1</p>
-			</ul>
+			<timer-progress></timer-progress>
 		</section>
 	</main>
 
@@ -166,6 +150,7 @@
 	<script src="components/timer-settings.js"></script>
 	<script src="components/timer-button.js"></script>
 	<script src="components/confirm-dialog.js"></script>
+	<script src="components/timer-progress.js"></script>
 	<!-- Testing timer end -->
 
 </body>
