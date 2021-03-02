@@ -38,6 +38,13 @@ const PHASE_LONG_BREAK = 'longBreak';
 /* Timer Statuses */
 const STATUS_STOPPED = 'stopped';
 const STATUS_RUNNING = 'running';
+
+/* Task List */
+const TASK_BUTTON_SELECTOR = "#task-button";
+const TASK_LIST_CONTAINER_SELECTOR = "#task-list";
+
+/* Focus Task */
+const FOCUS_TASK_CONTAINER_SELECTOR = "#focus-task-container";
 /* -------------------------------------------------------------------------- */
 
 /* TimerApp class */
@@ -642,17 +649,19 @@ class TaskList {
    * loadTaskList(): loads task list from local storage.
    */
   loadTaskList() {
-    JSON.parse(localStorage.getItem("task-list")).forEach(task => {
-      const newTask = new Task(
-        task.name,
-        task.pomoEstimate, 
-        task.pomoActual, 
-        task.isDone, 
-        this.taskListContainerElement
-      );
+    if (localStorage.getItem("task-list") != null) {
+      JSON.parse(localStorage.getItem("task-list")).forEach(task => {
+        const newTask = new Task(
+          task.name,
+          task.pomoEstimate, 
+          task.pomoActual, 
+          task.isDone, 
+          this.taskListContainerElement
+        );
 
-      newTask.appendTask(this.taskListContainerElement);
-    });
+        newTask.appendTask(this.taskListContainerElement);
+      });
+    }
   }
 
   /**
@@ -687,11 +696,13 @@ class TaskList {
 class FocusTask {
 
   /**
-   * constructor(): constructs the focus task div
+   * constructor(focusTaskContainerSelector): constructs the focus task div
+   * @param {*} focusTaskContainerSelector: selector to get focusTaskContainer element
    */
-  constructor() {
-    this.focusTaskContainer = document.createElement("div");
+  constructor(focusTaskContainerSelector) {
+    this.focusTaskContainer = document.querySelector(focusTaskContainerSelector);
     this.focusTaskContainer.className = "no-focus-task";
+    this.focusTaskContainer.id = "focus-task-container";
     
     this.focusTaskIsDone = document.createElement("input");
     this.focusTaskIsDone.type = "checkbox";
@@ -701,16 +712,19 @@ class FocusTask {
     this.focusTaskName = document.createElement("p");
     this.focusTaskName.textContent = "Choose a focus task";
     this.focusTaskName.id = "focus-task-name";
-    this.focusTaskName.className = "no-focus-task";
 
     this.focusTaskPomoActual = document.createElement("p");
-    this.focusTaskPomoActual.textcontent = 0;
+    this.focusTaskPomoActual.textContent = 0;
     this.focusTaskPomoActual.id = "focus-task-pomo-actual";
 
     this.focusTaskPomoEstimate = document.createElement("p");
-    this.focusTaskPomoEstimate.textcontent = 0;
+    this.focusTaskPomoEstimate.textContent = 0;
     this.focusTaskPomoEstimate.id = "focus-task-pomo-estimate";
 
+    this.focusTaskContainer.appendChild(this.focusTaskIsDone);
+    this.focusTaskContainer.appendChild(this.focusTaskName);
+    this.focusTaskContainer.appendChild(this.focusTaskPomoActual);
+    this.focusTaskContainer.appendChild(this.focusTaskPomoEstimate);
   }
 
   /**
@@ -722,10 +736,13 @@ class FocusTask {
   }
   
   /**
-   * removeFocusTask(): clears the focus task values
+   * clearFocusTask(): clears the focus task values
    */
-  removeFocusTask() {
-
+  clearFocusTask() {
+    this.focusTaskName.textContent = ""; 
+    this.focusTaskPomoActual.textContent = 0;
+    this.focusTaskPomoEstimate.textContent = 0;
+    this.focusTaskIsDone.value = "unchecked";
   }
 
   constructFocusTaskTemplate() { 
@@ -869,5 +886,6 @@ window.addEventListener('DOMContentLoaded', function () {
   let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
   let timerApp = new TimerApp();
   let taskList = new TaskList("#task-button", "#task-list");
+  let focusTask = new FocusTask("#focus-task-container");
 });
 
