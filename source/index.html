@@ -8,165 +8,167 @@
 	<title>Pomodoro</title>
 
 	<link rel="stylesheet" href="styles/main.css">
-	<link rel="stylesheet" href="styles/taskList.css">
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="styles/task-list.css">
+	<link rel="stylesheet" href="styles/progress-bar.css">
 </head>
 
 <body>
-
 	<!-- Timer splash screen -->
 	<div id="timer-splash">
 		<h1>POMODORO</h1>
 		<button id="timer-splash-button">ENTER</button>
 	</div>
+	<div class="wrapper">
+		<header>
+			<h1>POMODORO</h1>
+		</header>
 
-	<header id='del'>
-		<h1>POMODORO</h1>
-	</header>
-
-	<main id='del'>
-		<section id="timer-app">
-			<div id="timer-circle">
+		<main>
+			<section id="timer-app">
 				<span id="timer-text">25:00</span>
 				<timer-button data-text="START"></timer-button>
-			</div>
-		</section>
-		<section id="timer-info">
-			<p><span id="timer-info-sessions">0</span> Pomodoros completed</p>
-			<!-- Step progress bar -->
-			<ul id="progress-bar-container">
-				<!-- Work step -->
-				<label for="progress-step-1">Work Time</label>
-				<li id="progress-step-1"></li>
-				<!-- Work progress bar -->
-				<progress id="timer-info-work-progress" value=0.01></progress>
-				<!-- Break step -->
-				<label for="progress-step-2">Short Break</label>
-				<li id="progress-step-2"></li>
-				<!-- Break progress bar -->
-				<progress id="timer-info-break-progress" value=0.01></progress>
-				<!-- Done or next cycle step -->
-				<label for="progress-step-3">Done!</label>
-				<li id="progress-step-3"></li>
-				<!-- Sessions remaining tracker -->
-				<p id="timer-info-sessions-remaining">x1</p>
-			</ul>
-		</section>
-	</main>
+			</section>
+			<section id="timer-info">
+				<p><span id="timer-info-sessions">0</span> Pomodoros completed</p>
+				<!-- Step progress bar -->
+				<ul id="progress-bar-container">
+					<!-- Work step -->
+					<div class="progress-step">
+						<label for="progress-point-1" class="progress-label">Work Time</label>
+						<li id="progress-point-1"></li>
+					</div>
+					<!-- Work progress bar -->
+					<progress id="timer-info-work-progress" value=0></progress>
+					<!-- Break step -->
+					<div class="progress-step">
+						<label for="progress-step-2" class="progress-label">Short Break</label>
+						<li id="progress-step-2"></li>
+					</div>
+					<!-- Break progress bar -->
+					<progress id="timer-info-break-progress" value=0></progress>
+					<!-- Done or next cycle step -->
+					<div class="progress-step">
+						<label for="progress-step-3" class="progress-label">Next Cycle!</label>
+						<li id="progress-step-3"></li>
+					</div>
+				</ul>
+			</section>
+		</main>
 
-	<footer>
-		<!-- Task List Button -->
-		<button id='task-button'><img src="assets/task-button.svg" alt="Task List Button"></button>
-		<button id="timer-settings-button"><img src="assets/settings-icon.svg" alt="Settings Button"></button>
-		<div id='task-list' >
-				<!-- <div id="task-input">
-					<input id="input-value" type="text" placeholder="Tasks To Complete...">
-					<label for="estimated-count">Estimated Count</label>
-					<input id="estimated-count" type="number" min="1" max="4">
-					<button id='add-button'>+</button>
-				</div>
-				<div class='task-list'>
-					<li>
-						<input id="task-is-done" type="checkbox"></input>
-						<input id="task-input" type="text" disabled>
-						<label for="task-estimated"> est </label>
-						<input id="task-estimated" type="number" min="1" max="4" disabled>
-						<button id="task-edit">Edit</button>
-						<button id="task-remove">Remove</button>
-					</li>
-					<li>
-						<input id="task-is-done" type="checkbox"></input>
-						<input id="task-input" type="text" disabled>
-						<input id="task-estimated" type="number" min="1" max="4" disabled>
-						<button id="task-edit">Edit</button>
-						<button id="task-remove">Remove</button>
-					</li>
-				</div> -->
-			</div>
-		</div>
+		<footer>
+			<!-- Task List Button -->
+			<button id='task-button'><img src="assets/task-button.svg" alt="Task List Button"></button>
+			<div id="task-list"></div>
+			<button id="timer-settings-button"><img src="assets/settings-icon.svg" alt="Settings Button"></button>
+	<!-- 		<div id='task-list' >
+					<div id="task-input">
+						<input id="input-value" type="text" placeholder="Tasks To Complete...">
+						<label for="estimated-count">Estimated Count</label>
+						<input id="estimated-count" type="number" min="1" max="4">
+						<button id='add-button'>+</button>
+					</div>
+					<div class='task-list'>
+						<li>
+							<input id="task-is-done" type="checkbox"></input>
+							<input id="task-input" type="text" disabled>
+							<label for="task-estimated"> est </label>
+							<input id="task-estimated" type="number" min="1" max="4" disabled>
+							<button id="task-edit">Edit</button>
+							<button id="task-remove">Remove</button>
+						</li>
+						<li>
+							<input id="task-is-done" type="checkbox"></input>
+							<input id="task-input" type="text" disabled>
+							<input id="task-estimated" type="number" min="1" max="4" disabled>
+							<button id="task-edit">Edit</button>
+							<button id="task-remove">Remove</button>
+						</li>
+					</div>
+			</div> -->
 
-		<!-- Timer Settings Buttons -->
-		<div id="timer-settings" class="dialog">
-			<div class="dialog-content">
-				<form id="timer-settings-form">
-					<fieldset>
-						<label for="pomo-number">Number of Pomodoros:</label>
-						<div>
-							<input id="pomo-number" name="pomo-number" type="number" min="1" max="25" value="5">
-							<input id="pomo-slider" name="pomo-slider" type="range" min="1" max="25" value="5">
-						</div>
-					</fieldset>
-					<fieldset>
-						<legend>Choose your Pomodoro lengths:</legend>
-
-						<label for="pomo-length-number">Length of Pomodoro (min):</label>
-						<div>
-							<input id="pomo-length-number" name="pomo-length-number" type="number" min="5" max="120" value="25">
-							<input id="pomo-length-slider" name="pomo-length-slider" type="range" min="5" max="120" value="25">
-						</div>
-
-						<label for="short-break-number">Length of short break (min):</label>
-						<div>
-							<input id="short-break-number" name="short-break-number" type="number" min="1" max="25" value="5">
-							<input id="short-break-slider" name="short-break-slider" type="range" min="1" max="25" value="5">
-						</div>
-						<label for="long-break-number">Length of long break (min):</label>
-						<div>
-							<input id="long-break-number" name="long-break-number" type="number" min="1" max="50" value="15">
-							<input id="long-break-slider" name="long-break-slider" type="range" min="1" max="50" value="15">
-						</div>
-					</fieldset>
-
-					<button id="timer-settings-close" type="button">Close</button>
-					<button id="timer-settings-save" type="submit">Save</button>
-
-					<hr>
-					<h2>What is the Pomodoro Method?</h2>
-					<p>Pomodoro content</p>
-			</div>
-		</div>
-
-		<template id="confirm-dialog-template">
-			<style>
-				.dialog {
-					position: fixed;
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-					align-items: center;
-					width: 100vw;
-					height: 100vh;
-					top: 0;
-					left: 0;
-					background-color: rgba(0, 0, 0, 0.2);
-				}
-
-				.dialog-content {
-					padding: 1rem;
-					border: 2px solid black;
-					background-color: #FFFCF4;
-				}
-			</style>
-			<div class="dialog">
+			<!-- Timer Settings Buttons -->
+			<div id="timer-settings" class="dialog">
 				<div class="dialog-content">
-					<h2>
-						<slot name="header">Dialog header</slot>
-					</h2>
-					<p>
-						<slot name="text">Dialog text</slot>
-					</p>
-					<menu>
-						<button class="cancel-button">Cancel</button>
-						<button class="confirm-button">
-							<slot name="confirm-button-text">Confirm</slot>
-						</button>
-					</menu>
+					<form id="timer-settings-form">
+						<fieldset>
+							<label for="pomo-number">Number of Pomodoros:</label>
+							<div>
+								<input id="pomo-number" name="pomo-number" type="number" min="1" max="25" value="5">
+								<input id="pomo-slider" name="pomo-slider" type="range" min="1" max="25" value="5">
+							</div>
+						</fieldset>
+						<fieldset>
+							<legend>Choose your Pomodoro lengths:</legend>
+
+							<label for="pomo-length-number">Length of Pomodoro (min):</label>
+							<div>
+								<input id="pomo-length-number" name="pomo-length-number" type="number" min="5" max="120" value="25">
+								<input id="pomo-length-slider" name="pomo-length-slider" type="range" min="5" max="120" value="25">
+							</div>
+
+							<label for="short-break-number">Length of short break (min):</label>
+							<div>
+								<input id="short-break-number" name="short-break-number" type="number" min="1" max="25" value="5">
+								<input id="short-break-slider" name="short-break-slider" type="range" min="1" max="25" value="5">
+							</div>
+							<label for="long-break-number">Length of long break (min):</label>
+							<div>
+								<input id="long-break-number" name="long-break-number" type="number" min="1" max="50" value="15">
+								<input id="long-break-slider" name="long-break-slider" type="range" min="1" max="50" value="15">
+							</div>
+						</fieldset>
+
+						<button id="timer-settings-close" type="button">Close</button>
+						<button id="timer-settings-save" type="submit">Save</button>
+
+						<hr>
+						<h2>What is the Pomodoro Method?</h2>
+						<p>Pomodoro content</p>
 				</div>
 			</div>
-		</template>
 
-	</footer>
+			<template id="confirm-dialog-template">
+				<style>
+					.dialog {
+						position: fixed;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						width: 100vw;
+						height: 100vh;
+						top: 0;
+						left: 0;
+						background-color: rgba(0, 0, 0, 0.2);
+					}
+
+					.dialog-content {
+						padding: 1rem;
+						border: 2px solid black;
+						background-color: #FFFCF4;
+					}
+				</style>
+				<div class="dialog">
+					<div class="dialog-content">
+						<h2>
+							<slot name="header">Dialog header</slot>
+						</h2>
+						<p>
+							<slot name="text">Dialog text</slot>
+						</p>
+						<menu>
+							<button class="cancel-button">Cancel</button>
+							<button class="confirm-button">
+								<slot name="confirm-button-text">Confirm</slot>
+							</button>
+						</menu>
+					</div>
+				</div>
+			</template>
+
+		</footer>
+
+	</div>
 
 
 

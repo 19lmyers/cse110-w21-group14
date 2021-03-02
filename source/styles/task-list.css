@@ -2,6 +2,14 @@
     border-radius: 25px;
     width: 20em;
 }
+
+#task-list-component {
+    border: 1px solid black;
+}
+#task-list {
+    visibility: hidden;
+    position: absolute;
+}
 #task-pomo-estimate-input {
     width:2em;
 }
@@ -23,6 +31,7 @@
     height: 60px;
     width: 60px;
     background-color: #366577;
+    border-radius: 50%;
 }
 #task-add-button{
     border-radius: 10px;
