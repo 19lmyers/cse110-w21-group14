@@ -105,7 +105,7 @@ class TimerProgress extends HTMLElement {
           this.currentProgressBarElement = this.pomodoroProgress;
           this.pomodoroDot = true;
           break;
-      this.timerProgress.pomodoroDot = true;
+          this.timerProgress.pomodoroDot = true;
           break;
         case PHASE_SHORT_BREAK:
           this.currentProgressBarElement = this.breakProgress;
@@ -181,7 +181,8 @@ class TimerProgress extends HTMLElement {
 
     if (complete) {
       pomodoroDot.classList.add('complete');
-    } else {
+    } 
+    else {
       pomodoroDot.classList.remove('complete');
     }
   }
@@ -195,7 +196,8 @@ class TimerProgress extends HTMLElement {
 
     if (complete) {
       breakDot.classList.add('complete');
-    } else {
+    } 
+    else {
       breakDot.classList.remove('complete');
     }
   }
@@ -209,7 +211,8 @@ class TimerProgress extends HTMLElement {
 
     if (complete) {
       doneDot.classList.add('complete');
-    } else {
+    } 
+    else {
       doneDot.classList.remove('complete');
     }
   }
