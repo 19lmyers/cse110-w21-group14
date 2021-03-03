@@ -313,7 +313,7 @@ class TimerText {
   /**
    * Sets the timer to the desired value (in seconds).
    * Only works if the timer is stopped.
-   * @param newTime
+   * @param {number} newTime The time in seconds
    */
   setTime(newTime) {
     if (this.intervalId === null) {
@@ -656,32 +656,3 @@ function insert() {
 for (let i = 0; i < taskList.length; i++) {
   new Task(taskList[i]);
 }
-
-module.exports = {
-  SEC_01,
-  SEC_03,
-  SEC_05,
-  TIMER_TEXT_SELECTOR,
-  TIMER_BUTTON_SELECTOR,
-  TIMER_INFO_WORK_PROGRESS_SELECTOR,
-  TIMER_INFO_BREAK_PROGRESS_SELECTOR,
-  TIMER_INFO_SESSIONS_REMAINING_SELECTOR,
-  TIMER_RESET_BUTTON_SELECTOR,
-  TIMER_SETTINGS_SELECTOR,
-  POMO_NUMBER_SELECTOR,
-  POMO_LENGTH_NUMBER_SELECTOR,
-  SHORT_BREAK_NUMBER_SELECTOR,
-  LONG_BREAK_NUMBER_SELECTOR,
-  TIMER_SPLASH_SELECTOR,
-  TIMER_SPLASH_BUTTON_SELECTOR,
-  PHASE_POMODORO,
-  PHASE_SHORT_BREAK,
-  PHASE_LONG_BREAK,
-  STATUS_STOPPED,
-  STATUS_RUNNING,
-  TimerText,
-  TimerSettings,
-  TimerSplash,
-  TimerInfoProgress,
-  TimerApp
-};
