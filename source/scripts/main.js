@@ -584,8 +584,6 @@ class TaskList {
     //TODO: change to shadow dom element when using components
     this.taskListContainerElement = document.querySelector(taskListContainerSelector);
 
-    //load any stored tasks and append to task list
-
     this.taskInputElement = document.createElement("div");
     
     this.taskNameInput = document.createElement("input");
@@ -618,18 +616,31 @@ class TaskList {
         this.taskPomoEstimateInput.value = "";
       }
     );
+
     
-    // Handle task storage on window close
+    // Handle BEFOREUNLOAD event by storing tasks into local storage
     window.addEventListener("beforeunload", (event) => {
       this.storeTaskList();
     }, false);
 
-    // Handle no focus task functionality
+    // Handle NOFOCUSTASK event by toggling task list
     document.addEventListener("noFocusTask", (event) => {
       this.toggleTaskList();
       console.log("TaskList handled noFocusTaskEvent");
     });
 
+    // Handles the CHOOSETASK event by clearing all current focus tasks on task list and setting new
+    document.addEventListener("chooseTask", (event) => {
+      // Remove all current focus tasks
+      while (this.taskListContainerElement.querySelector("*[focus]")) {
+        this.taskListContainerElement.querySelector("*[focus]").removeAttribute("focus");
+      }
+      // Set chosen task as current focus task
+      event.detail.task.setAttribute("focus","true");
+      this.toggleTaskList();
+    });
+
+    // After constructing task list element, load all tasks from local storage.
     this.loadTaskList();
   }
 
@@ -638,13 +649,13 @@ class TaskList {
    */
   storeTaskList() {
     let tasksToBeStored = [];
-    Array.from(this.taskListContainerElement.getElementsByClassName("single-task")).forEach(task => 
+    Array.from(this.taskListContainerElement.getElementsByClassName("task")).forEach(task => 
       {
       let taskValues = {
         name: task.querySelector(".task-name").value,
         pomoActual: task.querySelector(".task-pomo-actual").textContent,
         pomoEstimate: task.querySelector(".task-pomo-estimate").value,
-        isDone: task.querySelector(".task-is-done").checked,
+        isDone: task.querySelector(".task-checkbox").checked,
       }
       tasksToBeStored.push(taskValues);
       localStorage.setItem("task-list", JSON.stringify(tasksToBeStored));
@@ -741,21 +752,32 @@ class FocusTask {
       if (event.target.className == "no-focus-task") {
         //Dispatch noFocusTaskEvent to document
         const noFocusTaskEvent = new Event("noFocusTask", { bubbles: true});
+        if (event.target.id == "focus-task-checkbox") {
+          const finishedNoFocusTaskEvent = new Event("noFocusTask", { bubbles: true })
+          document.dispatchEvent(finishedNoFocusTaskEvent);
+          console.log("focusTask dispatched finishedNoFocusTask event to document");
+        }
         document.dispatchEvent(noFocusTaskEvent);
 
         //TODO: delete
-        console.log("FocusTask dispatched noFocusTaskEvent");
+        console.log("FocusTask dispatched noFocusTask event to document");
       }
     });
 
     // Handle focusTaskIsDone check event:
     this.focusTaskIsDone.addEventListener("change", (event) => {
       if (event.target.checked == true) {
-        const finishedFocusTaskEvent = new Event("finishedFocusTask", { bubbles: true });
+        this.clearFocusTask();
+        //TODO: JSDocs headers for events
+        const finishedFocusTaskEvent = new CustomEvent("finishedFocusTask", { 
+          bubbles: true,
+          detail: event.target.parentElement.className,}
+        );
         document.dispatchEvent(finishedFocusTaskEvent);
 
         //TODO: delete task output
-        console.log("FocusTask dispatched finishedFocusTaskEvent");
+        console.log("FocusTask dispatched finishedFocusTask event with detail " 
+        + event.target.parentElement.className);
       }
     });
 
@@ -764,11 +786,12 @@ class FocusTask {
       this.setFocusTaskName(event.detail.name);
       this.setFocusTaskPomoActual(event.detail.pomoActual);
       this.setFocusTaskPomoEstimate(event.detail.pomoEstimate);
+      this.setFocusTaskIsDone(event.detail.isDone);
 
       //TODO: delete task output
       console.log("FocusTask handled chooseTaskEvent");
     });
-  }
+  } /* constructor */
 
   /**
    * setFocusTaskName: sets the new focus task name
@@ -777,7 +800,7 @@ class FocusTask {
   setFocusTaskName(taskName) {
     this.focusTaskName.textContent = taskName;
     this.focusTaskContainer.className = "focus-task";
-  }
+  } /* setFocusTaskName */
 
   /**
    * setFocusTaskPomoActual: sets the amount of pomodoros used for the focus task
@@ -785,7 +808,7 @@ class FocusTask {
    */
   setFocusTaskPomoActual(taskPomoActual) {
     this.focusTaskPomoActual.textContent = taskPomoActual;
-  }
+  } /* setFocusTaskPomoActual */
 
   /**
    * setFocusTaskPomoEstimate: sets the estimated pomos for the focus task
@@ -793,6 +816,14 @@ class FocusTask {
    */
   setFocusTaskPomoEstimate(taskPomoEstimate) {
     this.focusTaskPomoEstimate.textContent = taskPomoEstimate;
+  } /* setFocusTaskPomoEstimate */
+
+  /**
+   * setFocusTaskIsDone: sets whether or not the focus task is finished
+   * @param {boolean} done
+   */
+  setFocusTaskIsDone(done) {
+      this.focusTaskIsDone.checked = done;
   }
 
   /**
@@ -802,9 +833,8 @@ class FocusTask {
     this.focusTaskName.textContent = "Choose a focus task"; 
     this.focusTaskPomoActual.textContent = 0;
     this.focusTaskPomoEstimate.textContent = 0;
-    this.focusTaskIsDone.value = "unchecked";
     this.focusTaskContainer.className = "no-focus-task";
-  }
+  } /* clearFocusTask */
   
 }
 /* Task */
@@ -812,7 +842,7 @@ class FocusTask {
 class Task {
   /* 
    * Styling: 
-   * single-task, focus-task, and task-done, task-not-done, task-save-button, task-edit-button
+   * task, focus-task, and task-done, task-not-done, task-save-button, task-edit-button
    */
   /**
    * Task(taskName, pomoEstimate, pomoActual):
@@ -827,7 +857,7 @@ class Task {
     this.taskListContainerElement = taskListContainerElement;
 
     this.taskContainerElement = document.createElement("div");
-    this.taskContainerElement.className = "single-task"
+    this.taskContainerElement.className = "task"
 
     this.taskEditButton = document.createElement("button");
     this.taskEditButton.innerHTML="Edit"; //TODO: use pictures
@@ -853,13 +883,13 @@ class Task {
 
     this.taskIsDone = document.createElement("input");
     this.taskIsDone.type = "checkbox";
-    this.taskIsDone.className = "task-is-done";
+    this.taskIsDone.className = "task-checkbox";
     this.taskIsDone.checked = isTaskDone;
 
     if (isTaskDone == true) {
-      this.taskContainerElement.className = "single-task task-done";
+      this.taskContainerElement.className = "task task-done";
     } else {
-      this.taskContainerElement.className = "single-task task-not-done";
+      this.taskContainerElement.className = "task task-not-done";
     }
 
     //Append to task container
@@ -878,9 +908,9 @@ class Task {
     //TODO: Check if listener for check boxes update styling correctly
     this.taskIsDone.addEventListener("input", (event) => {
       if (event.target.checked == false) {
-        this.taskContainerElement.className = "single-task task-done";
+        this.taskContainerElement.className = "task task-not-done";
       } else {
-        this.taskContainerElement.className = "single-task task-not-done"
+        this.taskContainerElement.className = "task task-done"
       }
     });
  
@@ -903,14 +933,15 @@ class Task {
     this.taskContainerElement.addEventListener("click", (event) => {
       if (event.target.className != "task-save-button" &&
           event.target.className != "task-delete-button" &&
-          event.target.className != "task-edit-button") 
+          event.target.className != "task-edit-button" &&
+          event.target.className != "task-checkbox") 
           {
             const chooseTaskEvent = new CustomEvent("chooseTask", {
-              bubbles: true,
               detail: {
                 name: this.taskNameField.value,
                 pomoActual: this.taskPomoActualValue.textContent,
                 pomoEstimate: this.taskPomoEstimateValue.value,
+                isDone: this.taskIsDone.checked,
                 task: this.taskContainerElement,
               }
             });
@@ -919,7 +950,8 @@ class Task {
             document.dispatchEvent(chooseTaskEvent);
 
             //TODO: delete
-            console.log("Task dispatched chooseTaskEvent")
+            console.log("Task dispatched chooseTaskEvent with detail " + 
+                JSON.stringify(chooseTaskEvent.detail));
           }
     })
     
