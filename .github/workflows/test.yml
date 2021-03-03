@@ -1,17 +1,22 @@
-name: Unit Testing with Jest
+name: Cypress-Jest Test
 on:  
   push:
-    branches:
-      - master
   pull_request:
     branches:
       - master
 jobs:
-  test:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Cypress run
+      uses: cypress-io/github-action@v2
+  jest:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Install dependencies
+    - name: Install modules
       run: yarn
-    - name: Run jest unit tests
+    - name: Run tests
       run: yarn test

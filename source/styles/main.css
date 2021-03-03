@@ -7,6 +7,8 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #F08080;
+  text-align: center
 }
 
 /* Default button attributes */
@@ -210,4 +212,50 @@ progress[value]::-webkit-progress-value {
 
   color: #7DBAC8;
 }
+/* <--------------------------------------------------------------------------------------------> */
+
+
+/* Task Button */
+/* <--------------------------------------------------------------------------------------------> */
+#task-button {
+  width: 177.35px;
+  height: 63.34px;
+  margin: 50px;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px; 
+
+  background: #FFFCF4;
+  box-shadow: 0px 4px 4px #000000;
+  border-radius: 30px;
+}
+
+#task-button:hover {
+  box-shadow: inset 0px 4px 4px rgba(0,0,0,0.5);
+}
+
+#task-list {
+  visibility: hidden;
+}
+
+#task-list h1 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-right: -50%;
+}
+
+
+#edit {
+	background-color: green;
+	cursor: pointer;
+}
+
+#delete {
+  background-color: red;
+  cursor: pointer;
+}
+
+
 /* <--------------------------------------------------------------------------------------------> */

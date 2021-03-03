@@ -12,7 +12,8 @@ const TIMER_APP_SELECTOR = '#timer-app';
 const TIMER_INFO_SESSIONS_SELECTOR = '#timer-info-sessions';
 const TIMER_INFO_WORK_PROGRESS_SELECTOR = '#timer-info-work-progress';
 const TIMER_INFO_BREAK_PROGRESS_SELECTOR = '#timer-info-break-progress';
-const TIMER_INFO_SESSIONS_REMAINING_SELECTOR = "#timer-info-sesions-remaining"
+const TIMER_INFO_SESSIONS_REMAINING_SELECTOR = '#timer-info-sesions-remaining';
+const TIMER_RESET_BUTTON_SELECTOR = '#timer-reset-button';
 const TIMER_SETTINGS_SELECTOR = '#timer-settings';
 const POMO_NUMBER_SELECTOR = '#pomo-number';
 const POMO_SLIDER_SELECTOR = '#pomo-slider';
@@ -29,14 +30,14 @@ const PHASE_SHORT_BREAK = "shortBreak";
 const PHASE_LONG_BREAK = "longBreak"
 const TIMER_COMPLETE_SOUND = 'pomo-complete-sound';
 const BUTTON_SOUND = 'button-sound';
+const STATUS_STOPPED = 'stopped';
+const STATUS_RUNNING = 'running';
 /* -------------------------------------------------------------------------- */
 
 /* TimerApp class */
 class TimerApp {
   /**
    * Contructs a TimerApp, which handles all the logic for the timer.
-   * @param {*} timerText is a TimerText object.
-   * @param {*} timerButton is a selector for the timer's primary start/stop button.
    */
   constructor() {
     this.numPomodoros = 0;
@@ -46,27 +47,35 @@ class TimerApp {
       [PHASE_SHORT_BREAK]: SEC_03,
       [PHASE_LONG_BREAK]: SEC_05,
     };
-    this.currentStatus = 'stopped';
-    this.currentPhase = 'pomodoro';
+    this.currentStatus = STATUS_STOPPED;
+    this.currentPhase = PHASE_POMODORO;
     this.timeoutId = null;
 
     // Initialize components
     this.timerText = new TimerText(TIMER_TEXT_SELECTOR, this.pomodoroTimes.pomodoro);
-    this.timerButton = new TimerButton(TIMER_BUTTON_SELECTOR);
-    this.timerInfo = new TimerInfo(TIMER_INFO_SESSIONS_SELECTOR, TIMER_INFO_WORK_PROGRESS_SELECTOR,
-      TIMER_INFO_BREAK_PROGRESS_SELECTOR, TIMER_INFO_SESSIONS_REMAINING_SELECTOR);
+    this.timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
+    this.timerInfo = new TimerInfo(TIMER_INFO_SESSIONS_SELECTOR,
+      TIMER_INFO_WORK_PROGRESS_SELECTOR, TIMER_INFO_BREAK_PROGRESS_SELECTOR,
+      TIMER_INFO_SESSIONS_REMAINING_SELECTOR);
     this.timerSettings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
 
-    this.timerButton.element.addEventListener('buttonPressed', () => {
-      if (this.currentStatus === 'stopped' || (this.currentStatus === 'running' && confirm('Are you sure you want to end this Pomodoro?'))) {
-        this.toggleTimer();
+    // Event listener for toggling the timer via button
+    this.timerButton.addEventListener('buttonPressed', () => {
+      if (this.currentStatus === STATUS_RUNNING) {
+        let skip = this.currentPhase !== PHASE_POMODORO;
+        this.confirmEnd(skip);
+      }
+      else {
+        this.handleStart();
       }
     });
-    document.querySelector('#timer-reset-button').addEventListener('click', () => {
-      if (confirm('Are you sure you want to reset your Pomodoro count?')) {
-        this.resetPomodoros();
-      }
+
+    // Event listener for resetting Pomodoros via button
+    document.querySelector(TIMER_RESET_BUTTON_SELECTOR).addEventListener('click', () => {
+      this.confirmReset();
     });
+
+    // Event listener for changing settings via dialog
     this.timerSettings.element.addEventListener('settingsChanged', (event) => {
       this.pomodoroLimit = event.detail.pomodoroLimit;
       this.pomodoroTimes = event.detail.pomodoroTimes;
@@ -81,64 +90,53 @@ class TimerApp {
   } /* constructor */
 
   /**
-   * Toggles the state of the timer.
-   */
-  toggleTimer() {
-    switch (this.currentStatus) {
-      case 'stopped':
-        this.handleStart();
-
-        //TODO: Add this functionality to handleStart()
-        /* Clear progress bar if starting from stopped state */
-        this.timerInfo.progressInfo.clearProgress();
-        break;
-      case 'running':
-        this.handleEnd(true);
-        break;
-    }
-  } /* toggleTimer */
-
-  /**
    * Handles the start of the timer.
    */
   handleStart() {
-    if (this.currentStatus === 'stopped') {
+    if (this.currentStatus === STATUS_STOPPED) {
       this.timerText.start();
-      this.currentStatus = 'running';
+      this.currentStatus = STATUS_RUNNING;
 
-      //Progress bar: update progress
+      // Progress bar: update progress
+      this.timerInfo.progressInfo.clearProgress();
       this.timerInfo.progressInfo.startProgress(this.currentPhase,
         this.pomodoroTimes[this.currentPhase]);
 
       // Set natural timeout duration
       this.timeoutId = setTimeout(this.handleEnd.bind(this), this.timerText.time * 1000, false);
-      this.timerButton.buttonText = "END";
+      this.timerButton.setAttribute('data-text', 'END');
     }
   } /* handleStart */
 
   /**
-   * Handles the end of the timer.
+   * Handles the end of a Pomodoro session.
+   * @param {boolean} early indicates whether the Pomodoro was ended early.
    */
   handleEnd(early) {
-    this.timerText.end();
-    this.timerInfo.progressInfo.stopProgress();
-    this.currentStatus = 'stopped';
-    this.timerButton.buttonText = "START";
+    if (this.currentStatus === STATUS_RUNNING) {
+      this.timerText.end();
+      this.timerInfo.progressInfo.stopProgress();
+      this.currentStatus = 'stopped';
+      this.timerButton.setAttribute('data-text', 'START');
 
-    // Clear natural duration and reset ID
-    clearTimeout(this.timeoutId);
-    this.timeoutId = null;
+      // Clear natural duration and reset ID
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
 
-    if (early) {
-      if (this.currentPhase !== 'pomodoro') {
-        this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
+      // Set document title back to Pomodoro
+      document.title = 'Pomodoro';
+
+      if (early) {
+        if (this.currentPhase !== 'pomodoro') {
+          this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
+        }
+        this.currentPhase = 'pomodoro';
+        this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
+        this.timerInfo.progressInfo.clearProgress(early);
       }
-      this.currentPhase = 'pomodoro';
-      this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
-      this.timerInfo.progressInfo.clearProgress(early);
-    } else {
-      // Keep cycling through phases until break is finished
-      this.timerText.setTime(this.pomodoroTimes[this.cyclePhase()]);
+      else {
+        // Keep cycling through phases until break is finished
+        this.timerText.setTime(this.pomodoroTimes[this.cyclePhase()]);
 
       if (this.currentPhase !== 'pomodoro') {
         this.playSound(TIMER_COMPLETE_SOUND);
@@ -148,16 +146,23 @@ class TimerApp {
         this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
       }
     }
+  }
   } /* handleEnd */
 
+
+  /**
+   * Cycles the pomodoro to the next phase, taking into account
+   * long and short break cycles. 
+   * @return {string} the next phase of the cycle.
+   */
   cyclePhase() {
-    //set the amount of pomodoros on the screen
     switch (this.currentPhase) {
       case PHASE_POMODORO:
         // Fourth pomodoro: long break
         if (this.numPomodoros % 4 === 3) {
           this.currentPhase = PHASE_LONG_BREAK;
-        } else {
+        }
+        else {
           this.currentPhase = PHASE_SHORT_BREAK;
         }
         break;
@@ -169,10 +174,13 @@ class TimerApp {
     return this.currentPhase;
   }
 
+  /**
+   * Resets the number of pomodoros completed.
+   */
   resetPomodoros() {
     this.numPomodoros = 0;
     this.timerInfo.sessionsInfo.sessionsText = 0;
-  }
+  } /* resetPomodoros */
 
   /**
    * Will play a sound or start the sound over if it is already playing
@@ -187,6 +195,83 @@ class TimerApp {
     }
   }/* playSound */
 
+ 
+
+  /**
+   * Handles the logic of confirming ending the session early, including showing
+   * the dialog and handling an early end or skip if confirmed.
+   * @param {boolean} skip indicates whether the confirm dialog should show 
+   * end text (abrupt end during Pomodoro) or skip text (during a break).
+   */
+  confirmEnd(skip) {
+    // Constants for dialog text
+    const END_TEXT = `Are you sure you want to end this pomodoro session? Your current 
+      Pomodoro will not be saved.`;
+    const SKIP_TEXT = `Are you sure you want to end this break? You will still complete 
+      your pomodoro session, but skipping breaks is not advised`;
+
+    let confirmDialog = document.createElement('confirm-dialog');
+
+    // Fill slot header
+    let dialogHeader = document.createElement('span');
+    dialogHeader.setAttribute('slot', 'header');
+    dialogHeader.textContent = 'End Pomodoro Session';
+    confirmDialog.appendChild(dialogHeader);
+
+    // Fill slot text
+    let dialogText = document.createElement('span');
+    dialogText.setAttribute('slot', 'text');
+    dialogText.textContent = skip ? SKIP_TEXT : END_TEXT;
+    confirmDialog.appendChild(dialogText);
+
+    // Fill slot confirm-button-text
+    let dialogConfirm = document.createElement('span');
+    dialogConfirm.setAttribute('slot', 'confirm-button-text');
+    dialogConfirm.textContent = 'End';
+    confirmDialog.appendChild(dialogConfirm);
+
+    // Set confirm action
+    confirmDialog.addEventListener('confirmPressed', () => {
+      this.handleEnd(true);
+    });
+
+    document.body.appendChild(confirmDialog);
+  } /* confirmEnd */
+
+  /**
+   * Handles the logic of confirming the reset of all completed Pomodoros.
+   */
+  confirmReset() {
+    const RESET_TEXT = `Are you sure you want to reset your Pomodoro count? \
+    You won't be able to get them back.`;
+
+    let confirmDialog = document.createElement('confirm-dialog');
+
+    // Fill slot header
+    let dialogHeader = document.createElement('span');
+    dialogHeader.setAttribute('slot', 'header');
+    dialogHeader.textContent = 'Reset Pomodoros';
+    confirmDialog.appendChild(dialogHeader);
+
+    // Fill slot text
+    let dialogText = document.createElement('span');
+    dialogText.setAttribute('slot', 'text');
+    dialogText.textContent = RESET_TEXT;
+    confirmDialog.appendChild(dialogText);
+
+    // Fill slot confirm-button-text
+    let dialogConfirm = document.createElement('span');
+    dialogConfirm.setAttribute('slot', 'confirm-button-text');
+    dialogConfirm.textContent = 'Reset';
+    confirmDialog.appendChild(dialogConfirm);
+
+    // Set confirm action
+    confirmDialog.addEventListener('confirmPressed', () => {
+      this.resetPomodoros();
+    });
+
+    document.body.appendChild(confirmDialog);
+  } /* confirmReset */
 }
 
 /* TimerText class */
@@ -198,7 +283,7 @@ class TimerText {
    * @param {*} time is the initial time for the TimerText to display.
    */
   constructor(selector, time) {
-    // Initialize intervalId for timeout functions
+  // Initialize intervalId for timeout functions
     this.intervalId = null;
 
     // Store arguments
@@ -215,6 +300,9 @@ class TimerText {
   start() {
     if (this.intervalId === null) {
       this.intervalId = setInterval(this.update.bind(this), 1000);
+
+      // Set document title to current time
+      document.title = `Pomodoro - ${this.timeString}`;
     }
   } /* start */
 
@@ -224,6 +312,9 @@ class TimerText {
   update() {
     this.time--;
     this.element.textContent = this.timeString;
+
+    // Set document title to current time
+    document.title = `Pomodoro - ${this.timeString}`;
   } /* update */
 
 
@@ -238,6 +329,7 @@ class TimerText {
   /**
    * Sets the timer to the desired value (in seconds).
    * Only works if the timer is stopped.
+   * @param newTime
    */
   setTime(newTime) {
     if (this.intervalId === null) {
@@ -257,27 +349,6 @@ class TimerText {
     let secString = sec < 10 ? '0' + sec : '' + sec;
     return this.time < 0 ? `-${minString}:${secString}` : `${minString}:${secString}`;
   } /* timeString */
-
-}
-
-class TimerButton {
-  /**
-   * Constructs a TimerButton object, which propogates presses and can be set.
-   * @param {} selector 
-   */
-  constructor(selector) {
-    this.element = document.querySelector(selector);
-
-    this.element.addEventListener('click', () => {
-      let buttonPressedEvent = new Event('buttonPressed');
-      this.element.dispatchEvent(buttonPressedEvent);
-    });
-  }
-
-  set buttonText(text) {
-    this.element.textContent = text;
-  }
-
 }
 
 class TimerInfo {
@@ -308,14 +379,14 @@ class TimerInfoSessions {
   }
 }
 
-/* <--------------------------------------------------------------------------------------------> */
+/* <-------------------------------------------------------------------------------------------> */
 class TimerInfoProgress {
   constructor(workProgressSelector, breakProgressSelector, sessionsRemainingSelector) {
     this.workProgressElement = document.querySelector(workProgressSelector);
     this.breakProgressElement = document.querySelector(breakProgressSelector);
     this.sessionsRemainingElement = document.querySelector(sessionsRemainingSelector);
 
-    //TODO: Update to support default time or change constructor to be similar to TimerText
+    // TODO: Update to support default time or change constructor to be similar to TimerText
     this.time = MIN_25;
     this.totalTime = MIN_25;
     this.currentProgressBarElement = this.workProgressElement;
@@ -332,7 +403,7 @@ class TimerInfoProgress {
     this.time = phaseTotalTime;
     this.totalTime = phaseTotalTime;
 
-    //Selects currentProgressBarElement based on currentPhase
+    // Selects currentProgressBarElemetn based on currentPhase
     if (this.currentPhase == PHASE_POMODORO) {
       this.currentProgressBarElement = this.workProgressElement;
     }
@@ -340,7 +411,7 @@ class TimerInfoProgress {
       this.currentProgressBarElement = this.breakProgressElement;
     }
     else {
-      console.log("Error occured during TimerInfoProgress.updateProgress()")
+      console.log('Error occured during TimerInfoProgress.updateProgress()');
     }
 
     this.intervalId = setInterval(this.updateProgress.bind(this), 1000);
@@ -350,7 +421,7 @@ class TimerInfoProgress {
    * Updates the value of currentProgressBarElement based on current time
    */
   updateProgress() {
-    console.log("updateProgress()");
+    console.log('updateProgress()');
     this.time--;
     this.currentProgressBarElement.value = this.currentProgressValue;
   } /* updateProgress() */
@@ -366,7 +437,7 @@ class TimerInfoProgress {
    * stopProgress: Stops the updating of the currentPhase's progress bar.
    */
   stopProgress() {
-    console.log("stopProgress()");
+    console.log('stopProgress()');
     clearInterval(this.intervalId);
     this.intervalId = null;
   } /* stopProgress */
@@ -387,16 +458,20 @@ class TimerInfoProgress {
     this.sessionsRemainingElement.textcontent = pomosRemaining;
   }
 }
+
 /* <--------------------------------------------------------------------------------------------> */
 class TimerSettings {
   constructor(settingsSelector) {
     this.element = document.querySelector(settingsSelector);
-    document.querySelector('#timer-settings-button').addEventListener('click', this.openSettings.bind(this));
-    document.querySelector('#timer-settings-close').addEventListener('click', this.closeSettings.bind(this));
-    document.querySelector('#timer-settings-save').addEventListener('click', (event) => {
-      event.preventDefault();
-      this.updateSettings();
-    });
+    document.querySelector('#timer-settings-button')
+      .addEventListener('click', this.openSettings.bind(this));
+    document.querySelector('#timer-settings-close')
+      .addEventListener('click', this.closeSettings.bind(this));
+    document.querySelector('#timer-settings-save')
+      .addEventListener('click', (event) => {
+        event.preventDefault();
+        this.updateSettings();
+      });
 
     this.pomoNumber = document.querySelector(POMO_NUMBER_SELECTOR);
     this.pomoSlider = document.querySelector(POMO_SLIDER_SELECTOR);
@@ -410,25 +485,34 @@ class TimerSettings {
     this.longBreakNumber = document.querySelector(LONG_BREAK_NUMBER_SELECTOR);
     this.longBreakSlider = document.querySelector(LONG_BREAK_SLIDER_SELECTOR);
 
-    this.pomoNumber.addEventListener("input", this.updateSlider.bind(this, POMO_NUMBER_SELECTOR,POMO_SLIDER_SELECTOR));
-    this.pomoSlider.addEventListener("input", this.updateSlider.bind(this, POMO_SLIDER_SELECTOR, POMO_NUMBER_SELECTOR));
+    this.pomoNumber.addEventListener('input', this.updateSlider.bind(this,
+      POMO_NUMBER_SELECTOR, POMO_SLIDER_SELECTOR));
+    this.pomoSlider.addEventListener('input', this.updateSlider.bind(this,
+      POMO_SLIDER_SELECTOR, POMO_NUMBER_SELECTOR));
 
-    this.pomoLengthNumber.addEventListener("input", this.updateSlider.bind(this, POMO_LENGTH_NUMBER_SELECTOR, POMO_LENGTH_SLIDER_SELECTOR));
-    this.pomoLengthSlider.addEventListener("input", this.updateSlider.bind(this, POMO_LENGTH_SLIDER_SELECTOR, POMO_LENGTH_NUMBER_SELECTOR));
+    this.pomoLengthNumber.addEventListener('input', this.updateSlider.bind(this,
+      POMO_LENGTH_NUMBER_SELECTOR, POMO_LENGTH_SLIDER_SELECTOR));
+    this.pomoLengthSlider.addEventListener('input', this.updateSlider.bind(this,
+      POMO_LENGTH_SLIDER_SELECTOR, POMO_LENGTH_NUMBER_SELECTOR));
 
-    this.shortBreakNumber.addEventListener("input", this.updateSlider.bind(this, SHORT_BREAK_NUMBER_SELECTOR, SHORT_BREAK_SLIDER_SELECTOR));
-    this.shortBreakSlider.addEventListener("input", this.updateSlider.bind(this, SHORT_BREAK_SLIDER_SELECTOR, SHORT_BREAK_NUMBER_SELECTOR));
+    this.shortBreakNumber.addEventListener('input', this.updateSlider.bind(this,
+      SHORT_BREAK_NUMBER_SELECTOR, SHORT_BREAK_SLIDER_SELECTOR));
+    this.shortBreakSlider.addEventListener('input', this.updateSlider.bind(this,
+      SHORT_BREAK_SLIDER_SELECTOR, SHORT_BREAK_NUMBER_SELECTOR));
 
-    this.longBreakNumber.addEventListener("input", this.updateSlider.bind(this, LONG_BREAK_NUMBER_SELECTOR, LONG_BREAK_SLIDER_SELECTOR));
-    this.longBreakSlider.addEventListener("input", this.updateSlider.bind(this, LONG_BREAK_SLIDER_SELECTOR, LONG_BREAK_NUMBER_SELECTOR));
+    this.longBreakNumber.addEventListener('input', this.updateSlider.bind(this,
+      LONG_BREAK_NUMBER_SELECTOR, LONG_BREAK_SLIDER_SELECTOR));
+    this.longBreakSlider.addEventListener('input', this.updateSlider.bind(this,
+      LONG_BREAK_SLIDER_SELECTOR, LONG_BREAK_NUMBER_SELECTOR));
   }
 
   /**
-   * Will update a number to match the value on a slider or vice versa depending on the order of parameters
+   * Will update a number to match the value on a slider or vice versa depending on the 
+   * order of parameters
    * @param {*} updated is the number or slider that the user manually updated
    * @param {*} toUpdate the number or slider that should be updated to match
    */
-  updateSlider(updated, toUpdate){
+  updateSlider(updated, toUpdate) {
     const newValue = document.querySelector(updated).value;
     document.querySelector(toUpdate).value = newValue;
   }
@@ -449,8 +533,8 @@ class TimerSettings {
           pomodoro: document.querySelector(POMO_LENGTH_NUMBER_SELECTOR).value * 60,
           shortBreak: document.querySelector(SHORT_BREAK_NUMBER_SELECTOR).value * 60,
           longBreak: document.querySelector(LONG_BREAK_NUMBER_SELECTOR).value * 60,
-        }
-      }
+        },
+      },
     });
     this.element.dispatchEvent(settingsChangedEvent);
   }
@@ -474,13 +558,146 @@ class TimerSplash {
 
 /* -------------------------------------------------------------------------- */
 
-
-
 /**
  * To be executed when the page loads.
  * Currently initializes the timer and button.
  */
-window.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('DOMContentLoaded', function() {
   let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
   let timerApp = new TimerApp();
 });
+
+/* Task List */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Task list button pressed it goes to task list screen
+ * Changes to back to Pomodoro button and takes you back to the timer
+ */
+function del() {
+  event.preventDefault();
+  let hide = document.querySelectorAll('#del');
+  for (let i = 0; i < hide.length; i++) {
+    if (hide[i].style.visibility === 'hidden') {
+      document.getElementById('task-button').innerHTML = 'Task List';
+      hide[i].style.visibility = 'visible';
+      document.getElementById('task-list').style.visibility = 'hidden';
+    }
+    else {
+      document.getElementById('task-button').innerHTML = 'Back to Pomodoro';
+      hide[i].style.visibility = 'hidden';
+      document.getElementById('task-list').style.visibility = 'visible';
+    }
+  }
+}
+
+/**
+ * Local storage
+ */
+if (window.localStorage.getItem('list') == null) {
+  let list = [];
+  window.localStorage.setItem('list', JSON.stringify(list));
+}
+
+let taskList = JSON.parse(localStorage.getItem('list'));
+
+let contain = document.querySelector('.item-list');
+/**
+ * Fills out the tasks the user want to complete
+ * And shows them on screen as a list
+ */
+class Task {
+  constructor(name) {
+    this.createTask(name);
+  }
+
+  createTask(name) {
+    let myList = document.createElement('li');
+
+    let input = document.createElement('input');
+    input.value = name;
+    input.type = 'text';
+    input.disabled = true;
+
+    let editButton = document.createElement('button');
+    editButton.id = 'edit';
+    editButton.innerHTML = 'Edit';
+
+    let deleteButton = document.createElement('button');
+    deleteButton.id = 'delete';
+    deleteButton.innerHTML = 'Delete';
+
+    contain.appendChild(myList);
+    myList.appendChild(input);
+    myList.appendChild(editButton);
+    myList.appendChild(deleteButton);
+
+    editButton.addEventListener('click', () => {
+      if (input.disabled == true) {
+        input.disabled = !input.disabled;
+      }
+      else {
+        input.disabled = true;
+      }
+    });
+
+    deleteButton.addEventListener('click', () => {
+      contain.removeChild(myList);
+      let index = taskList.indexOf(name);
+      taskList.splice(index, 1);
+      window.localStorage.setItem('list', JSON.stringify(taskList));
+    });
+
+  }
+}
+
+// let addButton = document.getElementById('add-button');
+// addButton.addEventListener('click', insert);
+/**
+ * User creates a task and clicks + button then the task will show
+ */
+function insert() {
+  event.preventDefault();
+  let insert = document.getElementById('input-value');
+  if (insert.value != '') {
+    new Task(insert.value);
+    taskList.push(insert.value);
+    window.localStorage.setItem('list', JSON.stringify(taskList));
+  }
+}
+
+/**
+ * Local Storage elements
+ */
+for (let i = 0; i < taskList.length; i++) {
+  new Task(taskList[i]);
+}
+
+/*module.exports = {
+  SEC_01,
+  SEC_03,
+  SEC_05,
+  TIMER_TEXT_SELECTOR,
+  TIMER_BUTTON_SELECTOR,
+  TIMER_INFO_WORK_PROGRESS_SELECTOR,
+  TIMER_INFO_BREAK_PROGRESS_SELECTOR,
+  TIMER_INFO_SESSIONS_REMAINING_SELECTOR,
+  TIMER_RESET_BUTTON_SELECTOR,
+  TIMER_SETTINGS_SELECTOR,
+  POMO_NUMBER_SELECTOR,
+  POMO_LENGTH_NUMBER_SELECTOR,
+  SHORT_BREAK_NUMBER_SELECTOR,
+  LONG_BREAK_NUMBER_SELECTOR,
+  TIMER_SPLASH_SELECTOR,
+  TIMER_SPLASH_BUTTON_SELECTOR,
+  PHASE_POMODORO,
+  PHASE_SHORT_BREAK,
+  PHASE_LONG_BREAK,
+  STATUS_STOPPED,
+  STATUS_RUNNING,
+  TimerText,
+  TimerSettings,
+  TimerSplash,
+  TimerInfoProgress,
+  TimerApp
+};*/
