@@ -157,6 +157,7 @@ header {
 @media (min-width: 1200px) {
   #timer-splash h1 {
     font-size: 10vw;
+    letter-spacing: 0.05em;
   }
 
   #timer-splash-button {
@@ -188,6 +189,9 @@ header {
 
 #timer-info {
   padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* || Footer */

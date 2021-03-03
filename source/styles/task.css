@@ -13,6 +13,10 @@
     margin-bottom: 5px;
 }
 
+.task:hover {
+    background-color: #F3F3F3;
+}
+
 .task.task-done {
     background-color: #DFDFDF;
     text-decoration: line-through;
