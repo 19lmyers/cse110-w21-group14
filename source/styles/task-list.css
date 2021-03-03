@@ -14,17 +14,17 @@
     width:2em;
 }
 
-.single-task {
+.task {
     display: block;
 }
-.single-task * {
+.task * {
     display: inline-block;
 }
-.single-task input[type="text"] {
+.task input[type="text"] {
    width: 20em; 
 }
 
-.single-task input[type="number"]{
+.task input[type="number"]{
     width: 2em;
 }
 #task-button {
