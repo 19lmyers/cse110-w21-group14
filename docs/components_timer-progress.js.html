@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/timer-progress.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/timer-progress.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>class TimerProgress extends HTMLElement {
+  constructor() {
+    super();
+
+    let shadow = this.attachShadow({mode: 'open'});
+
+    let progress = document.createElement('ul');
+    progress.innerHTML = `
+      &lt;li id="progress-pomodoro">
+        &lt;div>
+          &lt;span class="progress-dot">&lt;/span>
+          &lt;p>Work Time&lt;/p>
+        &lt;/div>
+        &lt;progress value="0">&lt;/progress>
+      &lt;/li>
+      &lt;li id="progress-break">
+        &lt;div>
+          &lt;span class="progress-dot">&lt;/span>
+          &lt;p>Short Break&lt;/p>
+        &lt;/div>
+        &lt;progress value="0">&lt;/progress>
+      &lt;/li>
+      &lt;li id="progress-done">
+        &lt;div>
+          &lt;span class="progress-dot">&lt;/span>
+          &lt;p>Done!&lt;/p>
+        &lt;/div>
+      &lt;/li>`;
+
+    let style = document.createElement('style');
+    style.innerHTML = `
+      ul {
+        padding: 0;
+        list-style-type: none;
+        display: flex;
+        justify-content: center;
+      }
+
+      li {
+        display: flex;
+      }
+
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 2rem;
+      }
+
+      p {
+        display: block;
+        white-space: nowrap;
+        font-style: normal;
+        font-weight: 300;
+        color: #BFE4EC;
+      }
+
+      progress::-webkit-progress-bar {
+        background-color: #BDE1E9;
+        box-shadow: inset 0px 2px 1px rgba(0, 0, 0, 0.25);
+      }
+
+      progress[value]::-webkit-progress-value {
+        background-color: #243D51;
+        border-radius: 1px;
+      }
+
+      progress {
+        z-index: -1;
+        margin: 0.875rem 0;
+        height: 0.25rem;
+      }
+
+      .progress-dot {
+        width: 2rem;
+        height: 2rem;
+        background-color: #BDE1E9;
+        box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 50%;
+      }
+      
+      .progress-dot.complete {
+        background-color: #243D51;
+      }
+      `;
+
+    shadow.append(progress, style);
+
+    // Set properties
+    this.pomodoroProgress = shadow.querySelector('#progress-pomodoro progress');
+    this.breakProgress = shadow.querySelector('#progress-break progress');
+    this.currentProgressBarElement = this.pomodoroProgress;
+    this.intervalId = null;
+  } /* constructor */
+
+  /**
+   * Starts the updating of currentPhase's progress bar based on phase and time.
+   * Only one of the two progress bars can be on at any given time.
+   * @param {*} phase : Phase whose progress bar to start.
+   */
+  start(phase) {
+    if (this.intervalId === null) {
+      switch (phase) {
+        case PHASE_POMODORO:
+          this.currentProgressBarElement = this.pomodoroProgress;
+          this.pomodoroDot = true;
+          break;
+      this.timerProgress.pomodoroDot = true;
+          break;
+        case PHASE_SHORT_BREAK:
+          this.currentProgressBarElement = this.breakProgress;
+          this.breakDot = true;
+          break;
+        case PHASE_LONG_BREAK:
+          this.currentProgressBarElement = this.breakProgress;
+          this.breakDot = true;
+          break;
+      }
+
+      this.intervalId = setInterval(this.update.bind(this), 1000);
+    }
+  } /* start */
+
+  /**
+   * Updates the value of currentProgressBarElement based on current time
+   */
+  update() {
+    this.currentProgressBarElement.value++;
+  } /* update */
+
+  /**
+   * stopProgress: Stops the updating of the currentPhase's progress bar.
+   */
+  stop() {
+    clearInterval(this.intervalId);
+    this.intervalId = null;
+  } /* stop */
+
+  /**
+   * Sets the total time for the pomodoro progress bar.
+   * @param {Number} time is the time to set (in seconds).
+   */
+  set pomodoroTime(time) {
+    this.pomodoroProgress.max = time;
+  } /* set pomodoroTime */
+
+  /**
+   * Sets the total time for the break progress bar.
+   * @param {Number} time is the time to set (in seconds).
+   */
+  set breakTime(time) {
+    this.breakProgress.max = time;
+  } /* set breakTime */
+
+  set breakText(text) {
+    this.shadowRoot.querySelector('#progress-break p').textContent = text;
+  }
+
+  /**
+   * clearPomodoroProgress: Clears the pomodoro progress bar.
+   */
+  clearPomodoroProgress() {
+    this.pomodoroProgress.value = 0;
+    this.pomodoroDot = false;
+  } /* clearPomodoroProgress() */
+
+  /**
+   * clearBreakProgress: Clears the break progress bar.
+   */
+  clearBreakProgress() {
+    this.breakProgress.value = 0;
+    this.breakDot = false;
+  } /* clearBreakProgress() */
+
+  /**
+   * Sets the completion status for the pomodoro (first) dot.
+   * @param {boolean} complete indicates whether the dot should be filled.
+   */
+  set pomodoroDot(complete) {
+    let pomodoroDot = this.shadowRoot.querySelector('#progress-pomodoro .progress-dot');
+
+    if (complete) {
+      pomodoroDot.classList.add('complete');
+    } else {
+      pomodoroDot.classList.remove('complete');
+    }
+  }
+
+  /**
+   * Sets the completion status for the break (second) dot.
+   * @param {boolean} complete indicates whether the dot should be filled.
+   */
+  set breakDot(complete) {
+    let breakDot = this.shadowRoot.querySelector('#progress-break .progress-dot');
+
+    if (complete) {
+      breakDot.classList.add('complete');
+    } else {
+      breakDot.classList.remove('complete');
+    }
+  }
+
+  /**
+   * Sets the completion status for the done (third) dot.
+   * @param {boolean} complete indicates whether the dot should be filled.
+   */
+  set doneDot(complete) {
+    let doneDot = this.shadowRoot.querySelector('#progress-done .progress-dot');
+
+    if (complete) {
+      doneDot.classList.add('complete');
+    } else {
+      doneDot.classList.remove('complete');
+    }
+  }
+}
+
+customElements.define('timer-progress', TimerProgress);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Task.html">Task</a></li><li><a href="TimerApp.html">TimerApp</a></li><li><a href="TimerInfo.html">TimerInfo</a></li><li><a href="TimerText.html">TimerText</a></li></ul><h3>Global</h3><ul><li><a href="global.html#del">del</a></li><li><a href="global.html#insert">insert</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Wed Mar 03 2021 04:46:31 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
