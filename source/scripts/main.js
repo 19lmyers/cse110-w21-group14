@@ -2,16 +2,13 @@
 const MIN_05 = 60 * 5;
 const MIN_15 = 60 * 15;
 const MIN_25 = 60 * 25;
-const SEC_01 = 1; // For testing purposes only
 const SEC_03 = 3; // For testing purposes only
 const SEC_05 = 5; // For testing purposes only
 const DEFAULT_POMODORO_LIMIT = 5;
 const TIMER_TEXT_SELECTOR = '#timer-text';
 const TIMER_BUTTON_SELECTOR = 'timer-button';
-const TIMER_APP_SELECTOR = '#timer-app';
 const TIMER_INFO_SESSIONS_SELECTOR = '#timer-info-sessions';
 const TIMER_PROGRESS_SELECTOR = 'timer-progress';
-const TIMER_INFO_SESSIONS_REMAINING_SELECTOR = '#timer-info-sesions-remaining';
 const TIMER_RESET_BUTTON_SELECTOR = '#timer-reset-button';
 const TIMER_SETTINGS_SELECTOR = '#timer-settings';
 const POMO_NUMBER_SELECTOR = '#pomo-number';
@@ -168,9 +165,10 @@ class TimerApp {
         this.timerProgress.clearPomodoroProgress();
         this.timerProgress.clearBreakProgress();
         if (this.numPomodoros % 4 === 3) {
-          this.timerProgress.breakText = "Long break";
-        } else {
-          this.timerProgress.breakText = "Short break";
+          this.timerProgress.breakText = 'Long break';
+        }
+        else {
+          this.timerProgress.breakText = 'Short break';
         }
       }
     }
@@ -252,7 +250,7 @@ class TimerApp {
 
     confirmDialog.addEventListener('cancelPressed', () => {
       this.handleContinue();
-    })
+    });
 
     document.body.appendChild(confirmDialog);
   } /* confirmEnd */
@@ -348,7 +346,7 @@ class TimerText {
   /**
    * Sets the timer to the desired value (in seconds).
    * Only works if the timer is stopped.
-   * @param newTime
+   * @param {Number} newTime is the time in seconds.
    */
   setTime(newTime) {
     if (this.intervalId === null) {
@@ -501,9 +499,9 @@ class TimerSplash {
  * To be executed when the page loads.
  * Currently initializes the timer and button.
  */
-window.addEventListener('DOMContentLoaded', function () {
-  let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
-  let timerApp = new TimerApp();
+window.addEventListener('DOMContentLoaded', function() {
+  new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
+  new TimerApp();
 });
 
 /* Task List */

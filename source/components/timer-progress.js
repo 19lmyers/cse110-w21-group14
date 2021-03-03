@@ -2,7 +2,7 @@ class TimerProgress extends HTMLElement {
   constructor() {
     super();
 
-    let shadow = this.attachShadow({ mode: 'open' });
+    let shadow = this.attachShadow({mode: 'open'});
 
     let progress = document.createElement('ul');
     progress.innerHTML = `
@@ -124,6 +124,7 @@ class TimerProgress extends HTMLElement {
 
   /**
    * Sets the total time for the pomodoro progress bar.
+   * @param {Number} time is the time to set (in seconds).
    */
   set pomodoroTime(time) {
     this.pomodoroProgress.max = time;
@@ -131,6 +132,7 @@ class TimerProgress extends HTMLElement {
 
   /**
    * Sets the total time for the break progress bar.
+   * @param {Number} time is the time to set (in seconds).
    */
   set breakTime(time) {
     this.breakProgress.max = time;
