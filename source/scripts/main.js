@@ -79,6 +79,11 @@ class TimerApp {
       }
     });
 
+    // Handle finishedFocusTask event
+    document.addEventListener("finishedFocusTask", (event) => {
+      this.handleEnd(true);
+    })
+
     // Event listener for resetting Pomodoros via button
 
     // Event listener for changing settings via dialog
@@ -171,6 +176,9 @@ class TimerApp {
       }
       else {
         // Increment number of pomodoros completed after one cycle (pomo + break)
+        // TODO: update TIMEREND event
+        document.dispatchEvent(new Event("timerEnd"));
+        console.log("handleEnd dispatching timerEnd event");
         // TODO: Remove timerInfo class
         /* this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros; */
         this.timerProgress.clearPomodoroProgress();
@@ -535,6 +543,7 @@ class TaskList {
 
     //TODO: change to shadow dom element when using components
     this.taskListContainerElement = document.querySelector(taskListContainerSelector);
+    this.taskListContainerElement.style.visibility = "hidden";
 
     // Construct task input element
     this.taskInputElement = document.createElement("div");
@@ -543,17 +552,26 @@ class TaskList {
     this.taskNameInput = document.createElement("input");
     this.taskNameInput.id = "task-name-input";
     this.taskNameInput.type = "text";
-    this.taskNameInput.placeholder = "What task are you working on?";
+    this.taskNameInput.placeholder = "Type task to complete here...";
 
     this.taskPomoEstimateInput = document.createElement("input");
     this.taskPomoEstimateInput.id = "task-pomo-estimate-input";
     this.taskPomoEstimateInput.type = "number";
+    this.taskPomoEstimateInput.min = "0";
+    this.taskPomoEstimateInput.value = "0";
+    this.taskPomoEstimateInput.placeholder = "0";
+
+    this.taskPomoEstimateInputLabel = document.createElement("label");
+    this.taskPomoEstimateInputLabel.for = "task-pomo-estimate-input";
+    this.taskPomoEstimateInputLabel.id = "pomo-estimate-label";
+    this.taskPomoEstimateInputLabel.textContent = "Estimated Pomos";
 
     this.taskAddButton = document.createElement("button");
     this.taskAddButton.id = "task-add-button"; 
-    this.taskAddButton.textContent = "Add Task";
+    this.taskAddButton.innerHTML = "<img src='./assets/input-task-add-button.svg'>"
     
     this.taskInputElement.appendChild(this.taskNameInput);
+    this.taskInputElement.appendChild(this.taskPomoEstimateInputLabel);
     this.taskInputElement.appendChild(this.taskPomoEstimateInput);
     this.taskInputElement.appendChild(this.taskAddButton);
     this.taskListContainerElement.appendChild(this.taskInputElement);
@@ -614,8 +632,12 @@ class TaskList {
     document.addEventListener("taskCheckboxUpdate", (event) => {
       if (event.detail.checkboxValue == true) {
         this.doneTasksSection.appendChild(event.detail.task);
+        event.detail.task.classList.remove("task-not-done");
+        event.detail.task.classList.add("task-done");
       } else {
         this.notDoneTasksSection.appendChild(event.detail.task);
+        event.detail.task.classList.remove("task-done");
+        event.detail.task.classList.add("task-not-done");
       }
     })
 
@@ -768,6 +790,7 @@ class FocusTask {
     // Handle CLEARFOCUSTASK event
     document.addEventListener("clearFocusTask", (event) => {
       this.clearFocusTask();
+      console.log("clearing focus task");
     });
    
     // Handle focusCheckboxUpdate event
@@ -785,6 +808,11 @@ class FocusTask {
 
       //TODO: delete task output
       console.log("FocusTask handled chooseTaskEvent");
+    });
+
+    // Handle document TIMEREND event
+    document.addEventListener("timerEnd", (event) => {
+      this.setFocusTaskPomoActual(parseInt(this.focusTaskPomoActual.textContent) + 1);
     });
   } /* constructor */
 
@@ -852,11 +880,11 @@ class Task {
     this.taskContainerElement.className = "task"
 
     this.taskEditButton = document.createElement("button");
-    this.taskEditButton.innerHTML = "Edit"; //TODO: use pictures
+    this.taskEditButton.innerHTML = "<img src='./assets/task-edit-button.svg'>";
     this.taskEditButton.className = "task-edit-button";
 
     this.taskRemoveButton = document.createElement("button");
-    this.taskRemoveButton.innerHTML = "Delete"; //TODO: use pictures
+    this.taskRemoveButton.innerHTML = "<img src='./assets/task-delete-button.svg'>";
     this.taskRemoveButton.className = "task-delete-button";
 
     this.taskNameField = document.createElement("input");
@@ -887,8 +915,8 @@ class Task {
     //Append to task container
     this.taskContainerElement.appendChild(this.taskIsDone);
     this.taskContainerElement.appendChild(this.taskNameField);
-    this.taskContainerElement.appendChild(this.taskPomoEstimateValue);
     this.taskContainerElement.appendChild(this.taskPomoActualValue);
+    this.taskContainerElement.appendChild(this.taskPomoEstimateValue);
     this.taskContainerElement.appendChild(this.taskEditButton);
     this.taskContainerElement.appendChild(this.taskRemoveButton);
 
@@ -934,11 +962,8 @@ class Task {
           this.taskEditButton.className == "task-save-button") {
         return;
       }
-      if (event.target.className != "task-save-button" &&
-          event.target.className != "task-delete-button" &&
-          event.target.className != "task-edit-button" &&
-          event.target.className != "task-checkbox" ) 
-          {
+      if (event.target.className == "task-name") {
+            console.log(event.target);
             const chooseTaskEvent = new CustomEvent("chooseTask", {
               detail: {
                 name: this.taskNameField.value,
@@ -957,12 +982,19 @@ class Task {
                 JSON.stringify(chooseTaskEvent.detail));
           }
     })
+
+    // Handles document timerEnd event
+    document.addEventListener("timerEnd", (event) => {
+      if (this.taskContainerElement.hasAttribute("focus")) {
+        this.taskPomoActualValue.textContent = parseInt(this.taskPomoActualValue.textContent) + 1;
+      }
+    })
     
     // Handles FINISHEDFOCUSTASK event
     document.addEventListener("finishedFocusTask", (event) => {
       if (this.taskContainerElement.hasAttribute("focus")) {
         this.taskIsDone.checked = true;
-        this.emitTaskCheckboxUpdateEvent().bind(this);
+        this.emitTaskCheckboxUpdateEvent();
         this.taskContainerElement.removeAttribute("focus");
       }
     })
@@ -1000,12 +1032,12 @@ class Task {
     if (this.taskNameField.hasAttribute("disabled")) {
       this.taskNameField.removeAttribute("disabled");
       this.taskEditButton.className = "task-save-button";
-      this.taskEditButton.textContent = "Save";
+      this.taskEditButton.innerHTML = "<img src='./assets/task-edit-button.svg'>";
       //TODO: Handle updating stored tasks;
     } else {
       this.taskNameField.setAttribute("disabled", "true");
       this.taskEditButton.className = "task-edit-button";
-      this.taskEditButton.textContent = "Edit";
+      this.taskEditButton.innerHTML = "<img src='./assets/task-edit-button.svg'>";
       
       const updateTaskEvent = new CustomEvent("updateTask", {
         detail: {
