@@ -221,7 +221,7 @@ class TimerApp {
     const END_TEXT = `Are you sure you want to end this pomodoro session? Your current 
       Pomodoro will not be saved.`;
     const SKIP_TEXT = `Are you sure you want to end this break? You will still complete 
-      your pomodoro session, but skipping breaks is not advised`;
+      your pomodoro session, but skipping breaks is not advised.`;
 
     let confirmDialog = document.createElement('confirm-dialog');
 

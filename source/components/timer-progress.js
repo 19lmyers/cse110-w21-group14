@@ -7,30 +7,33 @@ class TimerProgress extends HTMLElement {
     let progress = document.createElement('ul');
     progress.innerHTML = `
       <li id="progress-pomodoro">
-        <span class="progress-dot"></span>
         <div>
+          <span class="progress-dot"></span>
           <p>Work Time</p>
-          <progress value="0"></progress>
         </div>
+        <progress value="0"></progress>
       </li>
       <li id="progress-break">
-        <span class="progress-dot"></span>
         <div>
+          <span class="progress-dot"></span>
           <p>Short Break</p>
-          <progress value="0"></progress>
         </div>
+        <progress value="0"></progress>
       </li>
-      <li id="progress-finish">
-        <p>Done!</p>
-        <span class="progress-dot"></span>
+      <li id="progress-done">
+        <div>
+          <span class="progress-dot"></span>
+          <p>Done!</p>
+        </div>
       </li>`;
 
     let style = document.createElement('style');
     style.innerHTML = `
       ul {
-        display: flex;
+        padding: 0;
         list-style-type: none;
-        min-width: 400px;
+        display: flex;
+        justify-content: center;
       }
 
       li {
@@ -40,7 +43,16 @@ class TimerProgress extends HTMLElement {
       div {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        align-items: center;
+        width: 2rem;
+      }
+
+      p {
+        display: block;
+        white-space: nowrap;
+        font-style: normal;
+        font-weight: 300;
+        color: #BFE4EC;
       }
 
       progress::-webkit-progress-bar {
@@ -54,26 +66,23 @@ class TimerProgress extends HTMLElement {
       }
 
       progress {
-        margin: 30px 0px;
-        height: 4px;
+        z-index: -1;
+        margin: 0.875rem 0;
+        height: 0.25rem;
       }
 
-      p {
-        min-width: fit-content;
-      }
-
-      span {
-        margin: auto 0px;
-        font-size: 0;
-        line-height: 0;
-        letter-spacing: 0;
-
-        width: 30px;
-        height: 30px;
+      .progress-dot {
+        width: 2rem;
+        height: 2rem;
         background-color: #BDE1E9;
         box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
         border-radius: 50%;
-      }`;
+      }
+      
+      .progress-dot.complete {
+        background-color: #243D51;
+      }
+      `;
 
     shadow.append(progress, style);
 
@@ -94,12 +103,17 @@ class TimerProgress extends HTMLElement {
       switch (phase) {
         case PHASE_POMODORO:
           this.currentProgressBarElement = this.pomodoroProgress;
+          this.pomodoroDot = true;
+          break;
+      this.timerProgress.pomodoroDot = true;
           break;
         case PHASE_SHORT_BREAK:
           this.currentProgressBarElement = this.breakProgress;
+          this.breakDot = true;
           break;
         case PHASE_LONG_BREAK:
           this.currentProgressBarElement = this.breakProgress;
+          this.breakDot = true;
           break;
       }
 
@@ -147,6 +161,7 @@ class TimerProgress extends HTMLElement {
    */
   clearPomodoroProgress() {
     this.pomodoroProgress.value = 0;
+    this.pomodoroDot = false;
   } /* clearPomodoroProgress() */
 
   /**
@@ -154,7 +169,50 @@ class TimerProgress extends HTMLElement {
    */
   clearBreakProgress() {
     this.breakProgress.value = 0;
+    this.breakDot = false;
   } /* clearBreakProgress() */
+
+  /**
+   * Sets the completion status for the pomodoro (first) dot.
+   * @param {boolean} complete indicates whether the dot should be filled.
+   */
+  set pomodoroDot(complete) {
+    let pomodoroDot = this.shadowRoot.querySelector('#progress-pomodoro .progress-dot');
+
+    if (complete) {
+      pomodoroDot.classList.add('complete');
+    } else {
+      pomodoroDot.classList.remove('complete');
+    }
+  }
+
+  /**
+   * Sets the completion status for the break (second) dot.
+   * @param {boolean} complete indicates whether the dot should be filled.
+   */
+  set breakDot(complete) {
+    let breakDot = this.shadowRoot.querySelector('#progress-break .progress-dot');
+
+    if (complete) {
+      breakDot.classList.add('complete');
+    } else {
+      breakDot.classList.remove('complete');
+    }
+  }
+
+  /**
+   * Sets the completion status for the done (third) dot.
+   * @param {boolean} complete indicates whether the dot should be filled.
+   */
+  set doneDot(complete) {
+    let doneDot = this.shadowRoot.querySelector('#progress-done .progress-dot');
+
+    if (complete) {
+      doneDot.classList.add('complete');
+    } else {
+      doneDot.classList.remove('complete');
+    }
+  }
 }
 
 customElements.define('timer-progress', TimerProgress);
