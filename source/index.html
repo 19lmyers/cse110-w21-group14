@@ -37,29 +37,8 @@
 			<div id="focus-task-container"> </div>
 				<p><span id="timer-info-sessions">0</span> Pomodoros completed</p>
 				<!-- Step progress bar -->
-				<ul id="progress-bar-container">
-					<!-- Work step -->
-					<div class="progress-step">
-						<label for="progress-point-1" class="progress-label">Work Time</label>
-						<li id="progress-point-1"></li>
-					</div>
-					<!-- Work progress bar -->
-					<progress id="timer-info-work-progress" value=0></progress>
-					<!-- Break step -->
-					<div class="progress-step">
-						<label for="progress-step-2" class="progress-label">Short Break</label>
-						<li id="progress-step-2"></li>
-					</div>
-					<!-- Break progress bar -->
-					<progress id="timer-info-break-progress" value=0></progress>
-					<!-- Done or next cycle step -->
-					<div class="progress-step">
-						<label for="progress-step-3" class="progress-label">Next Cycle!</label>
-						<li id="progress-step-3"></li>
-					</div>
-				</ul>
+				<timer-progress></timer-progress>
 			</section>
-
 		</main>
 
 		<footer>
@@ -186,6 +165,7 @@
 	<script src="components/timer-settings.js"></script>
 	<script src="components/timer-button.js"></script>
 	<script src="components/confirm-dialog.js"></script>
+	<script src="components/timer-progress.js"></script>
 	<!-- Testing timer end -->
 
 </body>
