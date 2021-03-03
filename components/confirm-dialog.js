@@ -15,6 +15,7 @@ class ConfirmDialog extends HTMLElement {
     });
 
     shadow.querySelector('.cancel-button').addEventListener('click', () => {
+      this.dispatchEvent(new Event('cancelPressed'));
       this.remove();
     });
   }
