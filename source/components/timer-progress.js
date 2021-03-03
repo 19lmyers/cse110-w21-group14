@@ -23,11 +23,10 @@ class TimerProgress extends HTMLElement {
       <li id="progress-done">
         <div>
           <span class="progress-dot"></span>
-          <p>Done!</p>
+          <p>Next Cycle!</p>
         </div>
       </li>`;
-
-    let style = document.createElement('style');
+   /*  let style = document.createElement('style');
     style.innerHTML = `
       ul {
         padding: 0;
@@ -75,15 +74,19 @@ class TimerProgress extends HTMLElement {
         width: 2rem;
         height: 2rem;
         background-color: #BDE1E9;
-        box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         border-radius: 50%;
       }
       
       .progress-dot.complete {
         background-color: #243D51;
+        width: 30px;
+        height: 30px;
       }
-      `;
-
+      `; */
+    let style = document.createElement("link");
+    style.rel = "stylesheet";
+    style.href = "./styles/progress-bar.css";
     shadow.append(progress, style);
 
     // Set properties

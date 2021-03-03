@@ -60,7 +60,9 @@ class TimerApp {
     // Initialize components
     this.timerText = new TimerText(TIMER_TEXT_SELECTOR, this.pomodoroTimes.pomodoro);
     this.timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
-    this.timerInfo = new TimerInfo(TIMER_INFO_SESSIONS_SELECTOR);
+    
+    //TODO: Remove TimerInfo Class
+    /* this.timerInfo = new TimerInfo(TIMER_INFO_SESSIONS_SELECTOR); */
     this.timerProgress = document.querySelector(TIMER_PROGRESS_SELECTOR);
     this.timerProgress.pomodoroTime = this.pomodoroTimes.pomodoro;
     this.timerProgress.breakTime = this.pomodoroTimes.shortBreak;
@@ -169,7 +171,8 @@ class TimerApp {
       }
       else {
         // Increment number of pomodoros completed after one cycle (pomo + break)
-        this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
+        // TODO: Remove timerInfo class
+        /* this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros; */
         this.timerProgress.clearPomodoroProgress();
         this.timerProgress.clearBreakProgress();
         if (this.numPomodoros % 4 === 3) {
@@ -375,7 +378,7 @@ class TimerText {
   } /* timeString */
 }
 
-/* TimerInfo class */
+/* TODO: remove TimerInfo class 
 class TimerInfo {
   /**
    * Constructs a new TimerInfo class, which holds a TimerInfoSessions
@@ -384,15 +387,15 @@ class TimerInfo {
    * @param {*} workProgressSelector: selector for the work progress element
    * @param {*} breakProgressSelector: selector for the break progress element
    * @param {*} sessionsRemainingSelector: selector for the sessions remaining element
-   */
+   
   constructor(sessionsSelector, workProgressSelector, breakProgressSelector,
     sessionsRemainingSelector) {
     this.sessionsInfo = new TimerInfoSessions(sessionsSelector);
   }
 
-}
+} /* Timer Info Class */
 
-/* TimerInfoSessions */
+/* TODO: Remove TimerInfoSessions 
 class TimerInfoSessions {
   constructor(selector) {
     this.element = document.querySelector(selector);
@@ -401,7 +404,7 @@ class TimerInfoSessions {
   set sessionsText(numPomodoros) {
     this.element.textContent = numPomodoros;
   }
-}
+} /* Timer Info Sessions */
 
 /* TimerInfoProgress */
 /* <-------------------------------------------------------------------------------------------> */
