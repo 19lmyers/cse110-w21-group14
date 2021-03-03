@@ -588,8 +588,8 @@ class Task {
   }
 }
 
-let addButton = document.getElementById('add-button');
-addButton.addEventListener('click', insert);
+// let addButton = document.getElementById('add-button');
+// addButton.addEventListener('click', insert);
 /**
  * User creates a task and clicks + button then the task will show
  */
@@ -603,11 +603,9 @@ function insert() {
   }
 }
 
-
 /**
  * Local Storage elements
  */
 for (let i = 0; i < taskList.length; i++) {
   new Task(taskList[i]);
 }
-
