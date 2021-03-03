@@ -181,7 +181,7 @@ class TimerProgress extends HTMLElement {
 
     if (complete) {
       pomodoroDot.classList.add('complete');
-    } 
+    }
     else {
       pomodoroDot.classList.remove('complete');
     }
@@ -196,7 +196,7 @@ class TimerProgress extends HTMLElement {
 
     if (complete) {
       breakDot.classList.add('complete');
-    } 
+    }
     else {
       breakDot.classList.remove('complete');
     }
@@ -211,7 +211,7 @@ class TimerProgress extends HTMLElement {
 
     if (complete) {
       doneDot.classList.add('complete');
-    } 
+    }
     else {
       doneDot.classList.remove('complete');
     }
