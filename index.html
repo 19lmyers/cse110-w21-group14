@@ -28,7 +28,7 @@
 		<section id="timer-app">
 			<div id="timer-circle">
 				<span id="timer-text">25:00</span>
-				<timer-button data-text="START"></timer-button>
+				<button id="timer-button" class="tactile-button">START</button>
 			</div>
 		</section>
 		<section id="timer-info">
@@ -38,10 +38,13 @@
 		</section>
 	</main>
 
+	<audio id="pomo-complete-sound" src="assets/singing-bowl-sound.wav"></audio>
+	<audio id="button-sound" src="assets/button-sound.wav"></audio>
+
 	<footer id='del'>
 		<!-- Timer Reset and Timer Settings Buttons -->
 		<button id="timer-reset-button"><img src="assets/reset-icon.svg" alt="Reset Button"></button>
-		<button id="timer-settings-button"><img src="assets/settings-icon.svg" alt="Settings Button"></button>
+		<button id="timer-settings-button" class="tactile-button"><img src="assets/settings-icon.svg" alt="Settings Button"></button>
 		<div id="timer-settings" class="dialog">
 			<div class="dialog-content">
 				<form id="timer-settings-form">
@@ -73,7 +76,7 @@
 						</div>
 					</fieldset>
 
-					<button id="timer-settings-close" type="button">Close</button>
+					<button id="timer-settings-close" type="button" class="tactile-button">Close</button>
 					<button id="timer-settings-save" type="submit">Save</button>
 
 					<hr>
