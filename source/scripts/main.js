@@ -6,7 +6,8 @@ const SEC_03 = 3; // For testing purposes only
 const SEC_05 = 5; // For testing purposes only
 const DEFAULT_POMODORO_LIMIT = 5;
 const TIMER_TEXT_SELECTOR = '#timer-text';
-const TIMER_BUTTON_SELECTOR = 'timer-button';
+const TIMER_BUTTON_SELECTOR = '#timer-button';
+const TIMER_APP_SELECTOR = '#timer-app';
 const TIMER_INFO_SESSIONS_SELECTOR = '#timer-info-sessions';
 const TIMER_PROGRESS_SELECTOR = 'timer-progress';
 const TIMER_RESET_BUTTON_SELECTOR = '#timer-reset-button';
@@ -24,6 +25,8 @@ const TIMER_SPLASH_BUTTON_SELECTOR = '#timer-splash-button';
 const PHASE_POMODORO = 'pomodoro';
 const PHASE_SHORT_BREAK = 'shortBreak';
 const PHASE_LONG_BREAK = 'longBreak';
+const TIMER_COMPLETE_SOUND = 'pomo-complete-sound';
+const BUTTON_SOUND = 'button-sound';
 const STATUS_STOPPED = 'stopped';
 const STATUS_RUNNING = 'running';
 const STATUS_PAUSED = 'paused';
@@ -56,7 +59,7 @@ class TimerApp {
     this.timerSettings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
 
     // Event listener for toggling the timer via button
-    this.timerButton.addEventListener('buttonPressed', () => {
+    this.timerButton.addEventListener('click', () => {
       if (this.currentStatus === STATUS_RUNNING) {
         let skip = this.currentPhase !== PHASE_POMODORO;
         this.confirmEnd(skip);
@@ -78,6 +81,14 @@ class TimerApp {
       this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
     });
 
+    // Event listener for page warning
+    const buttonList = document.getElementsByClassName('tactile-button');
+    for (let i = 0; i < buttonList.length; i++) {
+      buttonList[i].addEventListener('click', () => {
+        this.playSound(BUTTON_SOUND);
+      });
+    }
+    
     // Event listener for page warning
     window.addEventListener('beforeunload', (event) => {
       if (this.currentStatus === STATUS_RUNNING || this.currentStatus === STATUS_PAUSED) {
@@ -157,6 +168,7 @@ class TimerApp {
       this.timerText.setTime(this.pomodoroTimes[this.cyclePhase()]);
 
       if (this.currentPhase !== 'pomodoro') {
+        this.playSound(TIMER_COMPLETE_SOUND);
         this.handleStart();
       }
       else {
@@ -173,6 +185,7 @@ class TimerApp {
       }
     }
   } /* handleEnd */
+
 
   /**
    * Cycles the pomodoro to the next phase, taking into account
@@ -207,6 +220,20 @@ class TimerApp {
     this.numPomodoros = 0;
     this.timerInfo.sessionsInfo.sessionsText = 0;
   } /* resetPomodoros */
+
+  /**
+   * Will play a sound or start the sound over if it is already playing
+   * @param {*} sound the id of the sound to be played
+   */
+  playSound(sound) {
+    const soundElement = document.getElementById(sound);
+    if (soundElement.paused) {
+      soundElement.play();
+    }
+    else {
+      soundElement.currentTime = 0;
+    }
+  } /* playSound */
 
   /**
    * Handles the logic of confirming ending the session early, including showing
