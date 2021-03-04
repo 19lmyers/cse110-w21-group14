@@ -60,7 +60,7 @@ class TimerApp {
     this.timerSettings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
 
     // Event listener for toggling the timer via button
-    this.timerButton.addEventListener('buttonPressed', () => {
+    this.timerButton.addEventListener('click', () => {
       if (this.currentStatus === STATUS_RUNNING) {
         let skip = this.currentPhase !== PHASE_POMODORO;
         this.confirmEnd(skip);
