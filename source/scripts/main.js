@@ -22,9 +22,9 @@ const LONG_BREAK_NUMBER_SELECTOR = '#long-break-number';
 const LONG_BREAK_SLIDER_SELECTOR = '#long-break-slider';
 const TIMER_SPLASH_SELECTOR = '#timer-splash';
 const TIMER_SPLASH_BUTTON_SELECTOR = '#timer-splash-button';
-const PHASE_POMODORO = "pomodoro";
-const PHASE_SHORT_BREAK = "shortBreak";
-const PHASE_LONG_BREAK = "longBreak"
+const PHASE_POMODORO = 'pomodoro';
+const PHASE_SHORT_BREAK = 'shortBreak';
+const PHASE_LONG_BREAK = 'longBreak';
 const TIMER_COMPLETE_SOUND = 'pomo-complete-sound';
 const BUTTON_SOUND = 'button-sound';
 const STATUS_STOPPED = 'stopped';
@@ -82,10 +82,10 @@ class TimerApp {
     });
 
     // Event listener for page warning
-    const buttonList = document.getElementsByClassName("tactile-button");
-    for(let i = 0; i < buttonList.length; i++){
+    const buttonList = document.getElementsByClassName('tactile-button');
+    for (let i = 0; i < buttonList.length; i++) {
       buttonList[i].addEventListener('click', () => {
-        this.playSound(BUTTON_SOUND); 
+        this.playSound(BUTTON_SOUND);
       });
     }
     
@@ -227,14 +227,13 @@ class TimerApp {
    */
   playSound(sound) {
     const soundElement = document.getElementById(sound);
-    if(soundElement.paused) {
+    if (soundElement.paused) {
       soundElement.play();
-    }else{
+    }
+    else {
       soundElement.currentTime = 0;
     }
-  }/* playSound */
-
- 
+  } /* playSound */
 
   /**
    * Handles the logic of confirming ending the session early, including showing
