@@ -27,6 +27,7 @@
             "skipBlankLines": true,
             "ignoreComments": true
         }],
+        "no-unused-vars": "off",
         "padded-blocks": "off",
         "prefer-const": "off",
         "quotes": ["error", "single", {

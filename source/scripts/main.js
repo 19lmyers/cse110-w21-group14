@@ -2,7 +2,6 @@
 const MIN_05 = 60 * 5;
 const MIN_15 = 60 * 15;
 const MIN_25 = 60 * 25;
-const SEC_01 = 1; // For testing purposes only
 const SEC_03 = 3; // For testing purposes only
 const SEC_05 = 5; // For testing purposes only
 const DEFAULT_POMODORO_LIMIT = 5;
@@ -10,9 +9,7 @@ const TIMER_TEXT_SELECTOR = '#timer-text';
 const TIMER_BUTTON_SELECTOR = '#timer-button';
 const TIMER_APP_SELECTOR = '#timer-app';
 const TIMER_INFO_SESSIONS_SELECTOR = '#timer-info-sessions';
-const TIMER_INFO_WORK_PROGRESS_SELECTOR = '#timer-info-work-progress';
-const TIMER_INFO_BREAK_PROGRESS_SELECTOR = '#timer-info-break-progress';
-const TIMER_INFO_SESSIONS_REMAINING_SELECTOR = '#timer-info-sesions-remaining';
+const TIMER_PROGRESS_SELECTOR = 'timer-progress';
 const TIMER_RESET_BUTTON_SELECTOR = '#timer-reset-button';
 const TIMER_SETTINGS_SELECTOR = '#timer-settings';
 const POMO_NUMBER_SELECTOR = '#pomo-number';
@@ -32,6 +29,7 @@ const TIMER_COMPLETE_SOUND = 'pomo-complete-sound';
 const BUTTON_SOUND = 'button-sound';
 const STATUS_STOPPED = 'stopped';
 const STATUS_RUNNING = 'running';
+const STATUS_PAUSED = 'paused';
 /* -------------------------------------------------------------------------- */
 
 /* TimerApp class */
@@ -54,9 +52,10 @@ class TimerApp {
     // Initialize components
     this.timerText = new TimerText(TIMER_TEXT_SELECTOR, this.pomodoroTimes.pomodoro);
     this.timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
-    this.timerInfo = new TimerInfo(TIMER_INFO_SESSIONS_SELECTOR,
-      TIMER_INFO_WORK_PROGRESS_SELECTOR, TIMER_INFO_BREAK_PROGRESS_SELECTOR,
-      TIMER_INFO_SESSIONS_REMAINING_SELECTOR);
+    this.timerInfo = new TimerInfo(TIMER_INFO_SESSIONS_SELECTOR);
+    this.timerProgress = document.querySelector(TIMER_PROGRESS_SELECTOR);
+    this.timerProgress.pomodoroTime = this.pomodoroTimes.pomodoro;
+    this.timerProgress.breakTime = this.pomodoroTimes.shortBreak;
     this.timerSettings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
 
     // Event listener for toggling the timer via button
@@ -81,12 +80,22 @@ class TimerApp {
       this.pomodoroTimes = event.detail.pomodoroTimes;
       this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
     });
+
+    // Event listener for page warning
     const buttonList = document.getElementsByClassName("tactile-button");
     for(let i = 0; i < buttonList.length; i++){
       buttonList[i].addEventListener('click', () => {
         this.playSound(BUTTON_SOUND); 
       });
     }
+    
+    // Event listener for page warning
+    window.addEventListener('beforeunload', (event) => {
+      if (this.currentStatus === STATUS_RUNNING || this.currentStatus === STATUS_PAUSED) {
+        event.preventDefault();
+        event.returnValue = '';
+      }
+    });
   } /* constructor */
 
   /**
@@ -98,9 +107,7 @@ class TimerApp {
       this.currentStatus = STATUS_RUNNING;
 
       // Progress bar: update progress
-      this.timerInfo.progressInfo.clearProgress();
-      this.timerInfo.progressInfo.startProgress(this.currentPhase,
-        this.pomodoroTimes[this.currentPhase]);
+      this.timerProgress.start(this.currentPhase);
 
       // Set natural timeout duration
       this.timeoutId = setTimeout(this.handleEnd.bind(this), this.timerText.time * 1000, false);
@@ -109,44 +116,74 @@ class TimerApp {
   } /* handleStart */
 
   /**
+   * Handles pausing the timer.
+   */
+  handlePause() {
+    this.timerText.stop();
+    this.timerProgress.stop();
+    this.currentStatus = STATUS_PAUSED;
+
+    // Clear natural duration and reset ID
+    clearTimeout(this.timeoutId);
+    this.timeoutId = null;
+  }
+
+  /**
+   * Handles continuing the timer.
+   */
+  handleContinue() {
+    if (this.currentStatus === STATUS_PAUSED) {
+      this.timerText.start();
+      this.timerProgress.start(this.currentPhase);
+      this.currentStatus = STATUS_RUNNING;
+
+      // Set natural timeout duration
+      this.timeoutId = setTimeout(this.handleEnd.bind(this), this.timerText.time * 1000, false);
+    }
+  }
+
+  /**
    * Handles the end of a Pomodoro session.
    * @param {boolean} early indicates whether the Pomodoro was ended early.
    */
   handleEnd(early) {
-    if (this.currentStatus === STATUS_RUNNING) {
-      this.timerText.end();
-      this.timerInfo.progressInfo.stopProgress();
-      this.currentStatus = 'stopped';
-      this.timerButton.setAttribute('data-text', 'START');
+    this.timerText.stop();
+    this.timerProgress.stop();
+    this.currentStatus = STATUS_STOPPED;
+    this.timerButton.setAttribute('data-text', 'START');
 
-      // Clear natural duration and reset ID
-      clearTimeout(this.timeoutId);
-      this.timeoutId = null;
+    // Clear natural duration and reset ID
+    clearTimeout(this.timeoutId);
+    this.timeoutId = null;
 
-      // Set document title back to Pomodoro
-      document.title = 'Pomodoro';
+    // Set document title back to Pomodoro
+    document.title = 'Pomodoro';
 
-      if (early) {
-        if (this.currentPhase !== 'pomodoro') {
-          this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
-        }
-        this.currentPhase = 'pomodoro';
-        this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
-        this.timerInfo.progressInfo.clearProgress(early);
-      }
-      else {
-        // Keep cycling through phases until break is finished
-        this.timerText.setTime(this.pomodoroTimes[this.cyclePhase()]);
+    if (early && this.currentPhase === PHASE_POMODORO) {
+      this.timerText.setTime(this.pomodoroTimes[this.currentPhase]);
+      this.timerProgress.clearPomodoroProgress();
+    }
+    else {
+      // Keep cycling through phases until break is finished
+      this.timerText.setTime(this.pomodoroTimes[this.cyclePhase()]);
 
       if (this.currentPhase !== 'pomodoro') {
         this.playSound(TIMER_COMPLETE_SOUND);
         this.handleStart();
-      } else {
+      }
+      else {
         // Increment number of pomodoros completed after one cycle (pomo + break)
         this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros;
+        this.timerProgress.clearPomodoroProgress();
+        this.timerProgress.clearBreakProgress();
+        if (this.numPomodoros % 4 === 3) {
+          this.timerProgress.breakText = 'Long break';
+        }
+        else {
+          this.timerProgress.breakText = 'Short break';
+        }
       }
     }
-  }
   } /* handleEnd */
 
 
@@ -161,9 +198,11 @@ class TimerApp {
         // Fourth pomodoro: long break
         if (this.numPomodoros % 4 === 3) {
           this.currentPhase = PHASE_LONG_BREAK;
+          this.timerProgress.breakTime = this.pomodoroTimes.longBreak;
         }
         else {
           this.currentPhase = PHASE_SHORT_BREAK;
+          this.timerProgress.breakTime = this.pomodoroTimes.shortBreak;
         }
         break;
       case PHASE_SHORT_BREAK:
@@ -204,11 +243,13 @@ class TimerApp {
    * end text (abrupt end during Pomodoro) or skip text (during a break).
    */
   confirmEnd(skip) {
+    this.handlePause();
+
     // Constants for dialog text
     const END_TEXT = `Are you sure you want to end this pomodoro session? Your current 
       Pomodoro will not be saved.`;
     const SKIP_TEXT = `Are you sure you want to end this break? You will still complete 
-      your pomodoro session, but skipping breaks is not advised`;
+      your pomodoro session, but skipping breaks is not advised.`;
 
     let confirmDialog = document.createElement('confirm-dialog');
 
@@ -233,6 +274,10 @@ class TimerApp {
     // Set confirm action
     confirmDialog.addEventListener('confirmPressed', () => {
       this.handleEnd(true);
+    });
+
+    confirmDialog.addEventListener('cancelPressed', () => {
+      this.handleContinue();
     });
 
     document.body.appendChild(confirmDialog);
@@ -283,7 +328,7 @@ class TimerText {
    * @param {*} time is the initial time for the TimerText to display.
    */
   constructor(selector, time) {
-  // Initialize intervalId for timeout functions
+    // Initialize intervalId for timeout functions
     this.intervalId = null;
 
     // Store arguments
@@ -319,17 +364,17 @@ class TimerText {
 
 
   /**
-   * Ends the timer.
+   * Stops the timer.
    */
-  end() {
+  stop() {
     clearInterval(this.intervalId);
     this.intervalId = null;
-  } /* end */
+  } /* stop */
 
   /**
    * Sets the timer to the desired value (in seconds).
    * Only works if the timer is stopped.
-   * @param newTime
+   * @param {Number} newTime is the time in seconds.
    */
   setTime(newTime) {
     if (this.intervalId === null) {
@@ -363,8 +408,6 @@ class TimerInfo {
   constructor(sessionsSelector, workProgressSelector, breakProgressSelector,
     sessionsRemainingSelector) {
     this.sessionsInfo = new TimerInfoSessions(sessionsSelector);
-    this.progressInfo = new TimerInfoProgress(workProgressSelector, breakProgressSelector,
-      sessionsRemainingSelector);
   }
 
 }
@@ -380,84 +423,6 @@ class TimerInfoSessions {
 }
 
 /* <-------------------------------------------------------------------------------------------> */
-class TimerInfoProgress {
-  constructor(workProgressSelector, breakProgressSelector, sessionsRemainingSelector) {
-    this.workProgressElement = document.querySelector(workProgressSelector);
-    this.breakProgressElement = document.querySelector(breakProgressSelector);
-    this.sessionsRemainingElement = document.querySelector(sessionsRemainingSelector);
-
-    // TODO: Update to support default time or change constructor to be similar to TimerText
-    this.time = MIN_25;
-    this.totalTime = MIN_25;
-    this.currentProgressBarElement = this.workProgressElement;
-    this.intervalId = null;
-  } /* constructor(workProgressSelector, breakProgressSelector) */
-
-  /**
-   * Starts the updating of currentPhase's progress bar based on phase and time.
-   * @param {*} currentPhase : currentPhase stored in this.currentPhase
-   * @param {*} phaseTotalTime : phaseTotalTime stored in this.totalTime and this.time
-   */
-  startProgress(currentPhase, phaseTotalTime) {
-    this.currentPhase = currentPhase;
-    this.time = phaseTotalTime;
-    this.totalTime = phaseTotalTime;
-
-    // Selects currentProgressBarElemetn based on currentPhase
-    if (this.currentPhase == PHASE_POMODORO) {
-      this.currentProgressBarElement = this.workProgressElement;
-    }
-    else if (this.currentPhase == PHASE_SHORT_BREAK || this.currentPhase == PHASE_LONG_BREAK) {
-      this.currentProgressBarElement = this.breakProgressElement;
-    }
-    else {
-      console.log('Error occured during TimerInfoProgress.updateProgress()');
-    }
-
-    this.intervalId = setInterval(this.updateProgress.bind(this), 1000);
-  } /* startProgress(currentPhase, phaseTotalTime) */
-
-  /**
-   * Updates the value of currentProgressBarElement based on current time
-   */
-  updateProgress() {
-    console.log('updateProgress()');
-    this.time--;
-    this.currentProgressBarElement.value = this.currentProgressValue;
-  } /* updateProgress() */
-
-  /**
-   * Gets the current progress in decimal form.
-   */
-  get currentProgressValue() {
-    return ((this.totalTime - this.time) / this.totalTime);
-  } /* currentProgressValue() */
-
-  /**
-   * stopProgress: Stops the updating of the currentPhase's progress bar.
-   */
-  stopProgress() {
-    console.log('stopProgress()');
-    clearInterval(this.intervalId);
-    this.intervalId = null;
-  } /* stopProgress */
-
-  /**
-   * clearProgress: Clears any current progress within both progress bars
-   */
-  clearProgress() {
-    this.workProgressElement.value = 0;
-    this.breakProgressElement.value = 0;
-  } /* clearProgress() */
-
-  /**
-   * updateSessionsRemaining: Updates sessions remaining on progress bar
-   * @param {int} pomosRemaining: number of Pomodoros remaining
-   */
-  updateSessionsRemaining(pomosRemaining) {
-    this.sessionsRemainingElement.textcontent = pomosRemaining;
-  }
-}
 
 /* <--------------------------------------------------------------------------------------------> */
 class TimerSettings {
@@ -563,8 +528,8 @@ class TimerSplash {
  * Currently initializes the timer and button.
  */
 window.addEventListener('DOMContentLoaded', function() {
-  let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
-  let timerApp = new TimerApp();
+  new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
+  new TimerApp();
 });
 
 /* Task List */
@@ -672,32 +637,3 @@ function insert() {
 for (let i = 0; i < taskList.length; i++) {
   new Task(taskList[i]);
 }
-
-/*module.exports = {
-  SEC_01,
-  SEC_03,
-  SEC_05,
-  TIMER_TEXT_SELECTOR,
-  TIMER_BUTTON_SELECTOR,
-  TIMER_INFO_WORK_PROGRESS_SELECTOR,
-  TIMER_INFO_BREAK_PROGRESS_SELECTOR,
-  TIMER_INFO_SESSIONS_REMAINING_SELECTOR,
-  TIMER_RESET_BUTTON_SELECTOR,
-  TIMER_SETTINGS_SELECTOR,
-  POMO_NUMBER_SELECTOR,
-  POMO_LENGTH_NUMBER_SELECTOR,
-  SHORT_BREAK_NUMBER_SELECTOR,
-  LONG_BREAK_NUMBER_SELECTOR,
-  TIMER_SPLASH_SELECTOR,
-  TIMER_SPLASH_BUTTON_SELECTOR,
-  PHASE_POMODORO,
-  PHASE_SHORT_BREAK,
-  PHASE_LONG_BREAK,
-  STATUS_STOPPED,
-  STATUS_RUNNING,
-  TimerText,
-  TimerSettings,
-  TimerSplash,
-  TimerInfoProgress,
-  TimerApp
-};*/
