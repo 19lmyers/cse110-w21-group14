@@ -2,7 +2,7 @@
 Date: 03-07-2021, 03:00 - 03:20 p.m.  
 Location: Virtual through Zoom   
 Tools Used: Miro  
-Minutes prepared by: 
+Minutes prepared by: Harshi
 
 ## Attendance
 **Present**
