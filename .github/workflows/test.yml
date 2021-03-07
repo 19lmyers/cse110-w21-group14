@@ -1,6 +1,9 @@
 name: Cypress-Jest Test
 on:  
   push:
+    branches:
+      - master
+      - timer-unit-tests
   pull_request:
     branches:
       - master
