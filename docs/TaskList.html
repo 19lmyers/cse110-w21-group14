@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: TimerText</title>
+    <title>JSDoc: Class: TaskList</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: TimerText</h1>
+    <h1 class="page-title">Class: TaskList</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>TimerText<span class="signature">(selector, time)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>TaskList<span class="signature">(taskButtonSelector:, taskListContainerSelector:)</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="TimerText"><span class="type-signature"></span>new TimerText<span class="signature">(selector, time)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="TaskList"><span class="type-signature"></span>new TaskList<span class="signature">(taskButtonSelector:, taskListContainerSelector:)</span><span class="type-signature"></span></h4>
     
 
     
@@ -49,7 +49,8 @@
 
 
 <div class="description">
-    Constructs a new TimerText class, which handles the internal timekeeping.
+    TaskList(taskButtonElement, taskListContainerElement): Constructs the task list using the task
+button and the task list container.
 </div>
 
 
@@ -85,7 +86,7 @@
 
         <tr>
             
-                <td class="name"><code>selector</code></td>
+                <td class="name"><code>taskButtonSelector:</code></td>
             
 
             <td class="type">
@@ -101,14 +102,14 @@
 
             
 
-            <td class="description last">is the selector for the text.</td>
+            <td class="description last">the selector for the show task list button</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>time</code></td>
+                <td class="name"><code>taskListContainerSelector:</code></td>
             
 
             <td class="type">
@@ -124,7 +125,7 @@
 
             
 
-            <td class="description last">is the initial time for the TimerText to display.</td>
+            <td class="description last">selector for the task list revealed by task button element</td>
         </tr>
 
     
@@ -165,7 +166,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_main.js.html">scripts/main.js</a>, <a href="scripts_main.js.html#line349">line 349</a>
+        <a href="scripts_main.js.html">scripts/main.js</a>, <a href="scripts_main.js.html#line558">line 558</a>
     </li></ul></dd>
     
 
@@ -211,72 +212,6 @@
     
 
     
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id="timeString"><span class="type-signature"></span>timeString<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    Gets the current time as a mm:ss string.
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_main.js.html">scripts/main.js</a>, <a href="scripts_main.js.html#line408">line 408</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -287,7 +222,7 @@
     
 
     
-    <h4 class="name" id="setTime"><span class="type-signature"></span>setTime<span class="signature">(newTime)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="createTask"><span class="type-signature"></span>createTask<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -295,8 +230,7 @@
 
 
 <div class="description">
-    Sets the timer to the desired value (in seconds).
-Only works if the timer is stopped.
+    createTask(): creates a new task
 </div>
 
 
@@ -305,55 +239,6 @@ Only works if the timer is stopped.
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>newTime</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">is the time in seconds.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -389,7 +274,7 @@ Only works if the timer is stopped.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_main.js.html">scripts/main.js</a>, <a href="scripts_main.js.html#line398">line 398</a>
+        <a href="scripts_main.js.html">scripts/main.js</a>, <a href="scripts_main.js.html#line735">line 735</a>
     </li></ul></dd>
     
 
@@ -425,7 +310,7 @@ Only works if the timer is stopped.
     
 
     
-    <h4 class="name" id="start"><span class="type-signature"></span>start<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="loadTaskList"><span class="type-signature"></span>loadTaskList<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -433,7 +318,7 @@ Only works if the timer is stopped.
 
 
 <div class="description">
-    Starts the timer.
+    loadTaskList(): loads task list from local storage.
 </div>
 
 
@@ -477,7 +362,7 @@ Only works if the timer is stopped.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_main.js.html">scripts/main.js</a>, <a href="scripts_main.js.html#line364">line 364</a>
+        <a href="scripts_main.js.html">scripts/main.js</a>, <a href="scripts_main.js.html#line701">line 701</a>
     </li></ul></dd>
     
 
@@ -513,7 +398,7 @@ Only works if the timer is stopped.
     
 
     
-    <h4 class="name" id="stop"><span class="type-signature"></span>stop<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="storeTaskList"><span class="type-signature"></span>storeTaskList<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -521,7 +406,7 @@ Only works if the timer is stopped.
 
 
 <div class="description">
-    Stops the timer.
+    storeTaskList(): stores list of tasks into local storage as under the key "task-list".
 </div>
 
 
@@ -565,7 +450,7 @@ Only works if the timer is stopped.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_main.js.html">scripts/main.js</a>, <a href="scripts_main.js.html#line388">line 388</a>
+        <a href="scripts_main.js.html">scripts/main.js</a>, <a href="scripts_main.js.html#line680">line 680</a>
     </li></ul></dd>
     
 
@@ -601,7 +486,7 @@ Only works if the timer is stopped.
     
 
     
-    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="toggleTaskList"><span class="type-signature"></span>toggleTaskList<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -609,7 +494,7 @@ Only works if the timer is stopped.
 
 
 <div class="description">
-    Updates the timer's state.
+    toggleTaskList(): toggles visibility of task list
 </div>
 
 
@@ -653,7 +538,7 @@ Only works if the timer is stopped.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_main.js.html">scripts/main.js</a>, <a href="scripts_main.js.html#line376">line 376</a>
+        <a href="scripts_main.js.html">scripts/main.js</a>, <a href="scripts_main.js.html#line724">line 724</a>
     </li></ul></dd>
     
 
