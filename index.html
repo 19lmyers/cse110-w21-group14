@@ -7,45 +7,49 @@
 
 	<title>Pomodoro</title>
 
+	<!-- TODO: Uncomment after deleting local fonts -->
+<!-- 	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;800&display=swap" rel="stylesheet"> -->
+
 	<link rel="stylesheet" href="styles/main.css">
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="styles/task-list.css">
+	<link rel="stylesheet" href="styles/focus-task.css">
+	<link rel="stylesheet" href="styles/task.css">
 </head>
 
 <body>
-
 	<!-- Timer splash screen -->
 	<div id="timer-splash">
 		<h1>POMODORO</h1>
 		<button id="timer-splash-button">ENTER</button>
 	</div>
+	<div class="wrapper">
+		<header>
+			<h1>POMODORO</h1>
+		</header>
 
-	<header id='del'>
-		<h1>POMODORO</h1>
-	</header>
-
-	<main id='del'>
-		<section id="timer-app">
-			<div id="timer-circle">
+		<main>
+			<section id="timer-app">
 				<span id="timer-text">25:00</span>
-				<button id="timer-button" class="tactile-button">START</button>
-			</div>
-		</section>
-		<section id="timer-info">
-			<p><span id="timer-info-sessions">0</span> Pomodoros completed</p>
-			<!-- Step progress bar -->
-			<timer-progress></timer-progress>
-		</section>
-	</main>
+				<timer-button class="tactile-button" data-text="START"></timer-button>
+			</section>
+			<section id="timer-info">
+				<div id="focus-task-container"> </div>
+				<!-- Step progress bar -->
+				<timer-progress></timer-progress>
+			</section>
+		</main>
 
 	<audio id="pomo-complete-sound" src="assets/singing-bowl-sound.wav"></audio>
 	<audio id="button-sound" src="assets/button-sound.wav"></audio>
 
-	<footer id='del'>
+	<footer>
 		<!-- Timer Reset and Timer Settings Buttons -->
-		<button id="timer-reset-button"><img src="assets/reset-icon.svg" alt="Reset Button"></button>
+    <button id='task-button'><img src="assets/task-button.svg" alt="Task List Button"></button>
+		<div id="task-list"></div>
 		<button id="timer-settings-button" class="tactile-button"><img src="assets/settings-icon.svg" alt="Settings Button"></button>
-		<div id="timer-settings" class="dialog">
+		
+    <div id="timer-settings" class="dialog">
 			<div class="dialog-content">
 				<form id="timer-settings-form">
 					<fieldset>
@@ -122,31 +126,8 @@
 					</menu>
 				</div>
 			</div>
-		</template>
-
+		</template> 
 	</footer>
-
-
-	<button id='task-button' onclick="del()"> Task List</button>
-	<main id='task-list'>
-		<h1>Task List</h1>
-		<input id="input-value" type="text" placeholder="Tasks To Complete...">
-		<button id='add-button'>+</button>
-		<div class='item-list'>
-			<!-- <li>
-					<input id='input' type="text" disabled>
-					<button id="edit">Edit</button>
-					<button id="remove">Remove</button>
-				</li>
-				<li>
-					<input id='input' type="text" disabled>
-					<button id="edit">Edit</button>
-					<button id="delete">Delete</button>
-				</li> -->
-		</div>
-	</main>
-
-
 
 	<!-- Javascript scripts -->
 	<script src="scripts/main.js"></script>

@@ -1,0 +1,81 @@
+#focus-task-container {
+    position: relative;
+    display: flex;
+    background-color: white;
+    width: 500px;
+    height: 65px;
+    margin: 0;
+    border-radius: 18px;
+    box-shadow: inset 0px 3px 2px rgba(0,0,0,0.5);
+}
+
+#focus-task-checkbox {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    border: none;
+    outline: none;
+}
+
+#focus-task-container.no-focus-task #focus-task-name {
+    position: absolute;
+    margin: 0;
+    top: 15%;
+    left: 30%;
+    font-weight: 500;
+    font-size: 20px;
+    text-align: center;
+    color: #243D51;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+#focus-task-name {
+    position: absolute;
+    left: 8%;
+    margin: 0;
+    padding: 11px;
+    font-weight: 500;
+    font-size: 20px;
+    color: #243D51;
+}
+
+#focus-task-container.no-focus-task {
+    background-color: #E8E5E5;
+    box-shadow: 0px 3px 2px rgba(0,0,0,0.5);
+}
+
+#focus-task-pomo-actual::before {
+    content: "Pomos Done: ";
+    font-family: Montserrat;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #528799;
+}
+
+#focus-task-pomo-actual {
+    position: absolute;
+    top: 60%;
+    right: 7%;
+    margin: 0;
+    font-weight: 500;
+    font-family: Montserrat;
+    color:  #243D51;
+}
+
+#focus-task-pomo-estimate::before {
+    content: " / ";
+    font-family: Montserrat;
+    font-size: 12;
+    font-weight: 500;
+    color: #528799;
+}
+
+#focus-task-pomo-estimate {
+    margin: 0;
+    position: absolute;
+    top: 60%;
+    right: 2%;
+    color: #528799;
+    font-family: Montserrat;
+    font-size: 12;
+    font-weight: 500;
+}

@@ -22,6 +22,7 @@ class TimerButton extends HTMLElement {
         font-style: normal;
         font-weight: 500;
         font-size: 24px; 
+        margin: 80px;
 
         background: #FFFCF4;
         box-shadow: 0px 4px 4px #000000;

@@ -1,48 +1,211 @@
-/* TODO: Fix universal and read up on inheritance */
-* { 
-  font-family: "Montserrat";
-  font-style: normal;
+/* TODO: Delete */
+/** Montserrat ExtraBold **/
+@font-face {
+    font-family: "Montserrat";
+    font-weight: 800;
+    font-style: normal;
+    src: url("../fonts/Montserrat/Montserrat-ExtraBold.otf") format('opentype');
 }
 
-body {
+/** Montserrat Medium **/
+@font-face {
+    font-family: "Montserrat";
+    font-weight: 500;
+    font-style: normal;
+    src: url("../fonts/Montserrat/Montserrat-Medium.otf") format('opentype');
+}
+
+/** Montserrat Regular **/
+@font-face {
+    font-family: "Montserrat";
+    font-weight: 400;
+    font-style: normal;
+    src: url("../fonts/Montserrat/Montserrat-Regular.otf") format('opentype');
+}
+
+/** Montserrat Light **/
+@font-face {
+    font-family: "Montserrat";
+    font-weight: 300;
+    font-style: normal;
+    src: url("../fonts/Montserrat//Montserrat-Light.otf") format('opentype');
+}
+
+/* || General Styles */
+html,body {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
   margin: 0;
   padding: 0;
-  background-color: #F08080;
-  text-align: center
 }
 
-/* Default button attributes */
-button {
+button, select, textarea {
   border: 0;
   outline: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  font: inherit;
+}
 
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
- /*  font-family: "Montserrat";
-  font-style: normal; */
-
-  transition: background 250ms ease-in-out,
-                transform 150ms ease;
-  transition: box-shadow 250ms ease-in-out, transform 150ms ease;
-
+button {
+  box-shadow: 0px 3px 2px rgba(0,0,0,0.5);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 button:hover {
-  box-shadow: inset 1px 4px 4px rgba(0, 0, 0, 0.6);
+  box-shadow: none;
 }
 
-progress {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: none;
+h1,h2,h3,h4 {
+  margin: 0;
+  padding: 0;
 }
 
-/* TODO: Make everything below fill up the screen without overflowing 
- * (might be because of vw/vh issues)
- */
+/* || SITEWIDE */
+html::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
 
+html::-webkit-scrollbar-track:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+html::-webkit-scrollbar-thumb {
+  background-color: #969696;
+  border-radius: 30px;
+}
+
+.wrapper {
+  padding: 40px;
+  overflow-x: none;
+}
+
+html {
+  background-image: url("../assets/timer-background.jpg");
+  background-size: cover;
+  background-position: bottom center;
+  background-attachment: fixed;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: calc(100vh - 80px);
+}
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-width: fit-content;
+}
+
+footer {
+  grid-row: 6;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  grid-column: 1 / 4; 
+}
+
+header {
+  grid-row: 1;
+}
+
+/* || Typography */
+h1 {
+  font-weight: 800;
+  font-size: 2rem;
+  line-height: 100%;
+}
+
+/* || Header */
+header {
+  color: #024057;
+}
+/* || Splash Page */
+#timer-splash {
+  position: absolute;
+  z-index: 40000;
+  width: 100vw;
+  height: 100vh;
+  background-color: #FFFCF4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#timer-splash h1 {
+  color: #024057;
+  font-size: 15vw;
+  padding-bottom: 30px;
+  margin: 0;
+}
+#timer-splash-button {
+  font-size: 3vw;
+  border-radius: 2vw;
+  padding: 1vw 3vw;
+  background-color: #116880;
+  color: #EBF7FD;
+}
+@media (min-width: 1200px) {
+  #timer-splash h1 {
+    font-size: 10vw;
+    letter-spacing: 0.05em;
+  }
+
+  #timer-splash-button {
+    font-size: 2vw;
+    border-radius: 1vw;
+    padding: 0.5vw 1.5vw;
+  }
+}
+/* || Main content */
+/* || Timer App */
+#timer-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-feature-settings: "tnum";
+  padding-bottom: 30px;
+}
+
+#timer-text {
+  display: block;
+  font-size: 150px;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+  color: #024057;
+  text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.5);
+  padding-top: 100px;
+}
+
+#timer-info {
+  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* || Footer */
+.dialog {
+  position: absolute;
+}
+
+#timer-settings-button {
+  width: 60px;
+  height: 60px;
+  background-color: #366577;
+}
+
+/* || Dialog */
 .dialog {
   position: fixed;
   display: flex;
@@ -53,8 +216,8 @@ progress {
   height: 100vh;
   top: 0;
   left: 0;
-  visibility: hidden;
   background-color: rgba(0, 0, 0, 0.2);
+  visibility: hidden;
 }
 
 .dialog-content {
@@ -62,200 +225,3 @@ progress {
   border: 2px solid black;
   background-color: #FFFCF4;
 }
-
-/* Timer Splash */
-/* <--------------------------------------------------------------------------------------------> */
-#timer-splash {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background-color: #FFFCF4;
-}
-
-#timer-splash h1 {
-  font-size: 180px;
-  font-weight: 800;
-  line-height: auto;
-  letter-spacing: 0.2em;
-
-  color: #024057;
-  text-shadow: 0px 8px 10px rgba(0, 0, 0, 0.35);
-}
-
-#timer-splash-button {
-  width: 248px;
-  height: 68px;
-
-  font-weight: 500;
-  font-size: 40px;
-  line-height: auto;
-  letter-spacing: 0.05em;
-
-  background: #0F7490;
-  border-radius: 30px;
-
-  color: #EBF7FD;
-}
-
-#timer-splash-button:hover {
-  background: #116880;
-  border-radius: 30px;
-}
-
-/* TODO: Style timer app */
-/* <--------------------------------------------------------------------------------------------> */
-#timer-button {
-  /* TODO: change width and height to relative units */
-  width: 177.35px;
-  height: 63.34px;
-
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px; 
-
-  background: #FFFCF4;
-  box-shadow: 0px 4px 4px #000000;
-  border-radius: 30px;
-}
-
-#timer-button:hover {
-  box-shadow: inset 0px 4px 4px rgba(0,0,0,0.5);
-}
-
-#timer-text {
-  font-family: "Montserrat";
-  font-style: normal;
-  font-weight: bold;
-  font-size: 60px;
-  text-align: center;
-  font-feature-settings: "tnum", "lnum";
-
-  color: #024057;
-
-  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-}
-
-/* Footer buttons */
-/* <--------------------------------------------------------------------------------------------> */
-#timer-settings-button {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-
-  background: #366577;
-}
-
-#timer-reset-button {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-
-  background: #366577;
-}
-
-/* Progress Bar  */
-/* <--------------------------------------------------------------------------------------------> */
-#progress-bar-container {
-  display: flex;
-  list-style-type: none;
-  min-width: 400px;
- /*  border: 1px solid black; */
-}
-
-progress::-webkit-progress-bar {
-  background-color: #BDE1E9;
-  box-shadow: inset 0px 2px 1px rgba(0, 0, 0, 0.25);
-}
-
-progress[value]::-webkit-progress-value {
-  background-color: #243D51;
-  border-radius: 1px;
-}
-
-#progress-bar-container progress {
-  margin: 30px 0px;
-  height: 4px;
-}
-
-#progress-bar-container label {
- /*  border: 1px solid black; */
-  text-align: center;
-  min-width: fit-content;
-}
-
-#progress-bar-container li {
-  margin: auto 0px;
-  font-size: 0;
-  line-height: 0;
-  letter-spacing: 0;
-
-  width: 30px;
-  height: 30px;
-  background-color: #BDE1E9;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 50%;
-
-}
-
-/* Sessions Remaining counter */
-#timer-info-sessions-remaining {
-  font-family: inherit;
-  font-style: inherit;
-  font-weight: 800;
-  font-size: 20px;
-  letter-spacing: 0.05em;
-
-  color: #7DBAC8;
-}
-/* <--------------------------------------------------------------------------------------------> */
-
-
-/* Task Button */
-/* <--------------------------------------------------------------------------------------------> */
-#task-button {
-  width: 177.35px;
-  height: 63.34px;
-  margin: 50px;
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px; 
-
-  background: #FFFCF4;
-  box-shadow: 0px 4px 4px #000000;
-  border-radius: 30px;
-}
-
-#task-button:hover {
-  box-shadow: inset 0px 4px 4px rgba(0,0,0,0.5);
-}
-
-#task-list {
-  visibility: hidden;
-}
-
-#task-list h1 {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  margin-right: -50%;
-}
-
-
-#edit {
-	background-color: green;
-	cursor: pointer;
-}
-
-#delete {
-  background-color: red;
-  cursor: pointer;
-}
-
-
-/* <--------------------------------------------------------------------------------------------> */

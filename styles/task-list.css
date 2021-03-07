@@ -1,0 +1,122 @@
+/* || General Styling */
+#task-button {
+    width:60px;
+    height: 60px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background-color: #366577;
+}
+
+/* || Layout */
+#task-list {
+    width: 400px;
+    height: 500px;
+    background: #FFFCF4;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 18px;
+    position: absolute;
+    bottom: 90px;
+    left: 70px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+/* || Task Input */
+#task-input-container {
+    position:relative;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 90%;
+    height: 15%;
+    margin-top: 5%;
+}
+
+#task-name-input {
+    width: 90%;
+    margin: 2.5% 5% 2.5%;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+}
+
+#task-add-button {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    left: 88%;
+    bottom: -15%;
+}
+
+#task-add-button:hover {
+    background-color: #DFDFDF;
+    cursor: pointer;
+}
+
+
+#task-pomo-estimate-input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    background-color: white;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.25); 
+    position: absolute;
+    margin: 0;
+}
+
+#task-pomo-estimate-input {
+    width: 1rem;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #366577;
+    font-family: Montserrat;
+    font-weight: 500;
+}
+#pomo-estimate-label {
+    margin-left: 5.2%;
+    font-size: 16px;
+    font-family: Montserrat;
+    font-weight: 500;
+    margin-right: 5%;
+    color: #243D51;
+}
+
+/* || Tasks Section */
+#tasks-section {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 92%;
+    height: 70%;
+    margin-top: 5%;
+    border-radius: 15px;
+    overflow-y: auto;
+}
+#not-done-tasks-section, #done-tasks-section {
+    display: flex;
+    flex-direction: column;
+    width: 98%;
+}
+
+#tasks-section::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+#tasks-section::-webkit-scrollbar-track:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+#tasks-section::-webkit-scrollbar-thumb {
+  background-color: #969696;
+  border-radius: 30px;
+}
