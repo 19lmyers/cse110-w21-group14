@@ -38,11 +38,11 @@ const STATUS_RUNNING = 'running';
 const STATUS_PAUSED = 'paused';
 
 /* Task List */
-const TASK_BUTTON_SELECTOR = "#task-button";
-const TASK_LIST_CONTAINER_SELECTOR = "#task-list";
+const TASK_BUTTON_SELECTOR = '#task-button';
+const TASK_LIST_CONTAINER_SELECTOR = '#task-list';
 
 /* Focus Task */
-const FOCUS_TASK_CONTAINER_SELECTOR = "#focus-task-container";
+const FOCUS_TASK_CONTAINER_SELECTOR = '#focus-task-container';
 /* -------------------------------------------------------------------------- */
 
 /* TimerApp class */
@@ -66,7 +66,7 @@ class TimerApp {
     this.timerText = new TimerText(TIMER_TEXT_SELECTOR, this.pomodoroTimes.pomodoro);
     this.timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
     
-    //TODO: Remove TimerInfo Class
+    // TODO: Remove TimerInfo Class
     /* this.timerInfo = new TimerInfo(TIMER_INFO_SESSIONS_SELECTOR); */
     this.timerProgress = document.querySelector(TIMER_PROGRESS_SELECTOR);
     this.timerProgress.pomodoroTime = this.pomodoroTimes.pomodoro;
@@ -85,9 +85,9 @@ class TimerApp {
     });
 
     // Handle finishedFocusTask event
-    document.addEventListener("finishedFocusTask", (event) => {
+    document.addEventListener('finishedFocusTask', (event) => {
       this.handleEnd(true);
-    })
+    });
 
     // Event listener for resetting Pomodoros via button
 
@@ -191,8 +191,8 @@ class TimerApp {
       else {
         // Increment number of pomodoros completed after one cycle (pomo + break)
         // TODO: update TIMEREND event
-        document.dispatchEvent(new Event("timerEnd"));
-        console.log("handleEnd dispatching timerEnd event");
+        document.dispatchEvent(new Event('timerEnd'));
+        console.log('handleEnd dispatching timerEnd event');
         // TODO: Remove timerInfo class
         /* this.timerInfo.sessionsInfo.sessionsText = ++this.numPomodoros; */
         this.timerProgress.clearPomodoroProgress();
@@ -562,42 +562,42 @@ class TaskList {
      * Input fields (for taskName, taskEstimatedPomos)
      */
 
-    //Task List Button
-    //TODO: change to shadow dom element when using components
+    // Task List Button
+    // TODO: change to shadow dom element when using components
     this.taskButtonElement = document.querySelector(taskButtonSelector);
-    this.taskButtonElement.addEventListener("click", (event) => {
+    this.taskButtonElement.addEventListener('click', (event) => {
       event.preventDefault();
       this.toggleTaskList();
     });
 
-    //TODO: change to shadow dom element when using components
+    // TODO: change to shadow dom element when using components
     this.taskListContainerElement = document.querySelector(taskListContainerSelector);
-    this.taskListContainerElement.style.visibility = "hidden";
+    this.taskListContainerElement.style.visibility = 'hidden';
 
     // Construct task input element
-    this.taskInputElement = document.createElement("div");
-    this.taskInputElement.id = "task-input-container";
+    this.taskInputElement = document.createElement('div');
+    this.taskInputElement.id = 'task-input-container';
     
-    this.taskNameInput = document.createElement("input");
-    this.taskNameInput.id = "task-name-input";
-    this.taskNameInput.type = "text";
-    this.taskNameInput.placeholder = "Type task to complete here...";
+    this.taskNameInput = document.createElement('input');
+    this.taskNameInput.id = 'task-name-input';
+    this.taskNameInput.type = 'text';
+    this.taskNameInput.placeholder = 'Type task to complete here...';
 
-    this.taskPomoEstimateInput = document.createElement("input");
-    this.taskPomoEstimateInput.id = "task-pomo-estimate-input";
-    this.taskPomoEstimateInput.type = "number";
-    this.taskPomoEstimateInput.min = "0";
-    this.taskPomoEstimateInput.value = "0";
-    this.taskPomoEstimateInput.placeholder = "0";
+    this.taskPomoEstimateInput = document.createElement('input');
+    this.taskPomoEstimateInput.id = 'task-pomo-estimate-input';
+    this.taskPomoEstimateInput.type = 'number';
+    this.taskPomoEstimateInput.min = '0';
+    this.taskPomoEstimateInput.value = '0';
+    this.taskPomoEstimateInput.placeholder = '0';
 
-    this.taskPomoEstimateInputLabel = document.createElement("label");
-    this.taskPomoEstimateInputLabel.for = "task-pomo-estimate-input";
-    this.taskPomoEstimateInputLabel.id = "pomo-estimate-label";
-    this.taskPomoEstimateInputLabel.textContent = "Estimated Pomos";
+    this.taskPomoEstimateInputLabel = document.createElement('label');
+    this.taskPomoEstimateInputLabel.for = 'task-pomo-estimate-input';
+    this.taskPomoEstimateInputLabel.id = 'pomo-estimate-label';
+    this.taskPomoEstimateInputLabel.textContent = 'Estimated Pomos';
 
-    this.taskAddButton = document.createElement("button");
-    this.taskAddButton.id = "task-add-button"; 
-    this.taskAddButton.innerHTML = "<img src='./assets/input-task-add-button.svg'>"
+    this.taskAddButton = document.createElement('button');
+    this.taskAddButton.id = 'task-add-button';
+    this.taskAddButton.innerHTML = '<img src="./assets/input-task-add-button.svg">';
     
     this.taskInputElement.appendChild(this.taskNameInput);
     this.taskInputElement.appendChild(this.taskPomoEstimateInputLabel);
@@ -606,14 +606,14 @@ class TaskList {
     this.taskListContainerElement.appendChild(this.taskInputElement);
 
     // Construct section to hold tasks
-    this.tasksSection = document.createElement("section");
-    this.tasksSection.id = "tasks-section";
+    this.tasksSection = document.createElement('section');
+    this.tasksSection.id = 'tasks-section';
 
-    this.notDoneTasksSection = document.createElement("section");
-    this.notDoneTasksSection.id = "not-done-tasks-section";
+    this.notDoneTasksSection = document.createElement('section');
+    this.notDoneTasksSection.id = 'not-done-tasks-section';
 
-    this.doneTasksSection = document.createElement("section");
-    this.doneTasksSection.id = "done-tasks-section";
+    this.doneTasksSection = document.createElement('section');
+    this.doneTasksSection.id = 'done-tasks-section';
     
     this.tasksSection.appendChild(this.notDoneTasksSection);
     this.tasksSection.appendChild(this.doneTasksSection);
@@ -622,53 +622,53 @@ class TaskList {
    
     // EVENT Handlers
     // Handle create task when add button is clicked
-    this.taskAddButton.addEventListener("click", (event) => {
-        this.createTask(
-          this.taskNameInput.value, 
-          this.taskPomoEstimateInput.value, 
-          this.taskListContainerElement);
+    this.taskAddButton.addEventListener('click', (event) => {
+      this.createTask(
+        this.taskNameInput.value,
+        this.taskPomoEstimateInput.value,
+        this.taskListContainerElement);
         
-        //Clear values after creating task
-        this.taskNameInput.value = ""; //TODO: check this
-        this.taskPomoEstimateInput.value = "";
-      }
-    );
+      // Clear values after creating task
+      this.taskNameInput.value = ''; // TODO: check this
+      this.taskPomoEstimateInput.value = '';
+    });
 
     
     // Handle BEFOREUNLOAD event by storing tasks into local storage
-    window.addEventListener("beforeunload", (event) => {
+    window.addEventListener('beforeunload', (event) => {
       this.storeTaskList();
     }, false);
 
     // Handle NOFOCUSTASK event by toggling task list
-    document.addEventListener("noFocusTask", (event) => {
+    document.addEventListener('noFocusTask', (event) => {
       this.toggleTaskList();
-      console.log("TaskList handled noFocusTaskEvent");
+      console.log('TaskList handled noFocusTaskEvent');
     });
 
     // Handles the CHOOSETASK event by clearing all current focus tasks on task list and setting new
-    document.addEventListener("chooseTask", (event) => {
+    document.addEventListener('chooseTask', (event) => {
       // Remove all current focus tasks
-      while (this.taskListContainerElement.querySelector("*[focus]")) {
-        this.taskListContainerElement.querySelector("*[focus]").removeAttribute("focus");
+      while (this.taskListContainerElement.querySelector('*[focus]')) {
+        this.taskListContainerElement.querySelector('*[focus]').removeAttribute('focus');
       }
       // Set chosen task as current focus task
-      event.detail.task.setAttribute("focus","true");
+      event.detail.task.setAttribute('focus', 'true');
       this.toggleTaskList();
     });
 
     // Handles the TASKCHECKBOX event
-    document.addEventListener("taskCheckboxUpdate", (event) => {
+    document.addEventListener('taskCheckboxUpdate', (event) => {
       if (event.detail.checkboxValue == true) {
         this.doneTasksSection.appendChild(event.detail.task);
-        event.detail.task.classList.remove("task-not-done");
-        event.detail.task.classList.add("task-done");
-      } else {
-        this.notDoneTasksSection.appendChild(event.detail.task);
-        event.detail.task.classList.remove("task-done");
-        event.detail.task.classList.add("task-not-done");
+        event.detail.task.classList.remove('task-not-done');
+        event.detail.task.classList.add('task-done');
       }
-    })
+      else {
+        this.notDoneTasksSection.appendChild(event.detail.task);
+        event.detail.task.classList.remove('task-done');
+        event.detail.task.classList.add('task-not-done');
+      }
+    });
 
     // After constructing task list element, load all tasks from local storage.
     this.loadTaskList();
@@ -679,19 +679,18 @@ class TaskList {
    */
   storeTaskList() {
     let tasksToBeStored = [];
-    Array.from(this.taskListContainerElement.getElementsByClassName("task")).forEach(task => 
-      {
+    Array.from(this.taskListContainerElement.getElementsByClassName('task')).forEach((task) => {
       let taskValues = {
-        name: task.querySelector(".task-name").value,
-        pomoActual: task.querySelector(".task-pomo-actual").textContent,
-        pomoEstimate: task.querySelector(".task-pomo-estimate").value,
-        isDone: task.querySelector(".task-checkbox").checked,
-      }
+        name: task.querySelector('.task-name').value,
+        pomoActual: task.querySelector('.task-pomo-actual').textContent,
+        pomoEstimate: task.querySelector('.task-pomo-estimate').value,
+        isDone: task.querySelector('.task-checkbox').checked,
+      };
       tasksToBeStored.push(taskValues);
-      localStorage.setItem("task-list", JSON.stringify(tasksToBeStored));
+      localStorage.setItem('task-list', JSON.stringify(tasksToBeStored));
     });
     if (tasksToBeStored.length == 0) {
-      localStorage.removeItem("task-list");
+      localStorage.removeItem('task-list');
     }
   }
 
@@ -699,13 +698,13 @@ class TaskList {
    * loadTaskList(): loads task list from local storage.
    */
   loadTaskList() {
-    if (localStorage.getItem("task-list") != null) {
-      JSON.parse(localStorage.getItem("task-list")).forEach(task => {
+    if (localStorage.getItem('task-list') != null) {
+      JSON.parse(localStorage.getItem('task-list')).forEach((task) => {
         const newTask = new Task(
           task.name,
-          task.pomoEstimate, 
-          task.pomoActual, 
-          task.isDone, 
+          task.pomoEstimate,
+          task.pomoActual,
+          task.isDone,
         );
         
         if (task.isDone == false) {
@@ -722,21 +721,26 @@ class TaskList {
    * toggleTaskList(): toggles visibility of task list
    */
   toggleTaskList() {
-    if (this.taskListContainerElement.style.visibility == "visible") {
-      this.taskListContainerElement.style.visibility = "hidden";
-    } else {
-      this.taskListContainerElement.style.visibility = "visible";
+    if (this.taskListContainerElement.style.visibility == 'visible') {
+      this.taskListContainerElement.style.visibility = 'hidden';
+    }
+    else {
+      this.taskListContainerElement.style.visibility = 'visible';
     }
   }
 
   /**
    * createTask(): creates a new task
+   * @param {string} taskName: name of task being constructed.
+   * @param {number} pomoEstimate: estimated pomos for task being constructed.
+   * @param {*} taskListContainerElement: container for added tasks.
    */
   createTask(taskName, pomoEstimate, taskListContainerElement) {
-    if (taskName == "") {
-      //Encourage user to give tasks accurate descriptions
-    } else if (pomoEstimate > 4) {
-      //Prompt user to consider breaking down tasks into smaller more manageable chunks
+    if (taskName == '') {
+      // Encourage user to give tasks accurate descriptions
+    }
+    else if (pomoEstimate > 4) {
+      // Prompt user to consider breaking down tasks into smaller more manageable chunks
     }
     else {
       const newTask = new Task(taskName, pomoEstimate, 0, false);
@@ -755,25 +759,25 @@ class FocusTask {
    */
   constructor(focusTaskContainerSelector) {
     this.focusTaskContainer = document.querySelector(focusTaskContainerSelector);
-    this.focusTaskContainer.className = "no-focus-task";
-    this.focusTaskContainer.id = "focus-task-container";
+    this.focusTaskContainer.className = 'no-focus-task';
+    this.focusTaskContainer.id = 'focus-task-container';
     
-    this.focusTaskIsDone = document.createElement("input");
-    this.focusTaskIsDone.type = "checkbox";
+    this.focusTaskIsDone = document.createElement('input');
+    this.focusTaskIsDone.type = 'checkbox';
     this.focusTaskIsDone.checked = false;
-    this.focusTaskIsDone.id = "focus-task-checkbox";
+    this.focusTaskIsDone.id = 'focus-task-checkbox';
 
-    this.focusTaskName = document.createElement("p");
-    this.focusTaskName.textContent = "Choose a focus task";
-    this.focusTaskName.id = "focus-task-name";
+    this.focusTaskName = document.createElement('p');
+    this.focusTaskName.textContent = 'Choose a focus task';
+    this.focusTaskName.id = 'focus-task-name';
 
-    this.focusTaskPomoActual = document.createElement("p");
+    this.focusTaskPomoActual = document.createElement('p');
     this.focusTaskPomoActual.textContent = 0;
-    this.focusTaskPomoActual.id = "focus-task-pomo-actual";
+    this.focusTaskPomoActual.id = 'focus-task-pomo-actual';
 
-    this.focusTaskPomoEstimate = document.createElement("p");
+    this.focusTaskPomoEstimate = document.createElement('p');
     this.focusTaskPomoEstimate.textContent = 0;
-    this.focusTaskPomoEstimate.id = "focus-task-pomo-estimate";
+    this.focusTaskPomoEstimate.id = 'focus-task-pomo-estimate';
 
     this.focusTaskContainer.appendChild(this.focusTaskIsDone);
     this.focusTaskContainer.appendChild(this.focusTaskName);
@@ -782,65 +786,65 @@ class FocusTask {
 
     // EVENT HANDLERS:
     // Handle focusTaskContainer CLICK event:
-    this.focusTaskContainer.addEventListener("click", (event) => {
-      if (event.target.className == "no-focus-task") {
-        //Dispatch noFocusTaskEvent to document
-        const noFocusTaskEvent = new Event("noFocusTask", { bubbles: true });
-        if (event.target.id == "focus-task-checkbox") {
-          const finishedNoFocusTaskEvent = new Event("noFocusTask", { bubbles: true })
+    this.focusTaskContainer.addEventListener('click', (event) => {
+      if (event.target.className == 'no-focus-task') {
+        // Dispatch noFocusTaskEvent to document
+        const noFocusTaskEvent = new Event('noFocusTask', {bubbles: true});
+        if (event.target.id == 'focus-task-checkbox') {
+          const finishedNoFocusTaskEvent = new Event('noFocusTask', {bubbles: true});
           document.dispatchEvent(finishedNoFocusTaskEvent);
-          console.log("focusTask dispatched finishedNoFocusTask event to document");
+          console.log('focusTask dispatched finishedNoFocusTask event to document');
         }
         document.dispatchEvent(noFocusTaskEvent);
 
-        //TODO: delete
-        console.log("FocusTask dispatched noFocusTask event to document");
+        // TODO: delete
+        console.log('FocusTask dispatched noFocusTask event to document');
       }
     });
 
     // Handle focusTaskIsDone check event:
-    this.focusTaskIsDone.addEventListener("change", (event) => {
+    this.focusTaskIsDone.addEventListener('change', (event) => {
       if (event.target.checked == true) {
-        //TODO: JSDocs headers for events
-        const finishedFocusTaskEvent = new CustomEvent("finishedFocusTask", { 
+        // TODO: JSDocs headers for events
+        const finishedFocusTaskEvent = new CustomEvent('finishedFocusTask', {
           bubbles: true,
-          detail: event.target.parentElement.className,}
+          detail: event.target.parentElement.className},
         );
         document.dispatchEvent(finishedFocusTaskEvent);
 
-        //TODO: delete task output
-        console.log("FocusTask dispatched finishedFocusTask event with detail " 
-        + event.target.parentElement.className);
+        // TODO: delete task output
+        console.log('FocusTask dispatched finishedFocusTask event with detail ' +
+        event.target.parentElement.className);
 
         this.clearFocusTask();
       }
     });
 
     // Handle CLEARFOCUSTASK event
-    document.addEventListener("clearFocusTask", (event) => {
+    document.addEventListener('clearFocusTask', (event) => {
       this.clearFocusTask();
-      console.log("clearing focus task");
+      console.log('clearing focus task');
     });
    
     // Handle focusCheckboxUpdate event
     // TODO: rename event and decide whether or not to clear focus task if value is changed.
-    document.addEventListener("focusCheckboxUpdate", (event) => {
+    document.addEventListener('focusCheckboxUpdate', (event) => {
       this.focusTaskIsDone.checked = event.detail;
     });
 
     // Handle document CHOOSETASK event
-    document.addEventListener("chooseTask", (event) => {
+    document.addEventListener('chooseTask', (event) => {
       this.setFocusTaskName(event.detail.name);
       this.setFocusTaskPomoActual(event.detail.pomoActual);
       this.setFocusTaskPomoEstimate(event.detail.pomoEstimate);
       this.setFocusTaskIsDone(event.detail.isDone);
 
-      //TODO: delete task output
-      console.log("FocusTask handled chooseTaskEvent");
+      // TODO: delete task output
+      console.log('FocusTask handled chooseTaskEvent');
     });
 
     // Handle document TIMEREND event
-    document.addEventListener("timerEnd", (event) => {
+    document.addEventListener('timerEnd', (event) => {
       this.setFocusTaskPomoActual(parseInt(this.focusTaskPomoActual.textContent) + 1);
     });
   } /* constructor */
@@ -851,7 +855,7 @@ class FocusTask {
    */
   setFocusTaskName(taskName) {
     this.focusTaskName.textContent = taskName;
-    this.focusTaskContainer.className = "focus-task";
+    this.focusTaskContainer.className = 'focus-task';
   } /* setFocusTaskName */
 
   /**
@@ -875,17 +879,17 @@ class FocusTask {
    * @param {boolean} done
    */
   setFocusTaskIsDone(done) {
-      this.focusTaskIsDone.checked = done;
+    this.focusTaskIsDone.checked = done;
   }
 
   /**
    * clearFocusTask(): clears the focus task values
    */
   clearFocusTask() {
-    this.focusTaskName.textContent = "Choose a focus task"; 
+    this.focusTaskName.textContent = 'Choose a focus task';
     this.focusTaskPomoActual.textContent = 0;
     this.focusTaskPomoEstimate.textContent = 0;
-    this.focusTaskContainer.className = "no-focus-task";
+    this.focusTaskContainer.className = 'no-focus-task';
   } /* clearFocusTask */
   
 }
@@ -904,44 +908,45 @@ class Task {
    * @param {boolean} isTaskDone: true if task done, false if not.
    */
   constructor(taskName, pomoEstimate, pomoActual, isTaskDone) {
-    //create task container
-    this.taskContainerElement = document.createElement("div");
-    this.taskContainerElement.className = "task"
+    // create task container
+    this.taskContainerElement = document.createElement('div');
+    this.taskContainerElement.className = 'task';
 
-    this.taskEditButton = document.createElement("button");
+    this.taskEditButton = document.createElement('button');
     this.taskEditButton.innerHTML = "<img src='./assets/task-edit-button.svg'>";
-    this.taskEditButton.className = "task-edit-button";
+    this.taskEditButton.className = 'task-edit-button';
 
-    this.taskRemoveButton = document.createElement("button");
+    this.taskRemoveButton = document.createElement('button');
     this.taskRemoveButton.innerHTML = "<img src='./assets/task-delete-button.svg'>";
-    this.taskRemoveButton.className = "task-delete-button";
+    this.taskRemoveButton.className = 'task-delete-button';
 
-    this.taskNameField = document.createElement("input");
-    this.taskNameField.type = "text";
+    this.taskNameField = document.createElement('input');
+    this.taskNameField.type = 'text';
     this.taskNameField.value = taskName;
-    this.taskNameField.className = "task-name";
+    this.taskNameField.className = 'task-name';
 
-    this.taskPomoEstimateValue = document.createElement("input");
-    this.taskPomoEstimateValue.type = "number";
+    this.taskPomoEstimateValue = document.createElement('input');
+    this.taskPomoEstimateValue.type = 'number';
     this.taskPomoEstimateValue.value = pomoEstimate;
-    this.taskPomoEstimateValue.className = "task-pomo-estimate";
+    this.taskPomoEstimateValue.className = 'task-pomo-estimate';
 
-    this.taskPomoActualValue = document.createElement("p");
-    this.taskPomoActualValue.textContent = pomoActual; //Default actual pomo used when created is 0
-    this.taskPomoActualValue.className = "task-pomo-actual";
+    this.taskPomoActualValue = document.createElement('p');
+    this.taskPomoActualValue.textContent = pomoActual; // Default actual pomo used when created is 0
+    this.taskPomoActualValue.className = 'task-pomo-actual';
 
-    this.taskIsDone = document.createElement("input");
-    this.taskIsDone.type = "checkbox";
-    this.taskIsDone.className = "task-checkbox";
+    this.taskIsDone = document.createElement('input');
+    this.taskIsDone.type = 'checkbox';
+    this.taskIsDone.className = 'task-checkbox';
     this.taskIsDone.checked = isTaskDone;
 
     if (isTaskDone == true) {
-      this.taskContainerElement.className = "task task-done";
-    } else {
-      this.taskContainerElement.className = "task task-not-done";
+      this.taskContainerElement.className = 'task task-done';
+    }
+    else {
+      this.taskContainerElement.className = 'task task-not-done';
     }
 
-    //Append to task container
+    // Append to task container
     this.taskContainerElement.appendChild(this.taskIsDone);
     this.taskContainerElement.appendChild(this.taskNameField);
     this.taskContainerElement.appendChild(this.taskPomoActualValue);
@@ -949,22 +954,23 @@ class Task {
     this.taskContainerElement.appendChild(this.taskEditButton);
     this.taskContainerElement.appendChild(this.taskRemoveButton);
 
-    //Disable fields
-    this.taskPomoEstimateValue.setAttribute("disabled", "true");
-    this.taskNameField.setAttribute("disabled", "true");
+    // Disable fields
+    this.taskPomoEstimateValue.setAttribute('disabled', 'true');
+    this.taskNameField.setAttribute('disabled', 'true');
     
-    //Add event listeners
-    //TODO: Check if listener for check boxes update styling correctly
-    this.taskIsDone.addEventListener("input", (event) => {
+    // Add event listeners
+    // TODO: Check if listener for check boxes update styling correctly
+    this.taskIsDone.addEventListener('input', (event) => {
       if (event.target.checked == false) {
-        this.taskContainerElement.className = "task task-not-done";
-      } else {
-        this.taskContainerElement.className = "task task-done";
+        this.taskContainerElement.className = 'task task-not-done';
+      }
+      else {
+        this.taskContainerElement.className = 'task task-done';
       }
 
-      if (this.taskContainerElement.hasAttribute("focus")) {
-        document.dispatchEvent(new CustomEvent("focusCheckboxUpdate", {
-          detail: this.taskIsDone.checked
+      if (this.taskContainerElement.hasAttribute('focus')) {
+        document.dispatchEvent(new CustomEvent('focusCheckboxUpdate', {
+          detail: this.taskIsDone.checked,
         }));
       }
 
@@ -973,8 +979,8 @@ class Task {
  
     // Handle Events
     // Handles taskEditButton CLICK event
-    //TODO: Disable task edit button if has class "focus-task"
-    this.taskEditButton.addEventListener("click", (event) => {
+    // TODO: Disable task edit button if has class "focus-task"
+    this.taskEditButton.addEventListener('click', (event) => {
       event.preventDefault();
       this.editTask();
     });
@@ -986,62 +992,62 @@ class Task {
     });
 
     // Handles taskContainerElement CLICK event
-    this.taskContainerElement.addEventListener("click", (event) => {
-      if (event.target.className == "task-name" && 
-          this.taskEditButton.className == "task-save-button") {
+    this.taskContainerElement.addEventListener('click', (event) => {
+      if (event.target.className == 'task-name' &&
+          this.taskEditButton.className == 'task-save-button') {
         return;
       }
-      if (event.target.className == "task-name") {
-            console.log(event.target);
-            const chooseTaskEvent = new CustomEvent("chooseTask", {
-              detail: {
-                name: this.taskNameField.value,
-                pomoActual: this.taskPomoActualValue.textContent,
-                pomoEstimate: this.taskPomoEstimateValue.value,
-                isDone: this.taskIsDone.checked,
-                task: this.taskContainerElement,
-              }
-            });
+      if (event.target.className == 'task-name') {
+        console.log(event.target);
+        const chooseTaskEvent = new CustomEvent('chooseTask', {
+          detail: {
+            name: this.taskNameField.value,
+            pomoActual: this.taskPomoActualValue.textContent,
+            pomoEstimate: this.taskPomoEstimateValue.value,
+            isDone: this.taskIsDone.checked,
+            task: this.taskContainerElement,
+          },
+        });
 
-            // Dispatch choose task event if name or estimate or actual is clicked.
-            document.dispatchEvent(chooseTaskEvent);
+        // Dispatch choose task event if name or estimate or actual is clicked.
+        document.dispatchEvent(chooseTaskEvent);
 
-            //TODO: delete
-            console.log("Task dispatched chooseTaskEvent with detail " + 
+        // TODO: delete
+        console.log('Task dispatched chooseTaskEvent with detail ' +
                 JSON.stringify(chooseTaskEvent.detail));
-          }
-    })
+      }
+    });
 
     // Handles document timerEnd event
-    document.addEventListener("timerEnd", (event) => {
-      if (this.taskContainerElement.hasAttribute("focus")) {
+    document.addEventListener('timerEnd', (event) => {
+      if (this.taskContainerElement.hasAttribute('focus')) {
         this.taskPomoActualValue.textContent = parseInt(this.taskPomoActualValue.textContent) + 1;
       }
-    })
+    });
     
     // Handles FINISHEDFOCUSTASK event
-    document.addEventListener("finishedFocusTask", (event) => {
-      if (this.taskContainerElement.hasAttribute("focus")) {
+    document.addEventListener('finishedFocusTask', (event) => {
+      if (this.taskContainerElement.hasAttribute('focus')) {
         this.taskIsDone.checked = true;
         this.emitTaskCheckboxUpdateEvent();
-        this.taskContainerElement.removeAttribute("focus");
+        this.taskContainerElement.removeAttribute('focus');
       }
-    })
+    });
   }
 
   /**
    * emitTaskCheckboxUpdateEvent(): dispatches the taskCheckBox event to document
    */
   emitTaskCheckboxUpdateEvent() {
-    const taskCheckboxUpdateEvent = new CustomEvent("taskCheckboxUpdate", {
+    const taskCheckboxUpdateEvent = new CustomEvent('taskCheckboxUpdate', {
       detail: {
         task: this.taskContainerElement,
         checkboxValue: this.taskIsDone.checked,
-      }
+      },
     });
 
     document.dispatchEvent(taskCheckboxUpdateEvent);
-    console.log("emitTaskCheckboxUpdateEvent dispatched taskCheckboxUpdate event")
+    console.log('emitTaskCheckboxUpdateEvent dispatched taskCheckboxUpdate event');
   }
 
   /**
@@ -1057,29 +1063,30 @@ class Task {
    * editTask(): toggles editing of task
    */
   editTask() {
-    //TODO: If can't style with only classes, manually switch images.
-    if (this.taskNameField.hasAttribute("disabled")) {
-      this.taskNameField.removeAttribute("disabled");
-      this.taskEditButton.className = "task-save-button";
+    // TODO: If can't style with only classes, manually switch images.
+    if (this.taskNameField.hasAttribute('disabled')) {
+      this.taskNameField.removeAttribute('disabled');
+      this.taskEditButton.className = 'task-save-button';
       this.taskEditButton.innerHTML = "<img src='./assets/task-edit-button.svg'>";
-      //TODO: Handle updating stored tasks;
-    } else {
-      this.taskNameField.setAttribute("disabled", "true");
-      this.taskEditButton.className = "task-edit-button";
+      // TODO: Handle updating stored tasks;
+    }
+    else {
+      this.taskNameField.setAttribute('disabled', 'true');
+      this.taskEditButton.className = 'task-edit-button';
       this.taskEditButton.innerHTML = "<img src='./assets/task-edit-button.svg'>";
       
-      const updateTaskEvent = new CustomEvent("updateTask", {
+      const updateTaskEvent = new CustomEvent('updateTask', {
         detail: {
           name: this.taskNameField.value,
           pomoActual: this.taskPomoActualValue.textContent,
           pomoEstimate: this.taskPomoEstimateValue.value,
           isDone: this.taskIsDone.checked,
           task: this.taskContainerElement,
-        }
+        },
       });
       document.dispatchEvent(updateTaskEvent);
 
-      console.log("EditTask dispatched updateTask event");
+      console.log('EditTask dispatched updateTask event');
     }
   }
 
@@ -1087,11 +1094,11 @@ class Task {
    * removeTask(): deletes an existing task from local storage and task list.
    */
   removeTask() {
-    if (this.taskContainerElement.hasAttribute("focus")) {
-      const clearFocusTaskEvent = new Event("clearFocusTask");
+    if (this.taskContainerElement.hasAttribute('focus')) {
+      const clearFocusTaskEvent = new Event('clearFocusTask');
       document.dispatchEvent(clearFocusTaskEvent);
 
-      console.log("Task dispatched clearFocusTask event");
+      console.log('Task dispatched clearFocusTask event');
     }
     this.taskContainerElement.remove();
   }
@@ -1102,10 +1109,10 @@ class Task {
  * To be executed when the page loads.
  * Currently initializes the timer and button.
  */
-window.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('DOMContentLoaded', function() {
   let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
   let timerApp = new TimerApp();
-  let taskList = new TaskList("#task-button", "#task-list");
-  let focusTask = new FocusTask("#focus-task-container");
+  let taskList = new TaskList('#task-button', '#task-list');
+  let focusTask = new FocusTask('#focus-task-container');
 });
 
