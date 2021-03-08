@@ -26,7 +26,7 @@ class TimerProgress extends HTMLElement {
           <p>Next Cycle!</p>
         </div>
       </li>`;
-   /*  let style = document.createElement('style');
+    /* let style = document.createElement('style');
     style.innerHTML = `
       ul {
         padding: 0;
@@ -84,9 +84,9 @@ class TimerProgress extends HTMLElement {
         height: 30px;
       }
       `; */
-    let style = document.createElement("link");
-    style.rel = "stylesheet";
-    style.href = "./styles/progress-bar.css";
+    let style = document.createElement('link');
+    style.rel = 'stylesheet';
+    style.href = './styles/progress-bar.css';
     shadow.append(progress, style);
 
     // Set properties
