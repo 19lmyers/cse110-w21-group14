@@ -36,22 +36,25 @@ Minutes prepared by: Harshi
   - Document Code because we needed to work out other implementation kinks before going into this
   - Integration testing because needed to complete unit tests first
 
-2. Discuss and demonstrate the work.
-**Developers**    
-- Successes
+2. Discuss and demonstrate the work.     
+**Developers**      
+- Successes    
   - Implementing task list with limited time    
   - Implementing sounds    
   - Pause functionality    
-- Pain points
+- Pain points    
   - Local storage and draggability   
   - How to make it one page and creating pages for different devices    
-**Testers**
-- Successes
-  - 
-- Pain points
 
 
-**Pipeline Managers**
+**Testers**    
+- Successes    
+  - All unit tests were completed     
+  - Started on integration testing     
+- Pain points    
+  - None.     
+
+**Pipeline Managers**    
 - Successes     
   - Modified JSLint Rules      
   - Pipeline is functioning correctly now     
