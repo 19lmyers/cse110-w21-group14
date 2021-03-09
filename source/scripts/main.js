@@ -5,7 +5,7 @@ const MIN_25 = 60 * 25;
 const SEC_03 = 3; // For testing purposes only
 const SEC_05 = 5; // For testing purposes only
 const DEFAULT_POMODORO_LIMIT = 5;
-const TIMER_TEXT_SELECTOR = '#timer-text';
+const TIMER_TEXT_SELECTOR = 'timer-text';
 const TIMER_BUTTON_SELECTOR = 'timer-button';
 const TIMER_APP_SELECTOR = '#timer-app';
 const TIMER_INFO_SESSIONS_SELECTOR = '#timer-info-sessions';
@@ -62,8 +62,9 @@ class TimerApp {
     this.currentPhase = PHASE_POMODORO;
     this.timeoutId = null;
 
-    // Initialize components
-    this.timerText = new TimerText(TIMER_TEXT_SELECTOR, this.pomodoroTimes.pomodoro);
+    // Store components
+    this.timerText = document.querySelector(TIMER_TEXT_SELECTOR);
+    this.timerText.setTime(this.pomodoroTimes[PHASE_POMODORO]);
 
     this.timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
     this.timerButton.buttonAction = () => {
@@ -334,80 +335,6 @@ class TimerApp {
 }
 
 /* TimerText class */
-class TimerText {
-  /**
-   * Constructs a new TimerText class, which handles the internal timekeeping.
-   * @param {*} selector is the selector for the text.
-   * @param {*} time is the initial time for the TimerText to display.
-   */
-  constructor(selector, time) {
-    // Initialize intervalId for timeout functions
-    this.intervalId = null;
-
-    // Store arguments
-    this.element = document.querySelector(selector);
-    this.time = time;
-
-    // Display initialized time
-    this.element.textContent = this.timeString;
-  } /* constructor */
-
-  /**
-   * Starts the timer.
-   */
-  start() {
-    if (this.intervalId === null) {
-      this.intervalId = setInterval(this.update.bind(this), 1000);
-
-      // Set document title to current time
-      document.title = `Pomodoro - ${this.timeString}`;
-    }
-  } /* start */
-
-  /**
-   * Updates the timer's state.
-   */
-  update() {
-    this.time--;
-    this.element.textContent = this.timeString;
-
-    // Set document title to current time
-    document.title = `Pomodoro - ${this.timeString}`;
-  } /* update */
-
-
-  /**
-   * Stops the timer.
-   */
-  stop() {
-    clearInterval(this.intervalId);
-    this.intervalId = null;
-  } /* stop */
-
-  /**
-   * Sets the timer to the desired value (in seconds).
-   * Only works if the timer is stopped.
-   * @param {Number} newTime is the time in seconds.
-   */
-  setTime(newTime) {
-    if (this.intervalId === null) {
-      this.time = newTime;
-      this.element.textContent = this.timeString;
-    }
-  } /* time */
-
-  /**
-   * Gets the current time as a mm:ss string.
-   */
-  get timeString() {
-    let currentTime = Math.abs(this.time);
-    let min = Math.floor(currentTime / 60);
-    let sec = currentTime % 60;
-    let minString = min < 10 ? '0' + min : '' + min;
-    let secString = sec < 10 ? '0' + sec : '' + sec;
-    return this.time < 0 ? `-${minString}:${secString}` : `${minString}:${secString}`;
-  } /* timeString */
-}
 
 /* TODO: remove TimerInfo class 
 class TimerInfo {

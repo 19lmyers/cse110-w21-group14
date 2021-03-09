@@ -7,9 +7,8 @@
 
 	<title>Pomodoro</title>
 
-	<!-- TODO: Uncomment after deleting local fonts -->
-<!-- 	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;800&display=swap" rel="stylesheet"> -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;800&display=swap" rel="stylesheet">
 
 	<link rel="stylesheet" href="styles/main.css">
 	<link rel="stylesheet" href="styles/task-list.css">
@@ -30,8 +29,8 @@
 
 		<main>
 			<section id="timer-app">
-				<span id="timer-text">25:00</span>
-				<timer-button class="tactile-button" data-text="START"></timer-button>
+				<timer-text></timer-text>
+				<timer-button class="tactile-button"></timer-button>
 			</section>
 			<section id="timer-info">
 				<div id="focus-task-container"> </div>
@@ -135,8 +134,9 @@
 	<script src="scripts/main.js"></script>
 	<script src="components/timer-settings.js"></script>
 	<script src="components/timer-button.js"></script>
-	<script src="components/confirm-dialog.js"></script>
+	<script src="components/timer-text.js"></script>
 	<script src="components/timer-progress.js"></script>
+	<script src="components/confirm-dialog.js"></script>
 	<!-- Testing timer end -->
 
 </body>
