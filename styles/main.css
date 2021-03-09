@@ -224,4 +224,12 @@ header {
   padding: 1rem;
   border: 2px solid black;
   background-color: #FFFCF4;
+  width: 60vw;
+}
+
+#timer-settings-close, #timer-settings-save {
+  display: inline;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
 }
