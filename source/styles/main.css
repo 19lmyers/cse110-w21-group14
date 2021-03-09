@@ -1,235 +1,244 @@
 /* TODO: Delete */
 /** Montserrat ExtraBold **/
 @font-face {
-    font-family: "Montserrat";
-    font-weight: 800;
-    font-style: normal;
-    src: url("../fonts/Montserrat/Montserrat-ExtraBold.otf") format('opentype');
+  font-family: "Montserrat";
+  font-weight: 800;
+  font-style: normal;
+  src: url("../fonts/Montserrat/Montserrat-ExtraBold.otf") format('opentype');
 }
 
 /** Montserrat Medium **/
 @font-face {
-    font-family: "Montserrat";
-    font-weight: 500;
-    font-style: normal;
-    src: url("../fonts/Montserrat/Montserrat-Medium.otf") format('opentype');
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-style: normal;
+  src: url("../fonts/Montserrat/Montserrat-Medium.otf") format('opentype');
 }
 
 /** Montserrat Regular **/
 @font-face {
-    font-family: "Montserrat";
-    font-weight: 400;
-    font-style: normal;
-    src: url("../fonts/Montserrat/Montserrat-Regular.otf") format('opentype');
+  font-family: "Montserrat";
+  font-weight: 400;
+  font-style: normal;
+  src: url("../fonts/Montserrat/Montserrat-Regular.otf") format('opentype');
 }
 
 /** Montserrat Light **/
 @font-face {
-    font-family: "Montserrat";
-    font-weight: 300;
-    font-style: normal;
-    src: url("../fonts/Montserrat//Montserrat-Light.otf") format('opentype');
+  font-family: "Montserrat";
+  font-weight: 300;
+  font-style: normal;
+  src: url("../fonts/Montserrat//Montserrat-Light.otf") format('opentype');
 }
 
 /* || General Styles */
 html,body {
-  font-family: "Montserrat", sans-serif;
-  font-size: 16px;
-  margin: 0;
-  padding: 0;
+font-family: "Montserrat", sans-serif;
+font-size: 16px;
+margin: 0;
+padding: 0;
 }
 
 button, select, textarea {
-  border: 0;
-  outline: 0;
-  font: inherit;
+border: 0;
+outline: 0;
+font: inherit;
 }
 
 button {
-  box-shadow: 0px 3px 2px rgba(0,0,0,0.5);
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+box-shadow: 0px 3px 2px rgba(0,0,0,0.5);
+border-radius: 50%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+cursor: pointer;
 }
 
 button:hover {
-  box-shadow: none;
+box-shadow: none;
 }
 
 h1,h2,h3,h4 {
-  margin: 0;
-  padding: 0;
+margin: 0;
+padding: 0;
 }
 
 /* || SITEWIDE */
 html::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+width: 8px;
+height: 8px;
 }
 
 html::-webkit-scrollbar-track:hover {
-  background-color: rgba(0,0,0,0.1);
+background-color: rgba(0,0,0,0.1);
 }
 html::-webkit-scrollbar-thumb {
-  background-color: #969696;
-  border-radius: 30px;
+background-color: #969696;
+border-radius: 30px;
 }
 
 .wrapper {
-  padding: 40px;
-  overflow-x: none;
+padding: 40px;
+overflow-x: none;
 }
 
 html {
-  background-image: url("../assets/timer-background.jpg");
-  background-size: cover;
-  background-position: bottom center;
-  background-attachment: fixed;
+background-image: url("../assets/timer-background.jpg");
+background-size: cover;
+background-position: bottom center;
+background-attachment: fixed;
 }
 
 .wrapper {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  height: calc(100vh - 80px);
+display: flex;
+justify-content: space-between;
+flex-direction: column;
+height: calc(100vh - 80px);
 }
 main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  min-width: fit-content;
+margin-top: -50%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-between;
+min-width: fit-content;
 }
 
 footer {
-  grid-row: 6;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  grid-column: 1 / 4; 
+margin-top: -50%;
+grid-row: 6;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
+grid-column: 1 / 4; 
 }
 
 header {
-  grid-row: 1;
+grid-row: 1;
 }
 
 /* || Typography */
 h1 {
-  font-weight: 800;
-  font-size: 2rem;
-  line-height: 100%;
+font-weight: 800;
+font-size: 2rem;
+line-height: 100%;
 }
 
 /* || Header */
 header {
-  color: #024057;
+color: #024057;
 }
 /* || Splash Page */
 #timer-splash {
-  position: absolute;
-  z-index: 40000;
-  width: 100vw;
-  height: 100vh;
-  background-color: #FFFCF4;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+position: absolute;
+z-index: 40000;
+width: 100vw;
+height: 100vh;
+background-color: #FFFCF4;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
 }
 
 #timer-splash h1 {
-  color: #024057;
-  font-size: 15vw;
-  padding-bottom: 30px;
-  margin: 0;
+color: #024057;
+font-size: 15vw;
+padding-bottom: 30px;
+margin: 0;
 }
 #timer-splash-button {
-  font-size: 3vw;
-  border-radius: 2vw;
-  padding: 1vw 3vw;
-  background-color: #116880;
-  color: #EBF7FD;
+font-size: 3vw;
+border-radius: 2vw;
+padding: 1vw 3vw;
+background-color: #116880;
+color: #EBF7FD;
 }
 @media (min-width: 1200px) {
-  #timer-splash h1 {
-    font-size: 10vw;
-    letter-spacing: 0.05em;
-  }
+#timer-splash h1 {
+  font-size: 10vw;
+  letter-spacing: 0.05em;
+}
 
-  #timer-splash-button {
-    font-size: 2vw;
-    border-radius: 1vw;
-    padding: 0.5vw 1.5vw;
-  }
+#timer-splash-button {
+  font-size: 2vw;
+  border-radius: 1vw;
+  padding: 0.5vw 1.5vw;
+}
 }
 /* || Main content */
 /* || Timer App */
 #timer-app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  font-feature-settings: "tnum";
-  padding-bottom: 30px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-between;
+font-feature-settings: "tnum";
+padding-bottom: 30px;
 }
 
 #timer-text {
-  display: block;
-  font-size: 150px;
-  font-weight: 800;
-  letter-spacing: 0.025em;
-  color: #024057;
-  text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.5);
-  padding-top: 100px;
+display: block;
+font-size: 150px;
+font-weight: 800;
+letter-spacing: 0.025em;
+color: #024057;
+text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.5);
+padding-top: 100px;
 }
 
 #timer-info {
-  padding-top: 80px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+padding-top: 80px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
 }
 
 /* || Footer */
 .dialog {
-  position: absolute;
+position: absolute;
 }
 
 #timer-settings-button {
-  width: 60px;
-  height: 60px;
-  background-color: #366577;
+width: 60px;
+height: 60px;
+background-color: #366577;
 }
 
 /* || Dialog */
 .dialog {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.2);
-  visibility: hidden;
+position: fixed;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 100vw;
+height: 100vh;
+top: 0;
+left: 0;
+background-color: rgba(0, 0, 0, 0.2);
+visibility: hidden;
 }
 
 .dialog-content {
-  padding: 1rem;
-  border: 2px solid black;
-  background-color: #FFFCF4;
-  width: 60vw;
+padding: 1rem;
+border: 2px solid black;
+background-color: #FFFCF4;
+width: 60vw;
 }
 
 #timer-settings-close, #timer-settings-save {
-  display: inline;
-  padding: 0.5rem;
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
+display: inline;
+padding: 0.5rem;
+margin-top: 0.25rem;
+margin-bottom: 0.25rem;
+}
+
+.timer-progress {
+margin-top: -50%;
+}
+#focus-task-container.no-focus-task{
+margin-top: -20%;
 }
