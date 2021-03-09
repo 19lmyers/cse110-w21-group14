@@ -10,7 +10,7 @@ class TimerButton extends HTMLElement {
 
     let style = document.createElement('link');
     style.setAttribute('rel', 'stylesheet');
-    style.setAttribute('href', 'components/timer-button/timer-button.css');
+    style.setAttribute('href', 'styles/timer-button.css');
 
     button.addEventListener('click', () => {
       this.dispatchEvent(new Event('buttonPressed'));
