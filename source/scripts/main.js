@@ -64,7 +64,17 @@ class TimerApp {
 
     // Initialize components
     this.timerText = new TimerText(TIMER_TEXT_SELECTOR, this.pomodoroTimes.pomodoro);
+
     this.timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
+    this.timerButton.buttonAction = () => {
+      if (this.currentStatus === STATUS_RUNNING) {
+        let skip = this.currentPhase !== PHASE_POMODORO;
+        this.confirmEnd(skip);
+      }
+      else {
+        this.handleStart();
+      }
+    };
     
     // TODO: Remove TimerInfo Class
     /* this.timerInfo = new TimerInfo(TIMER_INFO_SESSIONS_SELECTOR); */
@@ -74,15 +84,6 @@ class TimerApp {
     this.timerSettings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
 
     // Event listener for toggling the timer via button
-    this.timerButton.addEventListener('buttonPressed', () => {
-      if (this.currentStatus === STATUS_RUNNING) {
-        let skip = this.currentPhase !== PHASE_POMODORO;
-        this.confirmEnd(skip);
-      }
-      else {
-        this.handleStart();
-      }
-    });
 
     // Handle finishedFocusTask event
     document.addEventListener('finishedFocusTask', (event) => {
@@ -128,7 +129,7 @@ class TimerApp {
 
       // Set natural timeout duration
       this.timeoutId = setTimeout(this.handleEnd.bind(this), this.timerText.time * 1000, false);
-      this.timerButton.setAttribute('data-text', 'END');
+      this.timerButton.buttonText = 'END';
     }
   } /* handleStart */
 
@@ -167,7 +168,7 @@ class TimerApp {
     this.timerText.stop();
     this.timerProgress.stop();
     this.currentStatus = STATUS_STOPPED;
-    this.timerButton.setAttribute('data-text', 'START');
+    this.timerButton.buttonText = 'START';
 
     // Clear natural duration and reset ID
     clearTimeout(this.timeoutId);
