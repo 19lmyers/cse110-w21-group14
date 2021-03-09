@@ -7,9 +7,8 @@
 
 	<title>Pomodoro</title>
 
-	<!-- TODO: Uncomment after deleting local fonts -->
-<!-- 	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;800&display=swap" rel="stylesheet"> -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;800&display=swap" rel="stylesheet">
 
 	<link rel="stylesheet" href="styles/main.css">
 	<link rel="stylesheet" href="styles/task-list.css">
@@ -40,109 +39,126 @@
 			</section>
 		</main>
 
-	<audio id="pomo-complete-sound" src="assets/singing-bowl-sound.wav"></audio>
-	<audio id="button-sound" src="assets/button-sound.wav"></audio>
+		<audio id="pomo-complete-sound" src="assets/singing-bowl-sound.wav"></audio>
+		<audio id="button-sound" src="assets/button-sound.wav"></audio>
 
-	<footer>
-		<!-- Timer Reset and Timer Settings Buttons -->
-    <button id='task-button'><img src="assets/task-button.svg" alt="Task List Button"></button>
-		<div id="task-list"></div>
-		<button id="timer-settings-button" class="tactile-button"><img src="assets/settings-icon.svg" alt="Settings Button"></button>
-		
-    <div id="timer-settings" class="dialog">
-			<div class="dialog-content">
-				<form id="timer-settings-form">
-					<fieldset>
-						<label for="pomo-number">Number of Pomodoros:</label>
-						<div>
-							<input id="pomo-number" name="pomo-number" type="number" min="1" max="25" value="5">
-							<input id="pomo-slider" name="pomo-slider" type="range" min="1" max="25" value="5">
-						</div>
-					</fieldset>
-					<fieldset>
-						<legend>Choose your Pomodoro lengths:</legend>
+		<footer>
+			<!-- Timer Reset and Timer Settings Buttons -->
+			<button id='task-button'><img src="assets/task-button.svg" alt="Task List Button"></button>
+			<div id="task-list"></div>
+			<button id="timer-settings-button" class="tactile-button"><img src="assets/settings-icon.svg"
+					alt="Settings Button"></button>
 
-						<label for="pomo-length-number">Length of Pomodoro (min):</label>
-						<div>
-							<input id="pomo-length-number" name="pomo-length-number" type="number" min="5" max="120" value="25">
-							<input id="pomo-length-slider" name="pomo-length-slider" type="range" min="5" max="120" value="25">
-						</div>
-
-						<label for="short-break-number">Length of short break (min):</label>
-						<div>
-							<input id="short-break-number" name="short-break-number" type="number" min="1" max="25" value="5">
-							<input id="short-break-slider" name="short-break-slider" type="range" min="1" max="25" value="5">
-						</div>
-						<label for="long-break-number">Length of long break (min):</label>
-						<div>
-							<input id="long-break-number" name="long-break-number" type="number" min="1" max="50" value="15">
-							<input id="long-break-slider" name="long-break-slider" type="range" min="1" max="50" value="15">
-						</div>
-					</fieldset>
-
-					<button id="timer-settings-save" type="submit">Save</button>
-					<button id="timer-settings-close" type="button" class="tactile-button">Close</button>
-
-					<hr>
-					<h2>What is the Pomodoro Method?</h2>
-					<p>Traditionally, the Pomodoro method is a cycle between a period of concentrated and uninterrupted work, known as 
-						a pomodoro, followed by a short break (and a long break every fourth cycle). This app expands upon the Pomodoro 
-						method while adhering to its fundamental philosophy, including customizable session times for pomodoros and 
-						breaks, task logging and estimations, and more. 
-						<br><br> <b>How should I use this app?</b> <br> Simply get ready and press the button to begin! This will start 
-						counting down from the pomodoro time allotted (25 minutes by default). Note that once the button is pressed, you cannot end the timer without losing your progress on the current pomodoro. After a pomodoro is complete, you will automatically transition into the break period 
-						(5 and 15 minutes for short and long breaks by default), after which the current work session will end. You can also use the task feature to log tasks you need to complete and the estimated number of pomodoros to complete it. </p>
-			</div>
-		</div>
-
-		<template id="confirm-dialog-template">
-			<style>
-				.dialog {
-					position: fixed;
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-					align-items: center;
-					width: 100vw;
-					height: 100vh;
-					top: 0;
-					left: 0;
-					background-color: rgba(0, 0, 0, 0.2);
-				}
-
-				.dialog-content {
-					padding: 1rem;
-					border: 2px solid black;
-					background-color: #FFFCF4;
-				}
-			</style>
-			<div class="dialog">
+			<div id="timer-settings" class="dialog">
 				<div class="dialog-content">
-					<h2>
-						<slot name="header">Dialog header</slot>
-					</h2>
-					<p>
-						<slot name="text">Dialog text</slot>
-					</p>
-					<menu>
-						<button class="cancel-button">Cancel</button>
-						<button class="confirm-button">
-							<slot name="confirm-button-text">Confirm</slot>
-						</button>
-					</menu>
+					<form id="timer-settings-form">
+						<fieldset>
+							<label for="pomo-number">Number of Pomodoros:</label>
+							<div>
+								<input id="pomo-number" name="pomo-number" type="number" min="1" max="25" value="5">
+								<input id="pomo-slider" name="pomo-slider" type="range" min="1" max="25" value="5">
+							</div>
+						</fieldset>
+						<fieldset>
+							<legend>Choose your Pomodoro lengths:</legend>
+
+							<label for="pomo-length-number">Length of Pomodoro (min):</label>
+							<div>
+								<input id="pomo-length-number" name="pomo-length-number" type="number" min="5" max="120"
+									value="25">
+								<input id="pomo-length-slider" name="pomo-length-slider" type="range" min="5" max="120"
+									value="25">
+							</div>
+
+							<label for="short-break-number">Length of short break (min):</label>
+							<div>
+								<input id="short-break-number" name="short-break-number" type="number" min="1" max="25"
+									value="5">
+								<input id="short-break-slider" name="short-break-slider" type="range" min="1" max="25"
+									value="5">
+							</div>
+							<label for="long-break-number">Length of long break (min):</label>
+							<div>
+								<input id="long-break-number" name="long-break-number" type="number" min="1" max="50"
+									value="15">
+								<input id="long-break-slider" name="long-break-slider" type="range" min="1" max="50"
+									value="15">
+							</div>
+						</fieldset>
+
+						<button id="timer-settings-save" type="submit">Save</button>
+						<button id="timer-settings-close" type="button" class="tactile-button">Close</button>
+
+						<hr>
+						<h2>What is the Pomodoro Method?</h2>
+						<p>Traditionally, the Pomodoro method is a cycle between a period of concentrated and
+							uninterrupted work, known as
+							a pomodoro, followed by a short break (and a long break every fourth cycle). This app
+							expands upon the Pomodoro
+							method while adhering to its fundamental philosophy, including customizable session times
+							for pomodoros and
+							breaks, task logging and estimations, and more.
+							<br><br> <b>How should I use this app?</b> <br> Simply get ready and press the button to
+							begin! This will start
+							counting down from the pomodoro time allotted (25 minutes by default). Note that once the
+							button is pressed, you cannot end the timer without losing your progress on the current
+							pomodoro. After a pomodoro is complete, you will automatically transition into the break
+							period
+							(5 and 15 minutes for short and long breaks by default), after which the current work
+							session will end. You can also use the task feature to log tasks you need to complete and
+							the estimated number of pomodoros to complete it.
+						</p>
 				</div>
 			</div>
-		</template> 
-	</footer>
 
-	<!-- Javascript scripts -->
-	<script src="scripts/main.js"></script>
-	<script src="components/timer-settings.js"></script>
-	<script src="components/timer-button.js"></script>
-	<script src="components/confirm-dialog.js"></script>
-	<script src="components/timer-progress.js"></script>
-	<!-- Testing timer end -->
+			<template id="confirm-dialog-template">
+				<style>
+					.dialog {
+						position: fixed;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						width: 100vw;
+						height: 100vh;
+						top: 0;
+						left: 0;
+						background-color: rgba(0, 0, 0, 0.2);
+					}
 
+					.dialog-content {
+						padding: 1rem;
+						border: 2px solid black;
+						background-color: #FFFCF4;
+					}
+				</style>
+				<div class="dialog">
+					<div class="dialog-content">
+						<h2>
+							<slot name="header">Dialog header</slot>
+						</h2>
+						<p>
+							<slot name="text">Dialog text</slot>
+						</p>
+						<menu>
+							<button class="cancel-button">Cancel</button>
+							<button class="confirm-button">
+								<slot name="confirm-button-text">Confirm</slot>
+							</button>
+						</menu>
+					</div>
+				</div>
+			</template>
+		</footer>
+
+		<!-- Javascript scripts -->
+		<script src="scripts/main.js"></script>
+		<script src="components/timer-settings.js"></script>
+		<script src="components/timer-button.js"></script>
+		<script src="components/confirm-dialog.js"></script>
+		<script src="components/timer-progress.js"></script>
+		<!-- Testing timer end -->
+	</div>
 </body>
 
 </html>
