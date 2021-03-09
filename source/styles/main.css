@@ -109,7 +109,12 @@ header {
 }
 
 timer-text {
+  margin: 1rem 0;
   width: 100%;
+}
+
+timer-progress {
+  margin-top: 3rem;
 }
 
 #timer-splash h1 {

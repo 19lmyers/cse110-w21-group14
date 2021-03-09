@@ -26,67 +26,10 @@ class TimerProgress extends HTMLElement {
           <p>Next Cycle!</p>
         </div>
       </li>`;
-    /* let style = document.createElement('style');
-    style.innerHTML = `
-      ul {
-        padding: 0;
-        list-style-type: none;
-        display: flex;
-        justify-content: center;
-      }
 
-      li {
-        display: flex;
-      }
-
-      div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 2rem;
-      }
-
-      p {
-        display: block;
-        white-space: nowrap;
-        font-style: normal;
-        font-weight: 300;
-        color: #BFE4EC;
-      }
-
-      progress::-webkit-progress-bar {
-        background-color: #BDE1E9;
-        box-shadow: inset 0px 2px 1px rgba(0, 0, 0, 0.25);
-      }
-
-      progress[value]::-webkit-progress-value {
-        background-color: #243D51;
-        border-radius: 1px;
-      }
-
-      progress {
-        z-index: -1;
-        margin: 0.875rem 0;
-        height: 0.25rem;
-      }
-
-      .progress-dot {
-        width: 2rem;
-        height: 2rem;
-        background-color: #BDE1E9;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        border-radius: 50%;
-      }
-      
-      .progress-dot.complete {
-        background-color: #243D51;
-        width: 30px;
-        height: 30px;
-      }
-      `; */
     let style = document.createElement('link');
-    style.rel = 'stylesheet';
-    style.href = './styles/progress-bar.css';
+    style.setAttribute('rel', 'stylesheet');
+    style.setAttribute('href', './styles/timer-progress.css');
     shadow.append(progress, style);
 
     // Set properties

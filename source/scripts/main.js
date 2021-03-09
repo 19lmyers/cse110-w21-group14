@@ -209,7 +209,6 @@ class TimerApp {
     }
   } /* handleEnd */
 
-
   /**
    * Cycles the pomodoro to the next phase, taking into account
    * long and short break cycles. 
@@ -333,42 +332,6 @@ class TimerApp {
     document.body.appendChild(confirmDialog);
   } /* confirmReset */
 }
-
-/* TimerText class */
-
-/* TODO: remove TimerInfo class 
-class TimerInfo {
-  /**
-   * Constructs a new TimerInfo class, which holds a TimerInfoSessions
-   * object and a TimerInfoProgress object.
-   * @param {*} sessionsSelector: selector for the sessions element
-   * @param {*} workProgressSelector: selector for the work progress element
-   * @param {*} breakProgressSelector: selector for the break progress element
-   * @param {*} sessionsRemainingSelector: selector for the sessions remaining element
-   
-  constructor(sessionsSelector, workProgressSelector, breakProgressSelector,
-    sessionsRemainingSelector) {
-    this.sessionsInfo = new TimerInfoSessions(sessionsSelector);
-  }
-
-} /* Timer Info Class */
-
-/* TODO: Remove TimerInfoSessions 
-class TimerInfoSessions {
-  constructor(selector) {
-    this.element = document.querySelector(selector);
-  }
-
-  set sessionsText(numPomodoros) {
-    this.element.textContent = numPomodoros;
-  }
-} /* Timer Info Sessions */
-
-/* TimerInfoProgress */
-/* <-------------------------------------------------------------------------------------------> */
-
-/* TimerSettings */
-/* <--------------------------------------------------------------------------------------------> */
 class TimerSettings {
   constructor(settingsSelector) {
     this.element = document.querySelector(settingsSelector);
