@@ -292,14 +292,9 @@ class TimerApp {
     dialogConfirm.textContent = 'End';
     confirmDialog.appendChild(dialogConfirm);
 
-    // Set confirm action
-    confirmDialog.addEventListener('confirmPressed', () => {
-      this.handleEnd(true);
-    });
-
-    confirmDialog.addEventListener('cancelPressed', () => {
-      this.handleContinue();
-    });
+    // Set actions
+    confirmDialog.confirmAction = () => this.handleEnd(true);
+    confirmDialog.cancelAction = () => this.handleContinue();
 
     document.body.appendChild(confirmDialog);
   } /* confirmEnd */
@@ -332,9 +327,7 @@ class TimerApp {
     confirmDialog.appendChild(dialogConfirm);
 
     // Set confirm action
-    confirmDialog.addEventListener('confirmPressed', () => {
-      this.resetPomodoros();
-    });
+    confirmDialog.confirmAction = () => this.resetPomodoros();
 
     document.body.appendChild(confirmDialog);
   } /* confirmReset */
