@@ -27,7 +27,7 @@ class TimerText extends HTMLElement {
    */
   start() {
     if (this.intervalId === null) {
-      this.intervalId = setInterval(this.update.bind(this), 1000);
+      this.intervalId = setInterval(this._update.bind(this), 1000);
 
       // Set document title to current time
       document.title = `Pomodoro - ${this.timeString}`;
@@ -37,7 +37,7 @@ class TimerText extends HTMLElement {
   /**
    * Updates the timer's state.
    */
-  update() {
+  _update() {
     this.time--;
 
     let shadow = this.shadowRoot;

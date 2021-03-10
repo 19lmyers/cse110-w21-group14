@@ -26,6 +26,28 @@ button:hover {
   box-shadow: none;
 }
 
+#settings-button {
+  position: fixed;
+  right: 5vw;
+  bottom: 5vh;
+  width: 60px;
+  height: 60px;
+  background-color: #366577;
+  border: 0;
+  outline: 0;
+  box-shadow: 0px 3px 2px rgba(0,0,0,0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#settings-button:hover,
+#settings-button:focus {
+  box-shadow: none;
+}
+
 h1,h2,h3,h4 {
   margin: 0;
   padding: 0;
@@ -142,7 +164,7 @@ timer-progress {
     padding: 0.5vw 1.5vw;
   }
 }
-/* || Main content */
+
 /* || Timer App */
 #timer-app {
   width: 100%;
@@ -159,36 +181,4 @@ timer-progress {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-/* || Footer */
-.dialog {
-  position: absolute;
-}
-
-#timer-settings-button {
-  width: 60px;
-  height: 60px;
-  background-color: #366577;
-}
-
-/* || Dialog */
-.dialog {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.2);
-  visibility: hidden;
-}
-
-.dialog-content {
-  padding: 1rem;
-  border: 2px solid black;
-  background-color: #FFFCF4;
 }

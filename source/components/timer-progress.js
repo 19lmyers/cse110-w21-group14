@@ -49,30 +49,36 @@ class TimerProgress extends HTMLElement {
       switch (phase) {
         case PHASE_POMODORO:
           this.currentProgressBarElement = this.pomodoroProgress;
-          this.pomodoroDot = true;
-          break;
-          this.timerProgress.pomodoroDot = true;
+          this._pomodoroDot = true;
           break;
         case PHASE_SHORT_BREAK:
           this.currentProgressBarElement = this.breakProgress;
-          this.breakDot = true;
+          this._breakDot = true;
           break;
         case PHASE_LONG_BREAK:
           this.currentProgressBarElement = this.breakProgress;
-          this.breakDot = true;
+          this._breakDot = true;
           break;
       }
 
-      this.intervalId = setInterval(this.update.bind(this), 1000);
+      this.intervalId = setInterval(this._update.bind(this), 1000);
     }
   } /* start */
 
   /**
    * Updates the value of currentProgressBarElement based on current time
    */
-  update() {
+  _update() {
     this.currentProgressBarElement.value++;
   } /* update */
+
+  /**
+   * Pauses the updating of the currentPhase's progress bar.
+   */
+  pause() {
+    clearInterval(this.intervalId);
+    this.intervalId = null;
+  }
 
   /**
    * stopProgress: Stops the updating of the currentPhase's progress bar.
@@ -80,6 +86,11 @@ class TimerProgress extends HTMLElement {
   stop() {
     clearInterval(this.intervalId);
     this.intervalId = null;
+
+    if (this.currentProgressBarElement === this.breakProgress) {
+      this.breakProgress.value = this.breakProgress.max;
+      this._doneDot = true;
+    }
   } /* stop */
 
   /**
@@ -103,26 +114,21 @@ class TimerProgress extends HTMLElement {
   }
 
   /**
-   * clearPomodoroProgress: Clears the pomodoro progress bar.
+   * Clears all progress bars and dots.
    */
-  clearPomodoroProgress() {
+  clear() {
     this.pomodoroProgress.value = 0;
-    this.pomodoroDot = false;
-  } /* clearPomodoroProgress() */
-
-  /**
-   * clearBreakProgress: Clears the break progress bar.
-   */
-  clearBreakProgress() {
     this.breakProgress.value = 0;
-    this.breakDot = false;
-  } /* clearBreakProgress() */
+    this._pomodoroDot = false;
+    this._breakDot = false;
+    this._doneDot = false;
+  }
 
   /**
    * Sets the completion status for the pomodoro (first) dot.
    * @param {boolean} complete indicates whether the dot should be filled.
    */
-  set pomodoroDot(complete) {
+  set _pomodoroDot(complete) {
     let pomodoroDot = this.shadowRoot.querySelector('#progress-pomodoro .progress-dot');
 
     if (complete) {
@@ -137,7 +143,7 @@ class TimerProgress extends HTMLElement {
    * Sets the completion status for the break (second) dot.
    * @param {boolean} complete indicates whether the dot should be filled.
    */
-  set breakDot(complete) {
+  set _breakDot(complete) {
     let breakDot = this.shadowRoot.querySelector('#progress-break .progress-dot');
 
     if (complete) {
@@ -152,7 +158,7 @@ class TimerProgress extends HTMLElement {
    * Sets the completion status for the done (third) dot.
    * @param {boolean} complete indicates whether the dot should be filled.
    */
-  set doneDot(complete) {
+  set _doneDot(complete) {
     let doneDot = this.shadowRoot.querySelector('#progress-done .progress-dot');
 
     if (complete) {
