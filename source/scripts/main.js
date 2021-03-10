@@ -4,10 +4,7 @@ const MIN_15 = 60 * 15;
 const MIN_25 = 60 * 25;
 const TIMER_TEXT_SELECTOR = 'timer-text';
 const TIMER_BUTTON_SELECTOR = 'timer-button';
-const TIMER_APP_SELECTOR = '#timer-app';
-const TIMER_INFO_SESSIONS_SELECTOR = '#timer-info-sessions';
 const TIMER_PROGRESS_SELECTOR = 'timer-progress';
-const TIMER_RESET_BUTTON_SELECTOR = '#timer-reset-button';
 const TIMER_SETTINGS_SELECTOR = 'timer-settings';
 const SETTINGS_BUTTON_SELECTOR = '#settings-button';
 const POMO_NUMBER_SELECTOR = '#pomo-number';
@@ -119,7 +116,7 @@ class TimerApp {
       this.timerButton.buttonText = 'END';
 
       // (Re)set progress bar
-      switch(this.currentPhase) {
+      switch (this.currentPhase) {
         case PHASE_POMODORO:
           this.timerProgress.clear();
           this.timerProgress.pomodoroTime = this.pomodoroTimes[PHASE_POMODORO];
@@ -134,7 +131,8 @@ class TimerApp {
       // Change progress break text
       if (this.numPomodoros % 4 === 3) {
         this.timerProgress.breakText = 'Long Break';
-      } else {
+      }
+      else {
         this.timerProgress.breakText = 'Short Break';
       }
       // Start progress bar
