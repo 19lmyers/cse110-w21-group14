@@ -524,6 +524,7 @@ class TimerSettings {
 
 /* TimerSplash */
 /* <--------------------------------------------------------------------------------------------> */
+/*
 class TimerSplash {
   constructor(splashSelector, splashButtonSelector) {
     this.element = document.querySelector(splashSelector);
@@ -539,7 +540,7 @@ class TimerSplash {
     this.element.style.visibility = 'hidden';
   }
 }
-
+*/
 /* Task List */
 /* ---------------------------------------------------------------------------------------------- */
 class TaskList {
