@@ -898,7 +898,6 @@ class Task {
  * Currently initializes the timer and button.
  */
 window.addEventListener('DOMContentLoaded', function() {
-  let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
   let timerApp = new TimerApp();
   let taskList = new TaskList('#task-button', '#task-list');
   let focusTask = new FocusTask('#focus-task-container');
@@ -918,7 +917,6 @@ module.exports = {
   BUTTON_SOUND,
   STATUS_RUNNING,
   TimerApp,
-  TimerSplash,
   TaskList,
   FocusTask,
   Task

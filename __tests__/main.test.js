@@ -2,6 +2,7 @@ const ConfirmDialog = require('../source/components/confirm-dialog.js');
 const TimerButton = require('../source/components/timer-button.js');
 const TimerProgress = require('../source/components/timer-progress.js');
 const TimerSettings = require('../source/components/timer-settings.js');
+const TimerSplash = require('../source/components/timer-splash.js');
 const TimerText = require('../source/components/timer-text.js');
 const {
   MIN_05,
@@ -17,7 +18,6 @@ const {
   BUTTON_SOUND,
   STATUS_RUNNING,
   TimerApp,
-  TimerSplash,
   TaskList,
   FocusTask,
   Task
@@ -27,9 +27,7 @@ beforeEach(() => {
   window.HTMLMediaElement.prototype.play = () => {};
 
   document.body.innerHTML =
-    '<div id="timer-splash">' +
-      '<button id="timer-splash-button">ENTER</button>' +
-    '</div>' +
+    '<timer-splash></timer-splash>' +
     '<section id="timer-app">' +
       '<timer-text></timer-text>' +
       '<timer-button class="tactile-button"></timer-button>' +
@@ -69,12 +67,11 @@ describe('splash screen', () => {
   });
 
   test('enter button closes splash screen', () => {
-    const timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
-    const splashButton = document.querySelector(TIMER_SPLASH_BUTTON_SELECTOR);
+    const timerSplash = new TimerSplash();
 
-    splashButton.click();
+    timerSplash.shadowRoot.querySelector(TIMER_SPLASH_BUTTON_SELECTOR).click();
 
-    expect(getComputedStyle(timerSplash.element)).toHaveProperty('visibility', 'hidden');
+    expect(getComputedStyle(timerSplash)).toHaveProperty('visibility', 'hidden');
   });
 });
 
