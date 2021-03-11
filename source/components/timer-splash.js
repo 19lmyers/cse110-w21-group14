@@ -12,16 +12,16 @@ class TimerSplash extends HTMLElement {
         pomoTitle.textContent = 'POMODORO';
         div.appendChild(pomoTitle);
 
-        let button = document.createElement('button');
+        const button = document.createElement('button');
         button.setAttribute('id', 'timer-splash-button');
         button.textContent = 'ENTER';
         div.appendChild(button);
 
-        let style = document.createElement('link');
+        const style = document.createElement('link');
         style.setAttribute('rel', 'stylesheet');
         style.setAttribute('href', 'styles/timer-splash.css');
 
-        button.addEventListener('click', this.close());
+        button.addEventListener('click', this.close.bind(this));
 
         this.shadowRoot.append(div, style);
 
@@ -33,8 +33,7 @@ class TimerSplash extends HTMLElement {
      * function to set timer-splash to visible
      */
     show() {
-        console.log("show");
-        this.shadowRoot.querySelector('div').style.visibility = 'visible';
+        this.style.visibility = 'visible';
     }
 
 
@@ -42,8 +41,7 @@ class TimerSplash extends HTMLElement {
      * functin to hide timer-splash
      */
     close() {
-        console.log("close");
-        this.shadowRoot.querySelector('div').style.visibility = 'hidden';
+        this.style.visibility = 'hidden';
     }
 }
 
