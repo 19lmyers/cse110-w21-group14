@@ -621,6 +621,17 @@ class TaskList {
     this.taskListContainerElement.appendChild(this.tasksSection);
    
     // EVENT Handlers
+    // Handle create task when enter is pressed on keyboard
+    window.addEventListener('keydown', (e) => {
+      if(e.which == 13){
+        this.createTask(this.taskNameInput.value,
+          this.taskPomoEstimateInput.value,
+          this.taskListContainerElement);
+          this.taskNameInput.value = ''; // TODO: check this
+          this.taskPomoEstimateInput.value = '';
+      }
+    })
+    // EVENT Handlers
     // Handle create task when add button is clicked
     this.taskAddButton.addEventListener('click', (event) => {
       this.createTask(
