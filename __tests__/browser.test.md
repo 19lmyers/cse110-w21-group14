@@ -20,4 +20,3 @@
 | error thrown when input out of range              | :white_check_mark: | :white_check_mark: | :white_check_mark: |         |
 | save button updates settings                      | :white_check_mark: | :white_check_mark: | :white_check_mark: |         |
 | close button closes settings                      | :white_check_mark: | :white_check_mark: | :white_check_mark: |         |
-| plays button sound when close button clicked      | :white_check_mark: | :white_check_mark: | :white_check_mark: |         |

@@ -7,10 +7,6 @@ const {
   MIN_05,
   MIN_15,
   MIN_25,
-  TIMER_TEXT_SELECTOR,
-  TIMER_BUTTON_SELECTOR,
-  TIMER_PROGRESS_SELECTOR,
-  TIMER_SETTINGS_SELECTOR,
   SETTINGS_BUTTON_SELECTOR,
   TIMER_SPLASH_SELECTOR,
   TIMER_SPLASH_BUTTON_SELECTOR,
@@ -19,11 +15,12 @@ const {
   PHASE_LONG_BREAK,
   TIMER_COMPLETE_SOUND,
   BUTTON_SOUND,
-  STATUS_STOPPED,
   STATUS_RUNNING,
-  STATUS_PAUSED,
   TimerApp,
-  TimerSplash
+  TimerSplash,
+  TaskList,
+  FocusTask,
+  Task
 } = require('../source/scripts/main.js');
 
 beforeEach(() => {
@@ -170,7 +167,7 @@ describe('timer text', () => {
     expect(timerApp.timerText.shadowRoot.querySelector('.second')).toHaveProperty('textContent', '00');
   });
 
-  test('timer text displays negative time', () => {
+  test('timer text handles negative time', () => {
     const timerText = new TimerText();
     timerText.setTime(-MIN_25);
 
@@ -393,8 +390,7 @@ describe('progress bar', () => {
 
   test('progress bar text changes from short break to long break', () => {
     const timerApp = new TimerApp();
-    const timerProgress = document.querySelector(TIMER_PROGRESS_SELECTOR);
-    const timerProgressText = timerProgress.shadowRoot.querySelector('#progress-break p');
+    const timerProgressText = timerApp.timerProgress.shadowRoot.querySelector('#progress-break p');
     timerApp.numPomodoros = 3;
 
     timerApp.handleStart();
@@ -462,7 +458,7 @@ describe('progress bar', () => {
 
 describe('settings', () => {
   test('settings button opens settings', () => {
-    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    const settings = new TimerSettings();
     const settingsButton = document.querySelector(SETTINGS_BUTTON_SELECTOR);
 
     settingsButton.click();
@@ -471,7 +467,7 @@ describe('settings', () => {
   });
 
   test('close button closes settings', () => {
-    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    const settings = new TimerSettings();
     const closeButton = settings.shadowRoot.querySelector('.close-button');
 
     closeButton.click();
@@ -496,7 +492,7 @@ describe('settings', () => {
   });
 
   test('error thrown when pomo length text input outside of range', () => {
-    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    const settings = new TimerSettings();
     const settingsForm = settings.shadowRoot.querySelector('#timer-settings-form');
 
     settings.shadowRoot.querySelector(POMO_LENGTH_NUMBER_SELECTOR).value = -5;
@@ -509,7 +505,7 @@ describe('settings', () => {
   });
 
   test('error thrown when short break text input outside of range', () => {
-    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    const settings = new TimerSettings();
     const settingsForm = settings.shadowRoot.querySelector('#timer-settings-form');
 
     settings.shadowRoot.querySelector(SHORT_BREAK_NUMBER_SELECTOR).value = -5;
@@ -522,7 +518,7 @@ describe('settings', () => {
   });
 
   test('error thrown when long break text input outside of range', () => {
-    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    const settings = new TimerSettings();
     const settingsForm = settings.shadowRoot.querySelector('#timer-settings-form');
 
     settings.shadowRoot.querySelector(LONG_BREAK_NUMBER_SELECTOR).value = -5;
@@ -535,7 +531,7 @@ describe('settings', () => {
   });
 
   test('pomo length text input changes slider pomo length value', () => {
-    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    const settings = new TimerSettings();
     settings.pomoLengthNumber.value = 15;
 
     settings.pomoLengthNumber.dispatchEvent(new Event('input'));
@@ -544,7 +540,7 @@ describe('settings', () => {
   });
 
   test('pomo slider input changes pomo text value', () => {
-    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    const settings = new TimerSettings();
     settings.pomoLengthSlider.value = 15;
 
     settings.pomoLengthSlider.dispatchEvent(new Event('input'));
@@ -553,7 +549,7 @@ describe('settings', () => {
   });
 
   test('short break text input changes slider short break value', () => {
-    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    const settings = new TimerSettings();
     settings.shortBreakNumber.value = 20;
 
     settings.shortBreakNumber.dispatchEvent(new Event('input'));
@@ -562,7 +558,7 @@ describe('settings', () => {
   });
 
   test('short break slider input changes short break text value', () => {
-    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    const settings = new TimerSettings();
     settings.shortBreakSlider.value = 20;
 
     settings.shortBreakSlider.dispatchEvent(new Event('input'));
@@ -571,7 +567,7 @@ describe('settings', () => {
   });
 
   test('long break text input changes slider long break value', () => {
-    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    const settings = new TimerSettings();
     settings.longBreakNumber.value = 50;
 
     settings.longBreakNumber.dispatchEvent(new Event('input'));
@@ -580,7 +576,7 @@ describe('settings', () => {
   });
 
   test('long break slider input changes long break text value', () => {
-    const settings = new TimerSettings(TIMER_SETTINGS_SELECTOR);
+    const settings = new TimerSettings();
     settings.longBreakSlider.value = 50;
 
     settings.longBreakSlider.dispatchEvent(new Event('input'));
@@ -626,67 +622,232 @@ describe('sounds', () => {
   });
 });
 
-// test('initializes timer page', () => {
-//   const timerApp = new TimerApp();
+describe('task list', () => {
+  test('task list button toggles task list', () => {
+    const taskList = new TaskList('#task-button', '#task-list');
 
-//   expect(TimerText).toBeTruthy();
-//   expect(TimerSettings).toBeTruthy();
-//   expect(TimerSplash).toBeTruthy();
-//   expect(TimerApp).toBeTruthy();
+    taskList.taskButtonElement.click();
+    expect(getComputedStyle(taskList.taskListContainerElement)).toHaveProperty('visibility', 'visible');
 
-//   expect(timerApp.timerButton.getAttribute('data-text')).toBe('START');
-//   expect(timerApp.timerText.element).toHaveProperty('textContent', '00:05');
-//   expect(timerApp.timerInfo.sessionsInfo.element).toHaveProperty('textContent', '0');
-//   expect(timerApp.timerProgress.pomodoroProgress).toHaveProperty('value', 0);
-//   expect(timerApp.timerProgress.breakProgress).toHaveProperty('value', 0);
-// });
+    taskList.taskButtonElement.click();
+    expect(getComputedStyle(taskList.taskListContainerElement)).toHaveProperty('visibility', 'hidden');
+  });
 
-// test('updates timer page', () => {
-//   const timerApp = new TimerApp();
-//   const timerButton = document.querySelector(TIMER_BUTTON_SELECTOR);
-//   const spy = jest.spyOn(timerApp, 'playSound');
+  test('creates new task', () => {
+    const taskList = new TaskList('#task-button', '#task-list');
 
-//   timerButton.dispatchEvent(new Event('buttonPressed'));  
+    taskList.createTask('CSE', 1);
 
-//   jest.advanceTimersByTime(1 * 1000);
+    expect(Task).toBeTruthy();
+  });
 
-//   expect(timerApp.timerButton.getAttribute('data-text')).toBe('END');
-//   expect(timerApp.timerText.element).toHaveProperty('textContent', '00:04');
-//   expect(timerApp.timerInfo.sessionsInfo.element).toHaveProperty('textContent', '0');
-//   expect(timerApp.timerProgress.pomodoroProgress).toHaveProperty('value', 1);
-//   expect(timerApp.timerProgress.breakProgress).toHaveProperty('value', 0);
+  test('add button adds new task', () => {
+    const taskList = new TaskList('#task-button', '#task-list');
+    const spy = jest.spyOn(taskList.notDoneTasksSection, 'appendChild');
+    taskList.taskNameInput.value = 'CSE';
+    taskList.taskPomoEstimateInput.value = 1;
 
-//   jest.advanceTimersByTime(MIN_25 * 1000);
+    taskList.taskAddButton.click();
 
-//   expect(spy).toHaveBeenCalled();
-//   expect(timerApp.timerButton.getAttribute('data-text')).toBe('END');
-//   expect(timerApp.timerText.element).toHaveProperty('textContent', '00:02');
-//   expect(timerApp.timerInfo.sessionsInfo.element).toHaveProperty('textContent', '0');
-//   expect(timerApp.timerProgress.pomodoroProgress).toHaveProperty('value', 5);
-//   expect(timerApp.timerProgress.breakProgress).toHaveProperty('value', 1);
+    expect(spy).toHaveBeenCalled();
+  });
 
-//   jest.advanceTimersByTime(2 * 1000);
+  // test('checks task as done', () => {
+  //   const task = new Task('CSE110', 1, 0, false);
 
-//   expect(timerApp.timerButton.getAttribute('data-text')).toBe('START');
-//   expect(timerApp.timerText.element).toHaveProperty('textContent', '00:05');
-//   expect(timerApp.timerInfo.sessionsInfo.element).toHaveProperty('textContent', '1');
-//   expect(timerApp.timerProgress.pomodoroProgress).toHaveProperty('value', 0);
-//   expect(timerApp.timerProgress.breakProgress).toHaveProperty('value', 0);
-// });
+  //   task.taskIsDone.dispatchEvent(new Event('input'));
+    
+  //   expect(task.taskContainerElement.classList).toContain('task-done');
+  // });
 
-// test('changes timer page settings', () => { 
-//   const timerApp = new TimerApp();
-//   const saveButton = document.querySelector('#timer-settings-save');
-//   document.querySelector(POMO_NUMBER_SELECTOR).value = 50;
-//   document.querySelector(POMO_LENGTH_NUMBER_SELECTOR).value = 20;
-//   document.querySelector(SHORT_BREAK_NUMBER_SELECTOR).value = 10;
-//   document.querySelector(LONG_BREAK_NUMBER_SELECTOR).value = 30;
+  // test('checks focus task as done', () => {
+  //   const focusTask = new FocusTask('#focus-task-container');
+  //   const task = new Task('CSE110', 1, 0, false);
+  //   const event = new Event('input');
+  //   Object.defineProperty(event, 'target', {value: {checked: true}});
+  //   task.taskContainerElement.setAttribute('focus', 'true');
 
-//   saveButton.click();
-//   timerApp.cyclePhase();
+  //   task.taskIsDone.dispatchEvent(event);
+    
+  //   expect(focusTask.focusTaskIsDone.checked).toBeTruthy();
+  // });
 
-//   expect(timerApp.timerText.element).toHaveProperty('textContent', '20:00');
-//   expect(timerApp.timerInfo.sessionsInfo.element).toHaveProperty('textContent', '0');
-//   // expect(timerApp.timerProgress.pomodoroProgress).toHaveProperty('max', 1200);
-//   expect(timerApp.timerProgress.breakProgress).toHaveProperty('max', 600);
-// })
+  // test('unchecks task as not done', () => {
+  //   const task = new Task('CSE110', 1, 0, true);
+  //   const event = new Event('input');
+  //   Object.defineProperty(event, 'target', {value: {checked: false}});
+
+  //   task.taskIsDone.dispatchEvent(event);
+    
+  //   expect(task.taskContainerElement).toHaveProperty('className', 'task task-not-done');
+  // });
+
+  test('edit button edits task', () => {
+    const task = new Task('CSE110', 1, 0, false);
+    const spy = jest.spyOn(task, 'editTask');
+
+    task.taskEditButton.click();
+    
+    expect(spy).toHaveBeenCalled();
+    expect(task.taskNameField.getAttribute('disabled')).not.toBeTruthy();
+  });
+
+  test('save button saves task', () => {
+    const task = new Task('CSE110', 1, 0, false);
+    const spy = jest.spyOn(task, 'editTask');
+    task.taskEditButton.click();
+
+    task.taskEditButton.click();
+    
+    expect(spy).toHaveBeenCalled();
+    expect(task.taskNameField.getAttribute('disabled')).toBeTruthy();
+  });
+
+  test('delete button deletes task', () => {
+    const task = new Task('CSE110', 1, 0, false);
+    const focusTask = new Task('CSE112', 1, 0, false);
+    const spy = jest.spyOn(task.taskContainerElement, 'remove');
+    const spyFocus = jest.spyOn(focusTask.taskContainerElement, 'remove'); 
+    focusTask.taskContainerElement.setAttribute('focus', 'true');
+
+    task.taskRemoveButton.click();
+    focusTask.taskRemoveButton.click();
+
+    expect(spy).toHaveBeenCalled();
+    expect(spyFocus).toHaveBeenCalled();
+  });
+
+  test('loads task list during initialization', () => {
+    const spy = jest.spyOn(TaskList.prototype, 'loadTaskList');
+    Storage.prototype.getItem = jest.fn(() => 
+      '[{"name":"CSE110","pomoEstimate":1,"pomoActual":1,"isDone":true},\
+      {"name":"CSE112","pomoEstimate":1,"pomoActual":1,"isDone":false}]');
+
+    new TaskList('#task-button', '#task-list');
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  test('stores task list before leaving app', () => {
+    const event = new Event('beforeunload');
+    const taskList = new TaskList('#task-button', '#task-list');
+    const spy = jest.spyOn(taskList, 'storeTaskList');
+    
+    window.dispatchEvent(event);
+
+    expect(spy).toHaveBeenCalled();
+  });
+});
+
+describe('focus task', () => {
+  test('clicking on focus task container without focus task toggles task list', () => {
+    const focusTask = new FocusTask('#focus-task-container');
+    const taskList = new TaskList('#task-button', '#task-list');
+    const spy = jest.spyOn(taskList, 'toggleTaskList');
+  
+    focusTask.focusTaskContainer.click();
+
+    expect(spy).toBeCalled();
+  });
+
+  test('clicking on focus task container with focus task does not toggle task list', () => {
+    const focusTask = new FocusTask('#focus-task-container');
+    const taskList = new TaskList('#task-button', '#task-list');
+    const spy = jest.spyOn(taskList, 'toggleTaskList');
+    const event = new Event('click');
+    Object.defineProperty(event, 'target', {value: {className: 'focus-task'}});
+  
+    focusTask.focusTaskContainer.dispatchEvent(event);
+
+    expect(spy).not.toBeCalled();
+  });
+
+  test('checks focus task as done and ends timer', () => {
+    const focusTask = new FocusTask('#focus-task-container');
+    const spyTask = jest.spyOn(focusTask, 'clearFocusTask');
+    const timerApp = new TimerApp();
+    const spyTimer = jest.spyOn(timerApp, 'handleEnd');
+    const event = new Event('change');
+    Object.defineProperty(event, 'target', {value: {checked: true, parentElement: {className: 'focus-task'}}});
+  
+    focusTask.focusTaskIsDone.dispatchEvent(event);
+
+    expect(spyTask).toBeCalled();
+    expect(spyTimer).toBeCalled();
+  });
+
+  test('ignores check without focus task', () => {
+    const focusTask = new FocusTask('#focus-task-container');
+    const spy = jest.spyOn(focusTask, 'clearFocusTask');
+    const event = new Event('change');
+    Object.defineProperty(event, 'target', {value: {checked: false, parentElement: {className: 'no-focus-task'}}});
+  
+    focusTask.focusTaskIsDone.dispatchEvent(event);
+
+    expect(spy).not.toBeCalled();
+  });
+})
+
+test('initializes timer page', () => {
+  const timerApp = new TimerApp();
+
+  expect(TimerButton).toBeTruthy();
+  expect(TimerText).toBeTruthy();
+  expect(TimerProgress).toBeTruthy();
+  expect(TimerSettings).toBeTruthy();
+  expect(TimerSplash).toBeTruthy();
+  expect(TimerApp).toBeTruthy();
+  expect(TaskList).toBeTruthy();
+  expect(FocusTask).toBeTruthy();
+
+  expect(timerApp.timerButton.shadowRoot.firstChild).toHaveProperty('textContent', 'START');
+  expect(timerApp.timerText.shadowRoot.querySelector('.minute')).toHaveProperty('textContent', '25');
+  expect(timerApp.timerText.shadowRoot.querySelector('.second')).toHaveProperty('textContent', '00');
+  expect(timerApp.timerProgress.pomodoroProgress).toHaveProperty('value', 0);
+  expect(timerApp.timerProgress.breakProgress).toHaveProperty('value', 0);
+});
+
+test('updates timer page', () => {
+  const timerApp = new TimerApp();
+  const spy = jest.spyOn(timerApp, 'playSound');
+
+  timerApp.timerButton.shadowRoot.firstChild.click();
+
+  jest.advanceTimersByTime(MIN_05 * 1000);
+
+  expect(timerApp.timerButton.shadowRoot.firstChild).toHaveProperty('textContent', 'END');
+  expect(timerApp.timerText.shadowRoot.querySelector('.minute')).toHaveProperty('textContent', '20');
+  expect(timerApp.timerText.shadowRoot.querySelector('.second')).toHaveProperty('textContent', '00');
+  expect(timerApp.timerProgress.pomodoroProgress).toHaveProperty('value', 60 * 5);
+  expect(timerApp.timerProgress.breakProgress).toHaveProperty('value', 0);
+
+  jest.advanceTimersByTime(60 * 22 * 1000);
+
+  expect(spy).toHaveBeenCalled();
+  expect(timerApp.timerButton.shadowRoot.firstChild).toHaveProperty('textContent', 'END');
+  expect(timerApp.timerText.shadowRoot.querySelector('.minute')).toHaveProperty('textContent', '03');
+  expect(timerApp.timerText.shadowRoot.querySelector('.second')).toHaveProperty('textContent', '00');
+  expect(timerApp.timerProgress.pomodoroProgress).toHaveProperty('value', 60 * 25);
+  expect(timerApp.timerProgress.breakProgress).toHaveProperty('value', 60 * 2);
+
+  jest.advanceTimersByTime(60 * 3 * 1000);
+
+  expect(timerApp.timerButton.shadowRoot.firstChild).toHaveProperty('textContent', 'START');
+  expect(timerApp.timerText.shadowRoot.querySelector('.minute')).toHaveProperty('textContent', '25');
+  expect(timerApp.timerText.shadowRoot.querySelector('.second')).toHaveProperty('textContent', '00');
+  expect(timerApp.timerProgress.pomodoroProgress).toHaveProperty('value', 60 * 25);
+  expect(timerApp.timerProgress.breakProgress).toHaveProperty('value', 60 * 5);
+});
+
+test('changes timer page settings', () => { 
+  const timerApp = new TimerApp();
+  const saveButton = timerApp.timerSettings.shadowRoot.querySelector('.save-button');
+    timerApp.timerSettings.pomoLengthNumber.value = 20;
+    timerApp.timerSettings.shortBreakNumber.value = 10;
+    timerApp.timerSettings.longBreakNumber.value = 30;
+
+  saveButton.click();
+
+  expect(timerApp.timerText.shadowRoot.querySelector('.minute')).toHaveProperty('textContent', '20');
+  expect(timerApp.timerText.shadowRoot.querySelector('.second')).toHaveProperty('textContent', '00');
+})
