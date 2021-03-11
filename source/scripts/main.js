@@ -337,24 +337,6 @@ class TimerApp {
   } /* confirmReset */
 }
 
-/* TimerSplash */
-/* <--------------------------------------------------------------------------------------------> */
-class TimerSplash {
-  constructor(splashSelector, splashButtonSelector) {
-    this.element = document.querySelector(splashSelector);
-    this.show();
-    document.querySelector(splashButtonSelector).addEventListener('click', this.close.bind(this));
-  }
-
-  show() {
-    this.element.style.visibility = 'visible';
-  }
-
-  close() {
-    this.element.style.visibility = 'hidden';
-  }
-}
-
 /* Task List */
 /* ---------------------------------------------------------------------------------------------- */
 class TaskList {
