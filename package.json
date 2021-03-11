@@ -13,5 +13,18 @@
   },
   "scripts": {
     "test": "jest"
+  },
+  "jest": {
+    "globals": {
+      "POMO_LENGTH_NUMBER_SELECTOR" : "#pomo-length-number",
+      "POMO_LENGTH_SLIDER_SELECTOR" : "#pomo-length-slider",
+      "SHORT_BREAK_NUMBER_SELECTOR" : "#short-break-number",
+      "SHORT_BREAK_SLIDER_SELECTOR" : "#short-break-slider",
+      "LONG_BREAK_NUMBER_SELECTOR" : "#long-break-number",
+      "LONG_BREAK_SLIDER_SELECTOR" : "#long-break-slider",
+      "PHASE_POMODORO" : "pomodoro",
+      "PHASE_SHORT_BREAK" : "shortBreak",
+      "PHASE_LONG_BREAK" : "longBreak"
+    }
   }
 }

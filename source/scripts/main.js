@@ -7,8 +7,6 @@ const TIMER_BUTTON_SELECTOR = 'timer-button';
 const TIMER_PROGRESS_SELECTOR = 'timer-progress';
 const TIMER_SETTINGS_SELECTOR = 'timer-settings';
 const SETTINGS_BUTTON_SELECTOR = '#settings-button';
-const POMO_NUMBER_SELECTOR = '#pomo-number';
-const POMO_SLIDER_SELECTOR = '#pomo-slider';
 const POMO_LENGTH_NUMBER_SELECTOR = '#pomo-length-number';
 const POMO_LENGTH_SLIDER_SELECTOR = '#pomo-length-slider';
 const SHORT_BREAK_NUMBER_SELECTOR = '#short-break-number';
@@ -396,7 +394,6 @@ class TaskList {
     this.taskPomoEstimateInput.id = 'task-pomo-estimate-input';
     this.taskPomoEstimateInput.type = 'number';
     this.taskPomoEstimateInput.min = '0';
-    this.taskPomoEstimateInput.value = '0';
     this.taskPomoEstimateInput.placeholder = '0';
 
     this.taskPomoEstimateInputLabel = document.createElement('label');
@@ -925,3 +922,25 @@ window.addEventListener('DOMContentLoaded', function() {
   let focusTask = new FocusTask('#focus-task-container');
 });
 
+module.exports = {
+  MIN_05,
+  MIN_15,
+  MIN_25,
+  TIMER_TEXT_SELECTOR,
+  TIMER_BUTTON_SELECTOR,
+  TIMER_PROGRESS_SELECTOR,
+  TIMER_SETTINGS_SELECTOR,
+  SETTINGS_BUTTON_SELECTOR,
+  TIMER_SPLASH_SELECTOR,
+  TIMER_SPLASH_BUTTON_SELECTOR,
+  PHASE_POMODORO,
+  PHASE_SHORT_BREAK,
+  PHASE_LONG_BREAK,
+  TIMER_COMPLETE_SOUND,
+  BUTTON_SOUND,
+  STATUS_STOPPED,
+  STATUS_RUNNING,
+  STATUS_PAUSED,
+  TimerApp,
+  TimerSplash
+};

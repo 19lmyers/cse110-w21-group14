@@ -91,8 +91,8 @@ class TimerSettings extends HTMLElement {
 
     wrapper.querySelector('.close-button')
       .addEventListener('click', () => this.closeSettings());
-    wrapper.querySelector('.save-button')
-      .addEventListener('click', (event) => {
+    wrapper.querySelector('#timer-settings-form')
+      .addEventListener('submit', (event) => {
         event.preventDefault();
         this.updateSettings();
         this.closeSettings();
@@ -160,3 +160,5 @@ class TimerSettings extends HTMLElement {
 }
 
 customElements.define('timer-settings', TimerSettings);
+
+module.exports = TimerSettings;
