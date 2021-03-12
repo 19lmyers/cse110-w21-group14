@@ -13,9 +13,6 @@
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;800&display=swap" rel="stylesheet">
 
 	<link rel="stylesheet" href="styles/main.css">
-	<link rel="stylesheet" href="styles/task-list.css">
-	<link rel="stylesheet" href="styles/focus-task.css">
-	<link rel="stylesheet" href="styles/task.css">
 </head>
 
 <body>
@@ -33,8 +30,8 @@
 				<timer-button class="tactile-button"></timer-button>
 			</section>
 			<section id="timer-info">
-				<div id="focus-task-container"> </div>
 				<!-- Step progress bar -->
+				<task-focus></task-focus>
 				<timer-progress></timer-progress>
 			</section>
 		</main>
@@ -43,9 +40,6 @@
 	<audio id="button-sound" src="assets/button-sound.wav"></audio>
 
 	<footer>
-		<!-- Timer Reset and Timer Settings Buttons -->
-    <button id='task-button'><img src="assets/task-button.svg" alt="Task List Button"></button>
-		<div id="task-list"></div>
 		<button id="settings-button" type="button" class="tactile-button">
 			<img src="assets/settings-icon.svg" alt="Settings Button">
 		</button>
@@ -98,6 +92,7 @@
 	<script src="components/timer-text.js"></script>
 	<script src="components/timer-progress.js"></script>
 	<script src="components/timer-splash.js"></script>
+	<script src="components/task-focus.js"></script>
 	<script src="components/confirm-dialog.js"></script>
 	<!-- Testing timer end -->
 
