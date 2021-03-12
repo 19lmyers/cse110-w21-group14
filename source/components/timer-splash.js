@@ -1,6 +1,6 @@
 class TimerSplash extends HTMLElement {
 
-  constructor(splashSelector, splashButtonSelector) {
+  constructor() {
     super();
 
     this.attachShadow({mode: 'open'});
