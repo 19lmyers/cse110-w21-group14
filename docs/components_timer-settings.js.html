@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/timer-settings.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/timer-settings.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>class TimerSettings extends HTMLElement {
+  constructor() {
+    super();
+
+    this.attachShadow({mode: 'open'});
+
+    let wrapper = document.createElement('div');
+    wrapper.setAttribute('class', 'dialog');
+
+    wrapper.innerHTML = `
+			&lt;div class="dialog-content">
+				&lt;form id="timer-settings-form">
+					&lt;fieldset>
+						&lt;legend>Choose your Pomodoro lengths:&lt;/legend>
+
+						&lt;label for="pomo-length-number">Length of Pomodoro (min):&lt;/label>
+						&lt;div>
+							&lt;input id="pomo-length-number" name="pomo-length-number" type="number" min="1" 
+                max="99" value="25">
+							&lt;input id="pomo-length-slider" name="pomo-length-slider" type="range" min="1" 
+                max="99" value="25">
+						&lt;/div>
+
+						&lt;label for="short-break-number">Length of short break (min):&lt;/label>
+						&lt;div>
+							&lt;input id="short-break-number" name="short-break-number" type="number" min="1" 
+                max="99" value="5">
+							&lt;input id="short-break-slider" name="short-break-slider" type="range" min="1" 
+                max="99" value="5">
+						&lt;/div>
+						&lt;label for="long-break-number">Length of long break (min):&lt;/label>
+						&lt;div>
+							&lt;input id="long-break-number" name="long-break-number" type="number" min="1" 
+                max="99" value="15">
+							&lt;input id="long-break-slider" name="long-break-slider" type="range" min="1" 
+                max="99" value="15">
+						&lt;/div>
+					&lt;/fieldset>
+
+					&lt;button type="button" class="close-button">Close&lt;/button>
+					&lt;button type="submit" class="save-button">Save&lt;/button>
+
+					&lt;hr>
+
+					&lt;h2>What is the Pomodoro Method?&lt;/h2>
+					&lt;p>Traditionally, the Pomodoro method is a cycle between a period of concentrated and
+             uninterrupted work, known as a pomodoro, followed by a short break (and a long break
+             every fourth cycle). This app expands upon the Pomodoro method while adhering to its
+             fundamental philosophy, including customizable session times for pomodoros and breaks,
+             task logging and estimations, and more. 
+          &lt;/p>
+
+          &lt;h2>How should I use this app?&lt;/h2>
+          &lt;p>
+						Simply get ready and press the button to begin! This will start counting down from the
+            pomodoro time allotted (25 minutes by default). Note that once the button is pressed,
+            you cannot end the timer without losing your progress on the current pomodoro. After a
+            pomodoro is complete, you will automatically transition into the break period (5 and 15
+            minutes for short and long breaks by default), after which the current work session will
+            end. You can also use the task feature to log tasks you need to complete and the
+            estimated number of pomodoros to complete it.
+          &lt;/p>
+			&lt;/div>`;
+
+    this.pomoLengthNumber = wrapper.querySelector(POMO_LENGTH_NUMBER_SELECTOR);
+    this.pomoLengthSlider = wrapper.querySelector(POMO_LENGTH_SLIDER_SELECTOR);
+
+    this.shortBreakNumber = wrapper.querySelector(SHORT_BREAK_NUMBER_SELECTOR);
+    this.shortBreakSlider = wrapper.querySelector(SHORT_BREAK_SLIDER_SELECTOR);
+
+    this.longBreakNumber = wrapper.querySelector(LONG_BREAK_NUMBER_SELECTOR);
+    this.longBreakSlider = wrapper.querySelector(LONG_BREAK_SLIDER_SELECTOR);
+
+    // Add event listeners for pomo length
+    this.pomoLengthNumber.addEventListener('input', () => {
+      this.updateSlider(this.pomoLengthNumber, this.pomoLengthSlider);
+    });
+    this.pomoLengthSlider.addEventListener('input', () => {
+      this.updateSlider(this.pomoLengthSlider, this.pomoLengthNumber);
+    });
+
+    // Add event listeners for short break length
+    this.shortBreakNumber.addEventListener('input', () => {
+      this.updateSlider(this.shortBreakNumber, this.shortBreakSlider);
+    });
+    this.shortBreakSlider.addEventListener('input', () => {
+      this.updateSlider(this.shortBreakSlider, this.shortBreakNumber);
+    });
+
+    // Add event listeners for long break length
+    this.longBreakNumber.addEventListener('input', () => {
+      this.updateSlider(this.longBreakNumber, this.longBreakSlider);
+    });
+    this.longBreakSlider.addEventListener('input', () => {
+      this.updateSlider(this.longBreakSlider, this.longBreakNumber);
+    });
+
+    wrapper.querySelector('.close-button')
+      .addEventListener('click', () => this.closeSettings());
+    wrapper.querySelector('.save-button')
+      .addEventListener('click', (event) => {
+        event.preventDefault();
+        this.updateSettings();
+        this.closeSettings();
+      });
+
+    let style = document.createElement('link');
+    style.setAttribute('rel', 'stylesheet');
+    style.setAttribute('href', 'styles/timer-settings.css');
+
+    this.shadowRoot.append(wrapper, style);
+
+  }
+
+  /**
+   * Will update a number to match the value on a slider or vice versa depending on the 
+   * order of parameters.
+   * @param {*} updated is the number or slider that the user manually updated
+   * @param {*} toUpdate the number or slider that should be updated to match
+   */
+  updateSlider(updated, toUpdate) {
+    const newValue = updated.value;
+    toUpdate.value = newValue;
+  }
+
+  /**
+   * Opens settings screen.
+   * @param {object} pomodoroTimes is an object containing the current
+   * pomodoro, short break, and long break times.
+   */
+  openSettings(pomodoroTimes) {
+    this.shadowRoot.querySelector('.dialog').style.visibility = 'visible';
+
+    this.pomoLengthNumber.value = pomodoroTimes[PHASE_POMODORO] / 60;
+    this.pomoLengthSlider.value = pomodoroTimes[PHASE_POMODORO] / 60;
+
+    this.shortBreakNumber.value = pomodoroTimes[PHASE_SHORT_BREAK] / 60;
+    this.shortBreakSlider.value = pomodoroTimes[PHASE_SHORT_BREAK] / 60;
+
+    this.longBreakNumber.value = pomodoroTimes[PHASE_LONG_BREAK] / 60;
+    this.longBreakSlider.value = pomodoroTimes[PHASE_LONG_BREAK] / 60;
+  }
+
+  /**
+   * Closes settings screen.
+   */
+  closeSettings() {
+    this.shadowRoot.querySelector('.dialog').style.visibility = 'hidden';
+  }
+
+  /**
+   * Dispatches event to update settings.
+   */
+  updateSettings() {
+    let settingsChangedEvent = new CustomEvent('settingsChanged', {
+      detail: {
+        pomodoroTimes: {
+          pomodoro: this.pomoLengthNumber.value * 60,
+          shortBreak: this.shortBreakNumber.value * 60,
+          longBreak: this.longBreakNumber.value * 60,
+        },
+      },
+    });
+    this.dispatchEvent(settingsChangedEvent);
+  }
+}
+
+customElements.define('timer-settings', TimerSettings);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="FocusTask.html">FocusTask</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskList.html">TaskList</a></li><li><a href="TimerApp.html">TimerApp</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Fri Mar 12 2021 02:16:37 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
