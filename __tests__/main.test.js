@@ -9,8 +9,6 @@ const {
   MIN_15,
   MIN_25,
   SETTINGS_BUTTON_SELECTOR,
-  TIMER_SPLASH_SELECTOR,
-  TIMER_SPLASH_BUTTON_SELECTOR,
   PHASE_POMODORO,
   PHASE_SHORT_BREAK,
   PHASE_LONG_BREAK,
@@ -69,7 +67,7 @@ describe('splash screen', () => {
   test('enter button closes splash screen', () => {
     const timerSplash = new TimerSplash();
 
-    timerSplash.shadowRoot.querySelector(TIMER_SPLASH_BUTTON_SELECTOR).click();
+    timerSplash.shadowRoot.querySelector('#timer-splash-button').click();
 
     expect(getComputedStyle(timerSplash)).toHaveProperty('visibility', 'hidden');
   });
@@ -649,35 +647,31 @@ describe('task list', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  // test('checks task as done', () => {
-  //   const task = new Task('CSE110', 1, 0, false);
+  test('checks task as done', () => {
+    const task = new Task('CSE110', 1, 0, true);
 
-  //   task.taskIsDone.dispatchEvent(new Event('input'));
+    task.taskIsDone.dispatchEvent(new Event('input'));
     
-  //   expect(task.taskContainerElement.classList).toContain('task-done');
-  // });
+    expect(task.taskContainerElement).toHaveProperty('className', 'task task-done');
+  });
 
-  // test('checks focus task as done', () => {
-  //   const focusTask = new FocusTask('#focus-task-container');
-  //   const task = new Task('CSE110', 1, 0, false);
-  //   const event = new Event('input');
-  //   Object.defineProperty(event, 'target', {value: {checked: true}});
-  //   task.taskContainerElement.setAttribute('focus', 'true');
+  test('checks focus task as done', () => {
+    const focusTask = new FocusTask('#focus-task-container');
+    const task = new Task('CSE110', 1, 0, true);
+    task.taskContainerElement.setAttribute('focus', 'true');
 
-  //   task.taskIsDone.dispatchEvent(event);
+    task.taskIsDone.dispatchEvent(new Event('input'));
     
-  //   expect(focusTask.focusTaskIsDone.checked).toBeTruthy();
-  // });
+    expect(focusTask.focusTaskIsDone.checked).toBeTruthy();
+  });
 
-  // test('unchecks task as not done', () => {
-  //   const task = new Task('CSE110', 1, 0, true);
-  //   const event = new Event('input');
-  //   Object.defineProperty(event, 'target', {value: {checked: false}});
+  test('unchecks task as not done', () => {
+    const task = new Task('CSE110', 1, 0, false);
 
-  //   task.taskIsDone.dispatchEvent(event);
+    task.taskIsDone.dispatchEvent(new Event('input'));
     
-  //   expect(task.taskContainerElement).toHaveProperty('className', 'task task-not-done');
-  // });
+    expect(task.taskContainerElement).toHaveProperty('className', 'task task-not-done');
+  });
 
   test('edit button edits task', () => {
     const task = new Task('CSE110', 1, 0, false);
