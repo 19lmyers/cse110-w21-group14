@@ -918,5 +918,5 @@ module.exports = {
   TimerApp,
   TaskList,
   FocusTask,
-  Task
+  Task,
 };
