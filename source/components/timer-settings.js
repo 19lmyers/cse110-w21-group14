@@ -15,19 +15,25 @@ class TimerSettings extends HTMLElement {
 
 						<label for="pomo-length-number">Length of Pomodoro (min):</label>
 						<div>
-							<input id="pomo-length-number" name="pomo-length-number" type="number" min="1" max="99" value="25">
-							<input id="pomo-length-slider" name="pomo-length-slider" type="range" min="1" max="99" value="25">
+							<input id="pomo-length-number" name="pomo-length-number" type="number" min="1" 
+                max="99" value="25">
+							<input id="pomo-length-slider" name="pomo-length-slider" type="range" min="1" 
+                max="99" value="25">
 						</div>
 
 						<label for="short-break-number">Length of short break (min):</label>
 						<div>
-							<input id="short-break-number" name="short-break-number" type="number" min="1" max="99" value="5">
-							<input id="short-break-slider" name="short-break-slider" type="range" min="1" max="99" value="5">
+							<input id="short-break-number" name="short-break-number" type="number" min="1" 
+                max="99" value="5">
+							<input id="short-break-slider" name="short-break-slider" type="range" min="1" 
+                max="99" value="5">
 						</div>
 						<label for="long-break-number">Length of long break (min):</label>
 						<div>
-							<input id="long-break-number" name="long-break-number" type="number" min="1" max="99" value="15">
-							<input id="long-break-slider" name="long-break-slider" type="range" min="1" max="99" value="15">
+							<input id="long-break-number" name="long-break-number" type="number" min="1" 
+                max="99" value="15">
+							<input id="long-break-slider" name="long-break-slider" type="range" min="1" 
+                max="99" value="15">
 						</div>
 					</fieldset>
 
@@ -83,10 +89,10 @@ class TimerSettings extends HTMLElement {
 
     // Add event listeners for long break length
     this.longBreakNumber.addEventListener('input', () => {
-      this.updateSlider(this.longBreakNumber, this.longBreakSlider)
+      this.updateSlider(this.longBreakNumber, this.longBreakSlider);
     });
     this.longBreakSlider.addEventListener('input', () => {
-      this.updateSlider(this.longBreakSlider, this.longBreakNumber)
+      this.updateSlider(this.longBreakSlider, this.longBreakNumber);
     });
 
     wrapper.querySelector('.close-button')

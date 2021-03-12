@@ -76,7 +76,8 @@ class TimerText extends HTMLElement {
    * Gets the current time as a mm:ss string.
    */
   get timeString() {
-    return this.time < 0 ? `-${this._minString}:${this._secString}` : `${this._minString}:${this._secString}`;
+    return this.time < 0 ? `-${this._minString}:${this._secString}` :
+      `${this._minString}:${this._secString}`;
   } /* timeString */
 
   /**

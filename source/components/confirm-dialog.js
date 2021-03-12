@@ -27,7 +27,7 @@ class ConfirmDialog extends HTMLElement {
       action();
       cancelButton.removeEventListener('click', this.cancelHandler);
       this.remove();
-    }
+    };
 
     cancelButton.addEventListener('click', this.cancelHandler);
   }
@@ -46,7 +46,7 @@ class ConfirmDialog extends HTMLElement {
       action();
       confirmButton.removeEventListener('click', this.confirmHandler);
       this.remove();
-    }
+    };
 
     confirmButton.addEventListener('click', this.confirmHandler);
   }
