@@ -15,6 +15,9 @@ const {
   TIMER_COMPLETE_SOUND,
   BUTTON_SOUND,
   STATUS_RUNNING,
+  TASK_BUTTON_SELECTOR,
+  TASK_LIST_CONTAINER_SELECTOR,
+  FOCUS_TASK_CONTAINER_SELECTOR,
   TimerApp,
   TaskList,
   FocusTask,
@@ -619,7 +622,7 @@ describe('sounds', () => {
 
 describe('task list', () => {
   test('task list button toggles task list', () => {
-    const taskList = new TaskList('#task-button', '#task-list');
+    const taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
 
     taskList.taskButtonElement.click();
     expect(getComputedStyle(taskList.taskListContainerElement)).toHaveProperty('visibility', 'visible');
@@ -629,7 +632,7 @@ describe('task list', () => {
   });
 
   test('creates new task', () => {
-    const taskList = new TaskList('#task-button', '#task-list');
+    const taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
 
     taskList.createTask('CSE', 1);
 
@@ -637,7 +640,7 @@ describe('task list', () => {
   });
 
   test('add button adds new task', () => {
-    const taskList = new TaskList('#task-button', '#task-list');
+    const taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
     const spy = jest.spyOn(taskList.notDoneTasksSection, 'appendChild');
     taskList.taskNameInput.value = 'CSE';
     taskList.taskPomoEstimateInput.value = 1;
@@ -656,7 +659,7 @@ describe('task list', () => {
   });
 
   test('checks focus task as done', () => {
-    const focusTask = new FocusTask('#focus-task-container');
+    const focusTask = new FocusTask(FOCUS_TASK_CONTAINER_SELECTOR);
     const task = new Task('CSE110', 1, 0, true);
     task.taskContainerElement.setAttribute('focus', 'true');
 
@@ -708,20 +711,41 @@ describe('task list', () => {
     expect(spyFocus).toHaveBeenCalled();
   });
 
+  test('selects task as focus task', () => {
+    const task = new Task('CSE110', 1, 0, true);
+    const event = new Event('click');
+    Object.defineProperty(event, 'target', {value: {className: 'task-name'}});
+
+    task.taskContainerElement.dispatchEvent(event);
+
+    expect(task.taskContainerElement.getAttribute('focus')).toBe('true');
+  });
+
+  test('ignores select task as focus task if editing', () => {
+    const task = new Task('CSE110', 1, 0, true);
+    const event = new Event('click');
+    Object.defineProperty(event, 'target', {value: {className: 'task-name'}});
+    task.taskEditButton.className = 'task-save-button';
+
+    task.taskContainerElement.dispatchEvent(event);
+
+    expect(task.taskContainerElement.getAttribute('focus')).not.toBeTruthy();
+  });
+
   test('loads task list during initialization', () => {
     const spy = jest.spyOn(TaskList.prototype, 'loadTaskList');
     Storage.prototype.getItem = jest.fn(() => 
       '[{"name":"CSE110","pomoEstimate":1,"pomoActual":1,"isDone":true},\
       {"name":"CSE112","pomoEstimate":1,"pomoActual":1,"isDone":false}]');
 
-    new TaskList('#task-button', '#task-list');
+    new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
 
     expect(spy).toHaveBeenCalled();
   });
 
   test('stores task list before leaving app', () => {
     const event = new Event('beforeunload');
-    const taskList = new TaskList('#task-button', '#task-list');
+    const taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
     const spy = jest.spyOn(taskList, 'storeTaskList');
     
     window.dispatchEvent(event);
@@ -732,8 +756,8 @@ describe('task list', () => {
 
 describe('focus task', () => {
   test('clicking on focus task container without focus task toggles task list', () => {
-    const focusTask = new FocusTask('#focus-task-container');
-    const taskList = new TaskList('#task-button', '#task-list');
+    const focusTask = new FocusTask(FOCUS_TASK_CONTAINER_SELECTOR);
+    const taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
     const spy = jest.spyOn(taskList, 'toggleTaskList');
   
     focusTask.focusTaskContainer.click();
@@ -742,8 +766,8 @@ describe('focus task', () => {
   });
 
   test('clicking on focus task container with focus task does not toggle task list', () => {
-    const focusTask = new FocusTask('#focus-task-container');
-    const taskList = new TaskList('#task-button', '#task-list');
+    const focusTask = new FocusTask(FOCUS_TASK_CONTAINER_SELECTOR);
+    const taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
     const spy = jest.spyOn(taskList, 'toggleTaskList');
     const event = new Event('click');
     Object.defineProperty(event, 'target', {value: {className: 'focus-task'}});
@@ -754,7 +778,7 @@ describe('focus task', () => {
   });
 
   test('checks focus task as done and ends timer', () => {
-    const focusTask = new FocusTask('#focus-task-container');
+    const focusTask = new FocusTask(FOCUS_TASK_CONTAINER_SELECTOR);
     const spyTask = jest.spyOn(focusTask, 'clearFocusTask');
     const timerApp = new TimerApp();
     const spyTimer = jest.spyOn(timerApp, 'handleEnd');
@@ -768,7 +792,7 @@ describe('focus task', () => {
   });
 
   test('ignores check without focus task', () => {
-    const focusTask = new FocusTask('#focus-task-container');
+    const focusTask = new FocusTask(FOCUS_TASK_CONTAINER_SELECTOR);
     const spy = jest.spyOn(focusTask, 'clearFocusTask');
     const event = new Event('change');
     Object.defineProperty(event, 'target', {value: {checked: false, parentElement: {className: 'no-focus-task'}}});

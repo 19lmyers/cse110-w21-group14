@@ -897,8 +897,8 @@ class Task {
  */
 window.addEventListener('DOMContentLoaded', function() {
   let timerApp = new TimerApp();
-  let taskList = new TaskList('#task-button', '#task-list');
-  let focusTask = new FocusTask('#focus-task-container');
+  let taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
+  let focusTask = new FocusTask(FOCUS_TASK_CONTAINER_SELECTOR);
 });
 
 module.exports = {
@@ -912,6 +912,9 @@ module.exports = {
   TIMER_COMPLETE_SOUND,
   BUTTON_SOUND,
   STATUS_RUNNING,
+  TASK_BUTTON_SELECTOR,
+  TASK_LIST_CONTAINER_SELECTOR,
+  FOCUS_TASK_CONTAINER_SELECTOR,
   TimerApp,
   TaskList,
   FocusTask,
