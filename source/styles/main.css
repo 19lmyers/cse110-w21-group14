@@ -182,3 +182,43 @@ timer-progress {
   flex-direction: column;
   justify-content: space-between;
 }
+
+/* || Footer */
+.dialog {
+  position: absolute;
+}
+
+#timer-settings-button {
+  width: 60px;
+  height: 60px;
+  background-color: #366577;
+}
+
+/* || Dialog */
+.dialog {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  visibility: hidden;
+}
+
+.dialog-content {
+  padding: 1rem;
+  border: 2px solid black;
+  background-color: #FFFCF4;
+  width: 60vw;
+}
+
+#timer-settings-close, #timer-settings-save {
+  display: inline;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
