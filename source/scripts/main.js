@@ -751,7 +751,32 @@ class TaskList {
       // Encourage user to give tasks accurate descriptions
     }
     else if (pomoEstimate > 4) {
-      // Prompt user to consider breaking down tasks into smaller more manageable chunks
+    let confirmDialog = document.createElement('confirm-dialog');
+
+    // Fill slot header
+    let dialogHeader = document.createElement('span');
+    dialogHeader.setAttribute('slot', 'header');
+    dialogHeader.textContent = 'INVALID POMO ESTMATE!';
+    confirmDialog.appendChild(dialogHeader);
+
+    // Fill slot text
+    let dialogText = document.createElement('span');
+    dialogText.setAttribute('slot', 'text');
+    dialogText.textContent = 'Number must be between 0-4, consider breaking your task up';
+    confirmDialog.appendChild(dialogText);
+
+    // Fill slot confirm-button-text
+    let dialogConfirm = document.createElement('span');
+    dialogConfirm.setAttribute('slot', 'confirm-button-text');
+    dialogConfirm.textContent = 'OK';
+    confirmDialog.appendChild(dialogConfirm);
+
+    // Set confirm action
+    confirmDialog.addEventListener('confirmPressed', () => {
+      this.handleEnd(true);
+    });
+
+    document.body.appendChild(confirmDialog);
     }
     else {
       const newTask = new Task(taskName, pomoEstimate, 0, false);
