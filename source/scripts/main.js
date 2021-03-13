@@ -751,50 +751,50 @@ class TaskList {
       // Encourage user to give tasks accurate descriptions
       let confirmDialog = document.createElement('confirm-dialog');
 
-    // Fill slot header
-    let dialogHeader = document.createElement('span');
-    dialogHeader.setAttribute('slot', 'header');
-    dialogHeader.textContent = 'NAME YOUR TASK!';
-    confirmDialog.appendChild(dialogHeader);
+      // Fill slot header
+      let dialogHeader = document.createElement('span');
+      dialogHeader.setAttribute('slot', 'header');
+      dialogHeader.textContent = 'NAME YOUR TASK!';
+      confirmDialog.appendChild(dialogHeader);
 
-    // Fill slot text
-    let dialogText = document.createElement('span');
-    dialogText.setAttribute('slot', 'text');
-    dialogText.textContent = 'Try to give an accurate task name to work on';
-    confirmDialog.appendChild(dialogText);
+      // Fill slot text
+      let dialogText = document.createElement('span');
+      dialogText.setAttribute('slot', 'text');
+      dialogText.textContent = 'Try to give an accurate task name to work on';
+      confirmDialog.appendChild(dialogText);
 
-    // Fill slot confirm-button-text
-    let dialogConfirm = document.createElement('span');
-    dialogConfirm.setAttribute('slot', 'confirm-button-text');
-    dialogConfirm.textContent = 'WILL DO!';
-    confirmDialog.appendChild(dialogConfirm);
+      // Fill slot confirm-button-text
+      let dialogConfirm = document.createElement('span');
+      dialogConfirm.setAttribute('slot', 'confirm-button-text');
+      dialogConfirm.textContent = 'WILL DO!';
+      confirmDialog.appendChild(dialogConfirm);
 
-    confirmDialog.cancelText = '';
-    document.body.appendChild(confirmDialog);
+      confirmDialog.cancelText = '';
+      document.body.appendChild(confirmDialog);
     }
     else if (pomoEstimate > 4) {
-    let confirmDialog = document.createElement('confirm-dialog');
+      let confirmDialog = document.createElement('confirm-dialog');
 
-    // Fill slot header
-    let dialogHeader = document.createElement('span');
-    dialogHeader.setAttribute('slot', 'header');
-    dialogHeader.textContent = 'INVALID POMO ESTMATE!';
-    confirmDialog.appendChild(dialogHeader);
+      // Fill slot header
+      let dialogHeader = document.createElement('span');
+      dialogHeader.setAttribute('slot', 'header');
+      dialogHeader.textContent = 'INVALID POMO ESTMATE!';
+      confirmDialog.appendChild(dialogHeader);
 
-    // Fill slot text
-    let dialogText = document.createElement('span');
-    dialogText.setAttribute('slot', 'text');
-    dialogText.textContent = 'Number must be between 0-4, consider breaking your task up';
-    confirmDialog.appendChild(dialogText);
+      // Fill slot text
+      let dialogText = document.createElement('span');
+      dialogText.setAttribute('slot', 'text');
+      dialogText.textContent = 'Number must be between 0-4, consider breaking your task up';
+      confirmDialog.appendChild(dialogText);
 
-    // Fill slot confirm-button-text
-    let dialogConfirm = document.createElement('span');
-    dialogConfirm.setAttribute('slot', 'confirm-button-text');
-    dialogConfirm.textContent = 'GOT IT!';
-    confirmDialog.appendChild(dialogConfirm);
+      // Fill slot confirm-button-text
+      let dialogConfirm = document.createElement('span');
+      dialogConfirm.setAttribute('slot', 'confirm-button-text');
+      dialogConfirm.textContent = 'GOT IT!';
+      confirmDialog.appendChild(dialogConfirm);
 
-    confirmDialog.cancelText = '';
-    document.body.appendChild(confirmDialog);
+      confirmDialog.cancelText = '';
+      document.body.appendChild(confirmDialog);
     }
     else if(pomoEstimate == 0){
       const newTask = new Task(taskName,0,0,false);
