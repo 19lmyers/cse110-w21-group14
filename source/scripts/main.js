@@ -749,6 +749,28 @@ class TaskList {
   createTask(taskName, pomoEstimate, taskListContainerElement) {
     if (taskName == '') {
       // Encourage user to give tasks accurate descriptions
+      let confirmDialog = document.createElement('confirm-dialog');
+
+    // Fill slot header
+    let dialogHeader = document.createElement('span');
+    dialogHeader.setAttribute('slot', 'header');
+    dialogHeader.textContent = 'NAME YOUR TASK!';
+    confirmDialog.appendChild(dialogHeader);
+
+    // Fill slot text
+    let dialogText = document.createElement('span');
+    dialogText.setAttribute('slot', 'text');
+    dialogText.textContent = 'Try to give an accurate task name to work on';
+    confirmDialog.appendChild(dialogText);
+
+    // Fill slot confirm-button-text
+    let dialogConfirm = document.createElement('span');
+    dialogConfirm.setAttribute('slot', 'confirm-button-text');
+    dialogConfirm.textContent = 'WILL DO!';
+    confirmDialog.appendChild(dialogConfirm);
+
+    confirmDialog.cancelText = '';
+    document.body.appendChild(confirmDialog);
     }
     else if (pomoEstimate > 4) {
     let confirmDialog = document.createElement('confirm-dialog');
@@ -768,14 +790,10 @@ class TaskList {
     // Fill slot confirm-button-text
     let dialogConfirm = document.createElement('span');
     dialogConfirm.setAttribute('slot', 'confirm-button-text');
-    dialogConfirm.textContent = 'OK';
+    dialogConfirm.textContent = 'GOT IT!';
     confirmDialog.appendChild(dialogConfirm);
 
-    // Set confirm action
-    confirmDialog.addEventListener('confirmPressed', () => {
-      this.handleEnd(true);
-    });
-
+    confirmDialog.cancelText = '';
     document.body.appendChild(confirmDialog);
     }
     else {
