@@ -24,6 +24,8 @@
   padding: 1vw 3vw;
   background-color: #116880;
   color: #EBF7FD;
+  height: auto;
+  width: auto;
 }
 
 @media (min-width: 1200px) {
