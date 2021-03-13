@@ -1,11 +1,11 @@
 /* || General Styling */
 #task-button {
-    width:60px;
-    height: 60px;
     display: flex;
     align-content: center;
     justify-content: center;
     background-color: #366577;
+    position: relative;
+    z-index: 3;
 }
 
 /* || Layout */
@@ -16,23 +16,43 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 18px;
     position: absolute;
-    bottom: 90px;
-    left: 70px;
+    bottom: calc(var(--button-size) + var(--page-margin));
+    left: calc(var(--button-size) + var(--page-margin));
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-
 /* || Task Input */
 #task-input-container {
-    position:relative;
+    position: relative;
     background-color: white;
     border-radius: 15px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     width: 90%;
     height: 15%;
     margin-top: 5%;
+}
+
+@media (max-width: 555px) {
+    #task-list {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        z-index: 2;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: 0;
+    }
+    #task-button {
+        content:"";
+    }
+
+    #task-input-container {
+        height: 80px;
+    }
 }
 
 #task-name-input {
@@ -56,6 +76,7 @@
     position: absolute;
     left: 88%;
     bottom: -15%;
+    z-index: 2;:
 }
 
 #task-add-button:hover {

@@ -1,0 +1,12 @@
+/* Timer Text */
+#timer-text {
+  width: 3.5em;
+  font-size: clamp(80px, 44px + 10vw, 10rem);
+  font-weight: 800;
+  letter-spacing: 0.025em;
+  color: #024057;
+  text-shadow: 0px 3px 4px #00000080;
+  line-height: 100%;
+  margin-top: clamp(40px, 30vh - 142px, 300px);
+  text-align: center;
+}

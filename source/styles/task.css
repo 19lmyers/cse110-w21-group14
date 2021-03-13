@@ -42,7 +42,7 @@
 
 .task:hover .task-delete-button {
     visibility: visible;
-    z-index: 1;
+    
 }
 
 .task-delete-button img {
@@ -63,7 +63,7 @@
     height: fit-content;
 }
 
-.task-edit-button{
+.task-edit-button {
     visibility: hidden;
 }
 

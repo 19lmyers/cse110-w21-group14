@@ -7,6 +7,7 @@ class TimerButton extends HTMLElement {
 
     let button = document.createElement('button');
     button.textContent = this.getAttribute('data-text');
+    button.id = "timer-button";
 
     let style = document.createElement('link');
     style.rel = 'stylesheet';
