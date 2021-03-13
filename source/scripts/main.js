@@ -796,6 +796,10 @@ class TaskList {
     confirmDialog.cancelText = '';
     document.body.appendChild(confirmDialog);
     }
+    else if(pomoEstimate == 0){
+      const newTask = new Task(taskName,0,0,false);
+      newTask.appendTask(this.notDoneTasksSection);
+    }
     else {
       const newTask = new Task(taskName, pomoEstimate, 0, false);
       newTask.appendTask(this.notDoneTasksSection);
