@@ -5,6 +5,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<link rel="icon" href="favicon.ico">
+
 	<title>Pomodoro</title>
 
 	<link rel="preconnect" href="https://fonts.gstatic.com">
@@ -19,11 +21,9 @@
 </head>
 
 <body>
-	<!-- Timer splash screen -->
-	<div id="timer-splash">
-		<h1>POMODORO</h1>
-		<button id="timer-splash-button">ENTER</button>
-	</div>
+	
+	<timer-splash></timer-splash>
+
 	<div class="wrapper">
 		<header>
 			<h1>POMODORO</h1>
@@ -31,7 +31,8 @@
 
 		<main>
 			<section id="timer-app">
-				<span id="timer-text">25:00</span>
+				<timer-text></timer-text>
+				<timer-button class="tactile-button"></timer-button>
 			</section>
 			<timer-button class="tactile-button" data-text="START"></timer-button>
 			<section id="timer-info">
@@ -41,17 +42,41 @@
 			</section>
 		</main>
 
-		<audio id="pomo-complete-sound" src="assets/singing-bowl-sound.wav"></audio>
-		<audio id="button-sound" src="assets/button-sound.wav"></audio>
+	<audio id="pomo-complete-sound" src="assets/singing-bowl-sound.wav"></audio>
+	<audio id="button-sound" src="assets/button-sound.wav"></audio>
 
-		<footer>
-			<!-- Timer Reset and Timer Settings Buttons -->
-			<button id='task-button'><img src="assets/task-button.svg" alt="Task List Button"></button>
-			<div id="task-list"></div>
-			<button id="timer-settings-button" class="tactile-button"><img src="assets/settings-icon.svg"
-					alt="Settings Button"></button>
+	<footer>
+		<!-- Timer Reset and Timer Settings Buttons -->
+		<button id='task-button'><img src="assets/task-button.svg" alt="Task List Button"></button>
+		<div id="task-list"></div>
 
-			<div id="timer-settings" class="dialog">
+		<button id="settings-button" type="button" class="tactile-button">
+			<img src="assets/settings-icon.svg" alt="Settings Button">
+		</button>
+		<timer-settings></timer-settings>
+
+		<template id="confirm-dialog-template">
+			<style>
+				.dialog {
+					position: fixed;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					width: 100vw;
+					height: 100vh;
+					top: 0;
+					left: 0;
+					background-color: rgba(0, 0, 0, 0.2);
+				}
+
+				.dialog-content {
+					padding: 1rem;
+					border: 2px solid black;
+					background-color: #FFFCF4;
+				}
+			</style>
+			<div class="dialog">
 				<div class="dialog-content">
 					<form id="timer-settings-form">
 						<fieldset>

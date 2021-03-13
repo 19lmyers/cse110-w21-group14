@@ -19,68 +19,12 @@ class TimerProgress extends HTMLElement {
         <div>
           <span class="progress-dot"></span>
           <p>Next Cycle!</p>
-        </div>`;
-    /* let style = document.createElement('style');
-    style.innerHTML = `
-      ul {
-        padding: 0;
-        list-style-type: none;
-        display: flex;
-        justify-content: center;
-      }
+        </div>
+      </li>`;
 
-      li {
-        display: flex;
-      }
-
-      div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 2rem;
-      }
-
-      p {
-        display: block;
-        white-space: nowrap;
-        font-style: normal;
-        font-weight: 300;
-        color: #BFE4EC;
-      }
-
-      progress::-webkit-progress-bar {
-        background-color: #BDE1E9;
-        box-shadow: inset 0px 2px 1px rgba(0, 0, 0, 0.25);
-      }
-
-      progress[value]::-webkit-progress-value {
-        background-color: #243D51;
-        border-radius: 1px;
-      }
-
-      progress {
-        z-index: -1;
-        margin: 0.875rem 0;
-        height: 0.25rem;
-      }
-
-      .progress-dot {
-        width: 2rem;
-        height: 2rem;
-        background-color: #BDE1E9;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        border-radius: 50%;
-      }
-      
-      .progress-dot.complete {
-        background-color: #243D51;
-        width: 30px;
-        height: 30px;
-      }
-      `; */
     let style = document.createElement('link');
-    style.rel = 'stylesheet';
-    style.href = './styles/progress-bar.css';
+    style.setAttribute('rel', 'stylesheet');
+    style.setAttribute('href', './styles/timer-progress.css');
     shadow.append(progress, style);
 
     // Set properties
@@ -100,30 +44,36 @@ class TimerProgress extends HTMLElement {
       switch (phase) {
         case PHASE_POMODORO:
           this.currentProgressBarElement = this.pomodoroProgress;
-          this.pomodoroDot = true;
-          break;
-          this.timerProgress.pomodoroDot = true;
+          this._pomodoroDot = true;
           break;
         case PHASE_SHORT_BREAK:
           this.currentProgressBarElement = this.breakProgress;
-          this.breakDot = true;
+          this._breakDot = true;
           break;
         case PHASE_LONG_BREAK:
           this.currentProgressBarElement = this.breakProgress;
-          this.breakDot = true;
+          this._breakDot = true;
           break;
       }
 
-      this.intervalId = setInterval(this.update.bind(this), 1000);
+      this.intervalId = setInterval(this._update.bind(this), 1000);
     }
   } /* start */
 
   /**
    * Updates the value of currentProgressBarElement based on current time
    */
-  update() {
+  _update() {
     this.currentProgressBarElement.value++;
   } /* update */
+
+  /**
+   * Pauses the updating of the currentPhase's progress bar.
+   */
+  pause() {
+    clearInterval(this.intervalId);
+    this.intervalId = null;
+  }
 
   /**
    * stopProgress: Stops the updating of the currentPhase's progress bar.
@@ -131,6 +81,11 @@ class TimerProgress extends HTMLElement {
   stop() {
     clearInterval(this.intervalId);
     this.intervalId = null;
+
+    if (this.currentProgressBarElement === this.breakProgress) {
+      this.breakProgress.value = this.breakProgress.max;
+      this._doneDot = true;
+    }
   } /* stop */
 
   /**
@@ -154,20 +109,15 @@ class TimerProgress extends HTMLElement {
   }
 
   /**
-   * clearPomodoroProgress: Clears the pomodoro progress bar.
+   * Clears all progress bars and dots.
    */
-  clearPomodoroProgress() {
+  clear() {
     this.pomodoroProgress.value = 0;
-    this.pomodoroDot = false;
-  } /* clearPomodoroProgress() */
-
-  /**
-   * clearBreakProgress: Clears the break progress bar.
-   */
-  clearBreakProgress() {
     this.breakProgress.value = 0;
-    this.breakDot = false;
-  } /* clearBreakProgress() */
+    this._pomodoroDot = false;
+    this._breakDot = false;
+    this._doneDot = false;
+  }
 
   /**
    * Sets the completion status for the pomodoro (first) dot.
