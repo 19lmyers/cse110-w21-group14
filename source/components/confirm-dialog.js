@@ -7,10 +7,13 @@ class ConfirmDialog extends HTMLElement {
     this.attachShadow({mode: 'open'}).appendChild(template.cloneNode(true));
 
     let shadow = this.shadowRoot;
-
-    // Initialize event handlers
-    this.cancelHandler = null;
-    this.confirmHandler = null;
+    shadow.querySelector('.confirm-button').addEventListener('click', () => {
+      this.dispatchEvent(new Event('confirmPressed'));
+      // Initialize event handlers
+      this.cancelHandler = null;
+      this.confirmHandler = null;
+    },
+    );
   }
 
   /**
@@ -49,6 +52,14 @@ class ConfirmDialog extends HTMLElement {
     };
 
     confirmButton.addEventListener('click', this.confirmHandler);
+  }
+  set cancelText(text) {
+    this.shadowRoot.querySelector('.cancel-button').style.visibility = 'hidden';
+    let confirmButton = this.shadowRoot.querySelector('.confirm-button');
+    confirmButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      this.remove();
+    });
   }
 }
 
