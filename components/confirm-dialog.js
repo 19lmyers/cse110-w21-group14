@@ -12,8 +12,9 @@ class ConfirmDialog extends HTMLElement {
       // Initialize event handlers
       this.cancelHandler = null;
       this.confirmHandler = null;
-    }
-    )}
+    },
+    );
+  }
 
   /**
    * Sets the action to trigger if the cancel button is pressed.
@@ -58,7 +59,7 @@ class ConfirmDialog extends HTMLElement {
     confirmButton.addEventListener('click', (event) => {
       event.preventDefault();
       this.remove();
-    })
+    });
   }
 }
 
