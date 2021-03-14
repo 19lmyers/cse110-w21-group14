@@ -16,7 +16,7 @@ class TimerButton extends HTMLElement {
     //   this.dispatchEvent(new Event('buttonPressed'));
     // });
 
-    // this.shadowRoot.append(button, style);
+    this.shadowRoot.append(button, style);
 
     // Initialize event handler
     this.clickHandler = null;
