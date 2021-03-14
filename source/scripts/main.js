@@ -409,7 +409,7 @@ class TaskList {
     // EVENT Handlers
     // Handle create task when enter is pressed on keyboard
     document.getElementById('task-name-input').addEventListener('keydown', (e) => {
-      if (e.which == 13) {
+      if (e.key === 'Enter') {
         this.createTask(this.taskNameInput.value,
           this.taskPomoEstimateInput.value,
           this.taskListContainerElement);
@@ -420,7 +420,7 @@ class TaskList {
     
     // Create task when click enter at the pomo estimate
     document.getElementById('task-pomo-estimate-input').addEventListener('keydown', (e) => {
-      if (e.which == 13) {
+      if (e.key === 'Enter') {
         this.createTask(this.taskNameInput.value,
           this.taskPomoEstimateInput.value,
           this.taskListContainerElement);
@@ -646,11 +646,11 @@ class FocusTask {
       if (event.target.className == 'no-focus-task') {
         // Dispatch noFocusTaskEvent to document
         const noFocusTaskEvent = new Event('noFocusTask', {bubbles: true});
-        if (event.target.id == 'focus-task-checkbox') {
-          const finishedNoFocusTaskEvent = new Event('noFocusTask', {bubbles: true});
-          document.dispatchEvent(finishedNoFocusTaskEvent);
-          console.log('focusTask dispatched finishedNoFocusTask event to document');
-        }
+        // if (event.target.id == 'focus-task-checkbox') {
+        //   const finishedNoFocusTaskEvent = new Event('noFocusTask', {bubbles: true});
+        //   document.dispatchEvent(finishedNoFocusTaskEvent);
+        //   console.log('focusTask dispatched finishedNoFocusTask event to document');
+        // }
         document.dispatchEvent(noFocusTaskEvent);
 
         // TODO: delete

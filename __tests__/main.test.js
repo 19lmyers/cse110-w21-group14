@@ -438,7 +438,7 @@ describe('progress bar', () => {
     const spy = jest.spyOn(confirmDialog.shadowRoot.querySelector('.confirm-button'), 'removeEventListener');
     confirmDialog.confirmHandler = jest.fn();
 
-    confirmDialog.confirmAction = jest.fn()
+    confirmDialog.confirmAction = jest.fn();
     
     expect(spy).toHaveBeenCalled();
   });
@@ -448,7 +448,19 @@ describe('progress bar', () => {
     const spy = jest.spyOn(confirmDialog.shadowRoot.querySelector('.cancel-button'), 'removeEventListener');
     confirmDialog.cancelHandler = jest.fn();
 
-    confirmDialog.cancelAction = jest.fn()
+    confirmDialog.cancelAction = jest.fn();
+    
+    expect(spy).toHaveBeenCalled();
+  });
+
+  test('confirmation removes card', () => {
+    const taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
+    taskList.createTask('', 1);
+    const confirmDialog = document.querySelector('confirm-dialog');
+    const confirmButton = confirmDialog.shadowRoot.querySelector('.confirm-button');
+    const spy = jest.spyOn(confirmDialog, 'remove');
+
+    confirmButton.click();
     
     expect(spy).toHaveBeenCalled();
   });
@@ -648,6 +660,71 @@ describe('task list', () => {
     taskList.taskAddButton.click();
 
     expect(spy).toHaveBeenCalled();
+  });
+
+  test('enter key on task name input adds new task', () => {
+    const taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
+    const spy = jest.spyOn(taskList.notDoneTasksSection, 'appendChild');
+    const letterEvent = new KeyboardEvent('keydown', {'key': 'C'});
+    const enterEvent = new KeyboardEvent('keydown', {'key': 'Enter'});
+    taskList.taskNameInput.value = 'CSE';
+    taskList.taskPomoEstimateInput.value = 1;
+
+    document.getElementById('task-name-input').dispatchEvent(letterEvent);
+    expect(spy).not.toHaveBeenCalled();
+
+    document.getElementById('task-name-input').dispatchEvent(enterEvent);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  test('enter key on pomo estimate input adds new task', () => {
+    const taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
+    const spy = jest.spyOn(taskList.notDoneTasksSection, 'appendChild');
+    const numberEvent = new KeyboardEvent('keydown', {'key': '1'});
+    const enterEvent = new KeyboardEvent('keydown', {'key': 'Enter'});
+    taskList.taskNameInput.value = 'CSE';
+    taskList.taskPomoEstimateInput.value = 1;
+
+    document.getElementById('task-pomo-estimate-input').dispatchEvent(numberEvent);
+    expect(spy).not.toHaveBeenCalled();
+
+    document.getElementById('task-pomo-estimate-input').dispatchEvent(enterEvent);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  test('missing task name triggers confirmation', () => {
+    const taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
+    const spy = jest.spyOn(document.body, 'appendChild');
+
+    taskList.createTask('', 1);
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  test('negative pomo estimates trigger confirmation', () => {
+    const taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
+    const spy = jest.spyOn(document.body, 'appendChild');
+
+    taskList.createTask('CSE', -1);
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  test('large pomo estimates trigger confirmation', () => {
+    const taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
+    const spy = jest.spyOn(document.body, 'appendChild');
+
+    taskList.createTask('CSE', 10);
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  test('sets default pomo estimate to 0', () => {
+    const taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
+
+    taskList.createTask('CSE', '');
+
+    expect(Task).toBeTruthy();
   });
 
   test('checks task as done', () => {

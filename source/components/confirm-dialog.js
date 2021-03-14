@@ -7,13 +7,13 @@ class ConfirmDialog extends HTMLElement {
     this.attachShadow({mode: 'open'}).appendChild(template.cloneNode(true));
 
     let shadow = this.shadowRoot;
-    shadow.querySelector('.confirm-button').addEventListener('click', () => {
-      this.dispatchEvent(new Event('confirmPressed'));
+    // shadow.querySelector('.confirm-button').addEventListener('click', () => {
+    //   this.dispatchEvent(new Event('confirmPressed'));
       // Initialize event handlers
       this.cancelHandler = null;
       this.confirmHandler = null;
-    },
-    );
+    // },
+    // );
   }
 
   /**
