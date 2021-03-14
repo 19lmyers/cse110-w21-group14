@@ -632,18 +632,22 @@ class FocusTask {
     this.focusTaskName.textContent = 'Choose a focus task';
     this.focusTaskName.id = 'focus-task-name';
 
-    this.focusTaskPomoActual = document.createElement('p');
+    this.focusTaskPomoContainer = document.createElement('span');
+    this.focusTaskPomoContainer.id = 'focus-task-pomo-container';
+
+    this.focusTaskPomoActual = document.createElement('span');
     this.focusTaskPomoActual.textContent = 0;
     this.focusTaskPomoActual.id = 'focus-task-pomo-actual';
 
-    this.focusTaskPomoEstimate = document.createElement('p');
+    this.focusTaskPomoEstimate = document.createElement('span');
     this.focusTaskPomoEstimate.textContent = 0;
     this.focusTaskPomoEstimate.id = 'focus-task-pomo-estimate';
 
     this.focusTaskContainer.appendChild(this.focusTaskIsDone);
     this.focusTaskContainer.appendChild(this.focusTaskName);
-    this.focusTaskContainer.appendChild(this.focusTaskPomoActual);
-    this.focusTaskContainer.appendChild(this.focusTaskPomoEstimate);
+    this.focusTaskPomoContainer.appendChild(this.focusTaskPomoActual);
+    this.focusTaskPomoContainer.appendChild(this.focusTaskPomoEstimate);
+    this.focusTaskContainer.appendChild(this.focusTaskPomoContainer);
 
     // EVENT HANDLERS:
     // Handle focusTaskContainer CLICK event:

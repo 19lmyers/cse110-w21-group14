@@ -1,20 +1,35 @@
-
+:host(timer-settings) {
+  position: absolute;
+}
 .dialog {
   position: fixed;
+  z-index: 4;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  max-width: 50em;
+  width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.2);
   visibility: hidden;
+  overflow-y: auto;
 }
 
 .dialog-content {
-  padding: 1rem;
-  border: 2px solid black;
+  box-sizing: content-box;
+  padding: 2rem;
+  border-radius: 5%;
   background-color: #FFFCF4;
+  max-width: 50rem;
+  max-height: inherit;
+  overflow: inherit;
+}
+
+@media (max-width: 50rem) {
+  .dialog-content {
+    border-radius: 0;
+  }
 }

@@ -9,13 +9,13 @@
 
 	<title>Pomodoro</title>
 
-  <link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;800&display=swap" rel="stylesheet">
 
-	<link rel="stylesheet" href="styles/main.css">
 	<link rel="stylesheet" href="styles/task-list.css">
 	<link rel="stylesheet" href="styles/focus-task.css">
 	<link rel="stylesheet" href="styles/task.css">
+	<link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body>
@@ -30,8 +30,8 @@
 		<main>
 			<section id="timer-app">
 				<timer-text></timer-text>
-				<timer-button class="tactile-button"></timer-button>
 			</section>
+			<timer-button class="tactile-button" data-text="START"></timer-button>
 			<section id="timer-info">
 				<div id="focus-task-container"> </div>
 				<!-- Step progress bar -->
@@ -39,58 +39,59 @@
 			</section>
 		</main>
 
-	<audio id="pomo-complete-sound" src="assets/singing-bowl-sound.wav"></audio>
-	<audio id="button-sound" src="assets/button-sound.wav"></audio>
+		<audio id="pomo-complete-sound" src="assets/singing-bowl-sound.wav"></audio>
+		<audio id="button-sound" src="assets/button-sound.wav"></audio>
 
-	<footer>
-		<!-- Timer Reset and Timer Settings Buttons -->
-    <button id='task-button'><img src="assets/task-button.svg" alt="Task List Button"></button>
-		<div id="task-list"></div>
+		<footer>
+			<!-- Timer Reset and Timer Settings Buttons -->
+			<button id='task-button'><img src="assets/task-button.svg" alt="Task List Button"></button>
+			<div id="task-list"></div>
 
-		<button id="settings-button" type="button" class="tactile-button">
-			<img src="assets/settings-icon.svg" alt="Settings Button">
-		</button>
-		<timer-settings></timer-settings>
+			<button id="settings-button" type="button" class="tactile-button">
+				<img src="assets/settings-icon.svg" alt="Settings Button">
+			</button>
+			<timer-settings></timer-settings>
 
-		<template id="confirm-dialog-template">
-			<style>
-				.dialog {
-					position: fixed;
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-					align-items: center;
-					width: 100vw;
-					height: 100vh;
-					top: 0;
-					left: 0;
-					background-color: rgba(0, 0, 0, 0.2);
-				}
+			<template id="confirm-dialog-template">
+				<style>
+					.dialog {
+						position: fixed;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						width: 100vw;
+						height: 100vh;
+						top: 0;
+						left: 0;
+						background-color: rgba(0, 0, 0, 0.2);
+					}
 
-				.dialog-content {
-					padding: 1rem;
-					border: 2px solid black;
-					background-color: #FFFCF4;
-				}
-			</style>
-			<div class="dialog">
-				<div class="dialog-content">
-					<h2>
-						<slot name="header">Dialog header</slot>
-					</h2>
-					<p>
-						<slot name="text">Dialog text</slot>
-					</p>
-					<menu>
-						<button class="cancel-button">Cancel</button>
-						<button class="confirm-button">
-							<slot name="confirm-button-text">Confirm</slot>
-						</button>
-					</menu>
+					.dialog-content {
+						padding: 1rem;
+						border: 2px solid black;
+						background-color: #FFFCF4;
+					}
+				</style>
+				<div class="dialog">
+					<div class="dialog-content">
+						<h2>
+							<slot name="header">Dialog header</slot>
+						</h2>
+						<p>
+							<slot name="text">Dialog text</slot>
+						</p>
+						<menu>
+							<button class="cancel-button">Cancel</button>
+							<button class="confirm-button">
+								<slot name="confirm-button-text">Confirm</slot>
+							</button>
+						</menu>
+					</div>
 				</div>
-			</div>
-		</template> 
-	</footer>
+			</template> 
+		</footer>
+	</div>
 
 	<!-- Javascript scripts -->
 	<script src="scripts/main.js"></script>
