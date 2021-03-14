@@ -11,9 +11,9 @@ class ConfirmDialog extends HTMLElement {
     // UNUSED (only event listener part)
     // shadow.querySelector('.confirm-button').addEventListener('click', () => {
     //   this.dispatchEvent(new Event('confirmPressed'));
-      // Initialize event handlers
-      this.cancelHandler = null;
-      this.confirmHandler = null;
+    // Initialize event handlers
+    this.cancelHandler = null;
+    this.confirmHandler = null;
     // },
     // );
   }

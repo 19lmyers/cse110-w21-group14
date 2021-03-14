@@ -651,7 +651,7 @@ class FocusTask {
       if (event.target.className == 'no-focus-task') {
         // Dispatch noFocusTaskEvent to document
         const noFocusTaskEvent = new Event('noFocusTask', {bubbles: true});
-        // UNUSED (noFcousTask event is not defined)
+        // UNUSED (dispatching the same event as ^)
         // if (event.target.id == 'focus-task-checkbox') {
         //   const finishedNoFocusTaskEvent = new Event('noFocusTask', {bubbles: true});
         //   document.dispatchEvent(finishedNoFocusTaskEvent);
