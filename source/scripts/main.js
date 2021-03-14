@@ -622,7 +622,17 @@ class TaskList {
    
     // EVENT Handlers
     // Handle create task when enter is pressed on keyboard
-    window.addEventListener('keydown', (e) => {
+    document.getElementById('task-name-input').addEventListener('keydown', (e) => {
+      if(e.which == 13){
+        this.createTask(this.taskNameInput.value,
+          this.taskPomoEstimateInput.value,
+          this.taskListContainerElement);
+          this.taskNameInput.value = ''; 
+          this.taskPomoEstimateInput.value = '';
+      }
+    })
+    //Create task when click enter at the pomo estimate
+    document.getElementById('task-pomo-estimate-input').addEventListener('keydown', (e) => {
       if(e.which == 13){
         this.createTask(this.taskNameInput.value,
           this.taskPomoEstimateInput.value,
