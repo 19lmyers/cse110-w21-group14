@@ -13,6 +13,7 @@ const SHORT_BREAK_NUMBER_SELECTOR = '#short-break-number';
 const SHORT_BREAK_SLIDER_SELECTOR = '#short-break-slider';
 const LONG_BREAK_NUMBER_SELECTOR = '#long-break-number';
 const LONG_BREAK_SLIDER_SELECTOR = '#long-break-slider';
+// UNUSED
 // const TIMER_SPLASH_SELECTOR = '#timer-splash';
 // const TIMER_SPLASH_BUTTON_SELECTOR = '#timer-splash-button';
 
@@ -238,6 +239,7 @@ class TimerApp {
     return this.currentPhase;
   }
 
+  // UNUSED
   /**
    * Resets the number of pomodoros completed.
    */
@@ -301,6 +303,7 @@ class TimerApp {
     document.body.appendChild(confirmDialog);
   } /* confirmEnd */
 
+  // UNUSED
   /**
    * Handles the logic of confirming the reset of all completed Pomodoros.
    */
@@ -648,6 +651,7 @@ class FocusTask {
       if (event.target.className == 'no-focus-task') {
         // Dispatch noFocusTaskEvent to document
         const noFocusTaskEvent = new Event('noFocusTask', {bubbles: true});
+        // UNUSED (noFcousTask event is not defined)
         // if (event.target.id == 'focus-task-checkbox') {
         //   const finishedNoFocusTaskEvent = new Event('noFocusTask', {bubbles: true});
         //   document.dispatchEvent(finishedNoFocusTaskEvent);
@@ -968,6 +972,7 @@ class Task {
  * Currently initializes the timer and button.
  */
 window.addEventListener('DOMContentLoaded', function() {
+  // UNUSED (technically not needed, already declared in HTML)
   // let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
   let timerApp = new TimerApp();
   let taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);

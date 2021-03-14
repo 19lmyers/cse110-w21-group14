@@ -7,6 +7,8 @@ class ConfirmDialog extends HTMLElement {
     this.attachShadow({mode: 'open'}).appendChild(template.cloneNode(true));
 
     let shadow = this.shadowRoot;
+
+    // UNUSED (only event listener part)
     // shadow.querySelector('.confirm-button').addEventListener('click', () => {
     //   this.dispatchEvent(new Event('confirmPressed'));
       // Initialize event handlers
