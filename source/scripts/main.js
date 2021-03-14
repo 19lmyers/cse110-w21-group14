@@ -429,8 +429,8 @@ class TaskList {
         this.createTask(this.taskNameInput.value,
           this.taskPomoEstimateInput.value,
           this.taskListContainerElement);
-         this.taskNameInput.value = '';
-         this.taskPomoEstimateInput.value = '';
+        this.taskNameInput.value = '';
+        this.taskPomoEstimateInput.value = '';
       }
     });
     
