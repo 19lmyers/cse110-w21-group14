@@ -31,8 +31,8 @@ beforeEach(() => {
     '<timer-splash></timer-splash>' +
     '<section id="timer-app">' +
       '<timer-text></timer-text>' +
-      '<timer-button class="tactile-button"></timer-button>' +
     '</section>' +
+    '<timer-button class="tactile-button"></timer-button>' +
     '<section id="timer-info">' +
       '<div id="focus-task-container"></div>' +
       '<timer-progress></timer-progress>' +
@@ -852,6 +852,14 @@ describe('focus task', () => {
     focusTask.focusTaskContainer.dispatchEvent(event);
 
     expect(spy).not.toBeCalled();
+  });
+
+  test('increments focus task pomo count when timer ends', () => {
+    const focusTask = new FocusTask(FOCUS_TASK_CONTAINER_SELECTOR);
+  
+    document.dispatchEvent(new Event('timerEnd'));
+
+    expect(focusTask.focusTaskPomoActual).toHaveProperty('textContent', '1');
   });
 
   test('checks focus task as done and ends timer', () => {

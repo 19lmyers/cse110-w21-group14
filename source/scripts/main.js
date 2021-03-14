@@ -575,7 +575,7 @@ class TaskList {
       confirmDialog.cancelText = '';
       document.body.appendChild(confirmDialog);
     }
-    else if (pomoEstimate > 4 || pomoEstimate < 0) {
+    else if (pomoEstimate > 4) {
       let confirmDialog = document.createElement('confirm-dialog');
 
       // Fill slot header
@@ -588,6 +588,30 @@ class TaskList {
       let dialogText = document.createElement('span');
       dialogText.setAttribute('slot', 'text');
       dialogText.textContent = 'Number must be between 0-4, consider breaking your task up';
+      confirmDialog.appendChild(dialogText);
+
+      // Fill slot confirm-button-text
+      let dialogConfirm = document.createElement('span');
+      dialogConfirm.setAttribute('slot', 'confirm-button-text');
+      dialogConfirm.textContent = 'GOT IT!';
+      confirmDialog.appendChild(dialogConfirm);
+
+      confirmDialog.cancelText = '';
+      document.body.appendChild(confirmDialog);
+    }
+    else if (pomoEstimate < 0) {
+      let confirmDialog = document.createElement('confirm-dialog');
+
+      // Fill slot header
+      let dialogHeader = document.createElement('span');
+      dialogHeader.setAttribute('slot', 'header');
+      dialogHeader.textContent = 'INVALID POMO ESTMATE!';
+      confirmDialog.appendChild(dialogHeader);
+
+      // Fill slot text
+      let dialogText = document.createElement('span');
+      dialogText.setAttribute('slot', 'text');
+      dialogText.textContent = 'Do not use a negative value!';
       confirmDialog.appendChild(dialogText);
 
       // Fill slot confirm-button-text
@@ -632,18 +656,22 @@ class FocusTask {
     this.focusTaskName.textContent = 'Choose a focus task';
     this.focusTaskName.id = 'focus-task-name';
 
-    this.focusTaskPomoActual = document.createElement('p');
+    this.focusTaskPomoContainer = document.createElement('span');
+    this.focusTaskPomoContainer.id = 'focus-task-pomo-container';
+
+    this.focusTaskPomoActual = document.createElement('span');
     this.focusTaskPomoActual.textContent = 0;
     this.focusTaskPomoActual.id = 'focus-task-pomo-actual';
 
-    this.focusTaskPomoEstimate = document.createElement('p');
+    this.focusTaskPomoEstimate = document.createElement('span');
     this.focusTaskPomoEstimate.textContent = 0;
     this.focusTaskPomoEstimate.id = 'focus-task-pomo-estimate';
 
     this.focusTaskContainer.appendChild(this.focusTaskIsDone);
     this.focusTaskContainer.appendChild(this.focusTaskName);
-    this.focusTaskContainer.appendChild(this.focusTaskPomoActual);
-    this.focusTaskContainer.appendChild(this.focusTaskPomoEstimate);
+    this.focusTaskPomoContainer.appendChild(this.focusTaskPomoActual);
+    this.focusTaskPomoContainer.appendChild(this.focusTaskPomoEstimate);
+    this.focusTaskContainer.appendChild(this.focusTaskPomoContainer);
 
     // EVENT HANDLERS:
     // Handle focusTaskContainer CLICK event:

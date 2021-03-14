@@ -1,9 +1,18 @@
+:root {
+  --button-size: clamp(40px, 30px + 2.8vw ,60px);
+  --page-margin: clamp(15px, 15px + 2vw, 40px);
+}
+
 /* || General Styles */
 html,body {
   font-family: "Montserrat", sans-serif;
-  font-size: 16px;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html * {
+  box-sizing: inherit;
 }
 
 button, select, textarea {
@@ -14,7 +23,10 @@ button, select, textarea {
 
 button {
   box-shadow: 0px 3px 2px rgba(0,0,0,0.5);
+  width: var(--button-size);
+  height: var(--button-size);
   border-radius: 50%;
+  background-color: #366577;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,30 +34,14 @@ button {
   cursor: pointer;
 }
 
+button img {
+  width: 80%;
+  height: 80%;
+}
+
 button:hover {
-  box-shadow: none;
-}
-
-#settings-button {
-  position: fixed;
-  right: 5vw;
-  bottom: 5vh;
-  width: 60px;
-  height: 60px;
-  background-color: #366577;
-  border: 0;
-  outline: 0;
-  box-shadow: 0px 3px 2px rgba(0,0,0,0.5);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-#settings-button:hover,
-#settings-button:focus {
-  box-shadow: none;
+  background-color: #2e5869;
+  box-shadow: inset 0px 4px 4px rgba(0,0,0,0.5);
 }
 
 h1,h2,h3,h4 {
@@ -67,44 +63,45 @@ html::-webkit-scrollbar-thumb {
   border-radius: 30px;
 }
 
-.wrapper {
-  padding: 40px;
-  overflow-x: none;
-}
-
-html {
+body {
   background-image: url("../assets/timer-background.jpg");
   background-size: cover;
-  background-position: bottom center;
+  background-position: center center;
   background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 .wrapper {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  height: calc(100vh - 80px);
-}
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  min-width: fit-content;
-}
-
-footer {
-  grid-row: 6;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  grid-column: 1 / 4; 
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: var(--page-margin);
+  width: 100vw;
+  height: 100vh;
 }
 
 header {
   grid-row: 1;
 }
+
+main {
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  max-width: fit-content;
+  justify-self: center;
+}
+
+
+footer {
+  grid-row: 3;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 
 /* || Typography */
 h1 {
@@ -117,84 +114,39 @@ h1 {
 header {
   color: #024057;
 }
-/* || Splash Page */
-#timer-splash {
-  position: absolute;
-  z-index: 40000;
-  width: 100vw;
-  height: 100vh;
-  background-color: #FFFCF4;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
 
-timer-text {
-  margin: 1rem 0;
-  width: 100%;
-}
-
-timer-progress {
-  margin-top: 3rem;
-}
-
-#timer-splash h1 {
-  color: #024057;
-  font-size: 15vw;
-  padding-bottom: 30px;
-  margin: 0;
-}
-#timer-splash-button {
-  font-size: 3vw;
-  border-radius: 2vw;
-  padding: 1vw 3vw;
-  background-color: #116880;
-  color: #EBF7FD;
-}
-@media (min-width: 1200px) {
-  #timer-splash h1 {
-    font-size: 10vw;
-    letter-spacing: 0.05em;
+@media (max-width: 1024px) {
+  header {
+    display: flex;
+    justify-content: center;
   }
-
-  #timer-splash-button {
-    font-size: 2vw;
-    border-radius: 1vw;
-    padding: 0.5vw 1.5vw;
+  
+  header h1 {
+    display: block;
   }
 }
 
-/* || Timer App */
+/* || Main content */
+/* Timer App */
 #timer-app {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  font-feature-settings: "tnum";
-  padding-bottom: 30px;
+  justify-content: flex-end;
 }
 
 #timer-info {
-  padding-top: 80px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
 }
 
-/* || Footer */
-.dialog {
-  position: absolute;
-}
 
-#timer-settings-button {
-  width: 60px;
-  height: 60px;
-  background-color: #366577;
-}
-
-/* || Dialog */
+/* Dialog */
 .dialog {
   position: fixed;
   display: flex;
