@@ -239,9 +239,9 @@ class TimerApp {
   /**
    * Resets the number of pomodoros completed.
    */
-  resetPomodoros() {
-    this.numPomodoros = 0;
-  } /* resetPomodoros */
+  // resetPomodoros() {
+  //   this.numPomodoros = 0;
+  // } /* resetPomodoros */
 
   /**
    * Will play a sound or start the sound over if it is already playing
@@ -302,35 +302,35 @@ class TimerApp {
   /**
    * Handles the logic of confirming the reset of all completed Pomodoros.
    */
-  confirmReset() {
-    const RESET_TEXT = `Are you sure you want to reset your Pomodoro count? \
-    You won't be able to get them back.`;
+  // confirmReset() {
+  //   const RESET_TEXT = `Are you sure you want to reset your Pomodoro count? \
+  //   You won't be able to get them back.`;
 
-    let confirmDialog = document.createElement('confirm-dialog');
+  //   let confirmDialog = document.createElement('confirm-dialog');
 
-    // Fill slot header
-    let dialogHeader = document.createElement('span');
-    dialogHeader.setAttribute('slot', 'header');
-    dialogHeader.textContent = 'Reset Pomodoros';
-    confirmDialog.appendChild(dialogHeader);
+  //   // Fill slot header
+  //   let dialogHeader = document.createElement('span');
+  //   dialogHeader.setAttribute('slot', 'header');
+  //   dialogHeader.textContent = 'Reset Pomodoros';
+  //   confirmDialog.appendChild(dialogHeader);
 
-    // Fill slot text
-    let dialogText = document.createElement('span');
-    dialogText.setAttribute('slot', 'text');
-    dialogText.textContent = RESET_TEXT;
-    confirmDialog.appendChild(dialogText);
+  //   // Fill slot text
+  //   let dialogText = document.createElement('span');
+  //   dialogText.setAttribute('slot', 'text');
+  //   dialogText.textContent = RESET_TEXT;
+  //   confirmDialog.appendChild(dialogText);
 
-    // Fill slot confirm-button-text
-    let dialogConfirm = document.createElement('span');
-    dialogConfirm.setAttribute('slot', 'confirm-button-text');
-    dialogConfirm.textContent = 'Reset';
-    confirmDialog.appendChild(dialogConfirm);
+  //   // Fill slot confirm-button-text
+  //   let dialogConfirm = document.createElement('span');
+  //   dialogConfirm.setAttribute('slot', 'confirm-button-text');
+  //   dialogConfirm.textContent = 'Reset';
+  //   confirmDialog.appendChild(dialogConfirm);
 
-    // Set confirm action
-    confirmDialog.confirmAction = () => this.resetPomodoros();
+  //   // Set confirm action
+  //   confirmDialog.confirmAction = () => this.resetPomodoros();
 
-    document.body.appendChild(confirmDialog);
-  } /* confirmReset */
+  //   document.body.appendChild(confirmDialog);
+  // } /* confirmReset */
 }
 
 /* Task List */

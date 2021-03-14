@@ -831,6 +831,7 @@ test('updates timer page', () => {
   jest.advanceTimersByTime(MIN_05 * 1000);
 
   expect(timerApp.timerButton.shadowRoot.firstChild).toHaveProperty('textContent', 'END');
+  expect(document).toHaveProperty('title', 'Pomodoro - 20:00');
   expect(timerApp.timerText.shadowRoot.querySelector('.minute')).toHaveProperty('textContent', '20');
   expect(timerApp.timerText.shadowRoot.querySelector('.second')).toHaveProperty('textContent', '00');
   expect(timerApp.timerProgress.pomodoroProgress).toHaveProperty('value', 60 * 5);
@@ -840,6 +841,7 @@ test('updates timer page', () => {
 
   expect(spy).toHaveBeenCalled();
   expect(timerApp.timerButton.shadowRoot.firstChild).toHaveProperty('textContent', 'END');
+  expect(document).toHaveProperty('title', 'Pomodoro - 03:00');
   expect(timerApp.timerText.shadowRoot.querySelector('.minute')).toHaveProperty('textContent', '03');
   expect(timerApp.timerText.shadowRoot.querySelector('.second')).toHaveProperty('textContent', '00');
   expect(timerApp.timerProgress.pomodoroProgress).toHaveProperty('value', 60 * 25);
@@ -848,6 +850,7 @@ test('updates timer page', () => {
   jest.advanceTimersByTime(60 * 3 * 1000);
 
   expect(timerApp.timerButton.shadowRoot.firstChild).toHaveProperty('textContent', 'START');
+  expect(document).toHaveProperty('title', 'Pomodoro');
   expect(timerApp.timerText.shadowRoot.querySelector('.minute')).toHaveProperty('textContent', '25');
   expect(timerApp.timerText.shadowRoot.querySelector('.second')).toHaveProperty('textContent', '00');
   expect(timerApp.timerProgress.pomodoroProgress).toHaveProperty('value', 60 * 25);
