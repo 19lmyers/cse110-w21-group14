@@ -575,7 +575,7 @@ class TaskList {
       confirmDialog.cancelText = '';
       document.body.appendChild(confirmDialog);
     }
-    else if (pomoEstimate > 4) {
+    else if (pomoEstimate > 4 || pomoEstimate < 0) {
       let confirmDialog = document.createElement('confirm-dialog');
 
       // Fill slot header
