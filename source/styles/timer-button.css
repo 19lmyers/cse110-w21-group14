@@ -1,5 +1,5 @@
 /* Timer button */
-#timer-button {
+button {
     box-sizing: content-box;
     border: 0;
     outline: 0;
@@ -32,8 +32,8 @@
     margin-bottom: 1rem;
 }
 
-#timer-button:hover,
-#timer-button:focus {
+button:hover
+{
     background-color: #DFDFDF;
     box-shadow: inset 0px 4px 4px rgba(0,0,0,0.5);
 }
