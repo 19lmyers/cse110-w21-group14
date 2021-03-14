@@ -414,24 +414,26 @@ class TaskList {
     // EVENT Handlers
     // Handle create task when enter is pressed on keyboard
     document.getElementById('task-name-input').addEventListener('keydown', (e) => {
-      if(e.which == 13){
+      if (e.which == 13) {
         this.createTask(this.taskNameInput.value,
           this.taskPomoEstimateInput.value,
           this.taskListContainerElement);
-          this.taskNameInput.value = ''; 
-          this.taskPomoEstimateInput.value = '';
+        this.taskNameInput.value = '';
+        this.taskPomoEstimateInput.value = '';
       }
-    })
-    //Create task when click enter at the pomo estimate
+    });
+    
+    // Create task when click enter at the pomo estimate
     document.getElementById('task-pomo-estimate-input').addEventListener('keydown', (e) => {
-      if(e.which == 13){
+      if (e.which == 13) {
         this.createTask(this.taskNameInput.value,
           this.taskPomoEstimateInput.value,
           this.taskListContainerElement);
-          this.taskNameInput.value = ''; 
-          this.taskPomoEstimateInput.value = '';
+         this.taskNameInput.value = '';
+         this.taskPomoEstimateInput.value = '';
       }
-    })
+    });
+    
     // EVENT Handlers
     // Handle create task when add button is clicked
     this.taskAddButton.addEventListener('click', (event) => {
@@ -597,8 +599,8 @@ class TaskList {
       confirmDialog.cancelText = '';
       document.body.appendChild(confirmDialog);
     }
-    else if(pomoEstimate == 0){
-      const newTask = new Task(taskName,0,0,false);
+    else if (pomoEstimate == 0) {
+      const newTask = new Task(taskName, 0, 0, false);
       newTask.appendTask(this.notDoneTasksSection);
     }
     else {
