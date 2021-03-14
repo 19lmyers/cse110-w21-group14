@@ -13,6 +13,8 @@ const SHORT_BREAK_NUMBER_SELECTOR = '#short-break-number';
 const SHORT_BREAK_SLIDER_SELECTOR = '#short-break-slider';
 const LONG_BREAK_NUMBER_SELECTOR = '#long-break-number';
 const LONG_BREAK_SLIDER_SELECTOR = '#long-break-slider';
+// const TIMER_SPLASH_SELECTOR = '#timer-splash';
+// const TIMER_SPLASH_BUTTON_SELECTOR = '#timer-splash-button';
 
 /* Timer Phases */
 const PHASE_POMODORO = 'pomodoro';
@@ -966,6 +968,7 @@ class Task {
  * Currently initializes the timer and button.
  */
 window.addEventListener('DOMContentLoaded', function() {
+  // let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
   let timerApp = new TimerApp();
   let taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
   let focusTask = new FocusTask(FOCUS_TASK_CONTAINER_SELECTOR);
