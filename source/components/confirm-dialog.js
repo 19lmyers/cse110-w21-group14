@@ -9,11 +9,11 @@ class ConfirmDialog extends HTMLElement {
     let shadow = this.shadowRoot;
     shadow.querySelector('.confirm-button').addEventListener('click', () => {
       this.dispatchEvent(new Event('confirmPressed'));
-
-    // Initialize event handlers
-    this.cancelHandler = null;
-    this.confirmHandler = null;
-  }
+      // Initialize event handlers
+      this.cancelHandler = null;
+      this.confirmHandler = null;
+    }
+    )}
 
   /**
    * Sets the action to trigger if the cancel button is pressed.
@@ -54,6 +54,11 @@ class ConfirmDialog extends HTMLElement {
   }
   set cancelText(text) {
     this.shadowRoot.querySelector('.cancel-button').style.visibility = 'hidden';
+    let confirmButton = this.shadowRoot.querySelector('.confirm-button');
+    confirmButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      this.remove();
+    })
   }
 }
 
