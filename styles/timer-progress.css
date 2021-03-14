@@ -1,20 +1,32 @@
+:host(timer-progress) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
+    width: 80%;
+    height: fit-content;
     display: flex;
     justify-content: center;
+    margin-top: clamp(20px, 3vh, 50px);
 }
 
 li {
     display: flex;
+    width: 100%;
 }
 
 div {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 2rem;
+    width: 8%;
+    max-width: 30px;
 }
 
 p {
@@ -22,38 +34,44 @@ p {
     white-space: nowrap;
     font-style: normal;
     font-weight: 300;
+    font-size: clamp(12px, 8px + 1vw, 16px);
     color: #BFE4EC;
+
+    margin: 0;
+    margin-top: .5em;
 }
 
-li progress {
+progress {
+    width: 40%;
     z-index: -1;
-    margin: 0.875rem 0;
-    height: 0.25rem;
+    margin-top: 3%;
+    padding-top: calc(0 - clamp(3px, 2px + .3vh, 4px));
+    height: clamp(3px, 2px + .3vh, 4px);
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     border: none;
 }
 
-li progress[value] {
+progress[value] {
     -webkit-appearance: none;
     appearance: none;
 }
 
-li progress::-webkit-progress-bar {
+progress::-webkit-progress-bar {
     background-color: #70AAB6;
     box-shadow: inset 0px 2px 1px rgba(0, 0, 0, 0.25);
 }
 
-li progress[value]::-webkit-progress-value {
+progress[value]::-webkit-progress-value {
     background-color: white;
     border-radius: 1px;
 }
 
-
 .progress-dot {
-    width: 2rem;
-    height: 2rem;
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
     background-color: #70AAB6;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 50%;
@@ -63,10 +81,10 @@ li progress[value]::-webkit-progress-value {
     content: "";
     display: block;
     background-color: white;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 75%;
+    padding-top: 75%;
     border-radius: 50%;
-    position: relative;
-    left: 0.25em;
-    top: 0.25em;
+    position: absolute;
+    top: 12.5%;
+    left: 12.5%;
 }
