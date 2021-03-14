@@ -23,6 +23,7 @@
             "ignoreComments": true,
             "ignoreUrls": true
         }],
+        "no-tabs": "off",
         "no-trailing-spaces": ["error", {
             "skipBlankLines": true,
             "ignoreComments": true
