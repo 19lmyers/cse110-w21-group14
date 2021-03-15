@@ -318,7 +318,7 @@ describe('timer buttons', () => {
 describe('progress bar', () => {
   test('starts progress bar at pomo', () => {
     const timerProgress = new TimerProgress();
-    const pomodoroDot = timerProgress.shadowRoot.querySelector('#progress-pomodoro .progress-dot');
+    const pomodoroDot = timerProgress.shadowRoot.querySelector('.progress-dot');
 
     timerProgress.start(PHASE_POMODORO);
 
@@ -328,7 +328,7 @@ describe('progress bar', () => {
 
   test('starts progress bar at short break', () => {
     const timerProgress = new TimerProgress();
-    const breakDot = timerProgress.shadowRoot.querySelector('#progress-break .progress-dot');
+    const breakDot = timerProgress.shadowRoot.querySelector('#progress-pomodoro + div .progress-dot');
 
     timerProgress.start(PHASE_SHORT_BREAK);
 
@@ -338,7 +338,7 @@ describe('progress bar', () => {
 
   test('starts progress bar at long break', () => {
     const timerProgress = new TimerProgress();
-    const breakDot = timerProgress.shadowRoot.querySelector('#progress-break .progress-dot');
+    const breakDot = timerProgress.shadowRoot.querySelector('#progress-pomodoro + div .progress-dot');
 
     timerProgress.start(PHASE_LONG_BREAK);
 
@@ -365,7 +365,7 @@ describe('progress bar', () => {
 
   test('stops progress bar', () => {
     const timerProgress = new TimerProgress();
-    const doneDot = timerProgress.shadowRoot.querySelector('#progress-done .progress-dot');
+    const doneDot = timerProgress.shadowRoot.querySelector('#progress-break + div .progress-dot');
     timerProgress.currentProgressBarElement = timerProgress.breakProgress;
 
     timerProgress.stop();
@@ -388,7 +388,7 @@ describe('progress bar', () => {
 
   test('progress bar text changes from short break to long break', () => {
     const timerApp = new TimerApp();
-    const timerProgressText = timerApp.timerProgress.shadowRoot.querySelector('#progress-break p');
+    const timerProgressText = timerApp.timerProgress.shadowRoot.querySelector('#progress-pomodoro + div p');
     timerApp.numPomodoros = 3;
 
     timerApp.handleStart();
