@@ -4,4 +4,6 @@ node_modules/
 # Jest coverage
 coverage/
 
+yarn-error.log
+
 **/.DS_Store
