@@ -12,9 +12,10 @@ class TimerButton extends HTMLElement {
     style.setAttribute('rel', 'stylesheet');
     style.setAttribute('href', 'styles/timer-button.css');
 
-    button.addEventListener('click', () => {
-      this.dispatchEvent(new Event('buttonPressed'));
-    });
+    // UNUSED (buttonPressed event is not defined)
+    // button.addEventListener('click', () => {
+    //   this.dispatchEvent(new Event('buttonPressed'));
+    // });
 
     this.shadowRoot.append(button, style);
 
@@ -47,3 +48,5 @@ class TimerButton extends HTMLElement {
 }
 
 customElements.define('timer-button', TimerButton);
+
+module.exports = TimerButton;
