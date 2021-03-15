@@ -165,3 +165,5 @@ class TimerProgress extends HTMLElement {
 }
 
 customElements.define('timer-progress', TimerProgress);
+
+module.exports = TimerProgress;
