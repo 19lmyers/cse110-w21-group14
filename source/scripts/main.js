@@ -1007,6 +1007,7 @@ window.addEventListener('DOMContentLoaded', function() {
   let focusTask = new FocusTask(FOCUS_TASK_CONTAINER_SELECTOR);
 });
 
+var module = module || {}; //eslint-disable-line
 module.exports = {
   MIN_05,
   MIN_15,
