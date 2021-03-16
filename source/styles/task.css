@@ -42,7 +42,12 @@
 
 .task:hover .task-delete-button {
     visibility: visible;
-    
+    z-index: 1;
+}
+
+.task-delete-button:hover {
+    background-color: #DFDFDF;
+    box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .task-delete-button img {
