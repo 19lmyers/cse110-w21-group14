@@ -44,15 +44,15 @@ class TimerProgress extends HTMLElement {
       switch (phase) {
         case PHASE_POMODORO:
           this.currentProgressBarElement = this.pomodoroProgress;
-          this._pomodoroDot = true;
+          this.pomodoroDot = true;
           break;
         case PHASE_SHORT_BREAK:
           this.currentProgressBarElement = this.breakProgress;
-          this._breakDot = true;
+          this.breakDot = true;
           break;
         case PHASE_LONG_BREAK:
           this.currentProgressBarElement = this.breakProgress;
-          this._breakDot = true;
+          this.breakDot = true;
           break;
       }
 
@@ -114,9 +114,9 @@ class TimerProgress extends HTMLElement {
   clear() {
     this.pomodoroProgress.value = 0;
     this.breakProgress.value = 0;
-    this._pomodoroDot = false;
-    this._breakDot = false;
-    this._doneDot = false;
+    this.pomodoroDot = false;
+    this.breakDot = false;
+    this.doneDot = false;
   }
 
   /**
