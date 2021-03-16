@@ -6,21 +6,20 @@ class TimerProgress extends HTMLElement {
 
     let progress = document.createElement('ul');
     progress.innerHTML = `
-        <div>
-          <span class="progress-dot"></span>
-          <p>Work Time</p>
-        </div>
-        <progress id="progress-pomodoro" value="0"></progress>
-        <div>
-          <span class="progress-dot"></span>
-          <p>Short Break</p>
-        </div>
-        <progress id="progress-break" value="0"></progress>
-        <div>
-          <span class="progress-dot"></span>
-          <p>Next Cycle!</p>
-        </div>
-      </li>`;
+      <div>
+        <span class="progress-dot"></span>
+        <p>Work Time</p>
+      </div>
+      <progress id="progress-pomodoro" value="0"></progress>
+      <div>
+        <span class="progress-dot"></span>
+        <p>Short Break</p>
+      </div>
+      <progress id="progress-break" value="0"></progress>
+      <div>
+        <span class="progress-dot"></span>
+        <p>Next Cycle!</p>
+      </div>`;
 
     let style = document.createElement('link');
     style.setAttribute('rel', 'stylesheet');
@@ -105,7 +104,7 @@ class TimerProgress extends HTMLElement {
   } /* set breakTime */
 
   set breakText(text) {
-    this.shadowRoot.querySelector('#progress-pomodoro~div p').textContent = text;
+    this.shadowRoot.querySelector('#progress-pomodoro + div p').textContent = text;
   }
 
   /**
@@ -123,8 +122,8 @@ class TimerProgress extends HTMLElement {
    * Sets the completion status for the pomodoro (first) dot.
    * @param {boolean} complete indicates whether the dot should be filled.
    */
-  set pomodoroDot(complete) {
-    let pomodoroDot = this.shadowRoot.querySelector('ul:first-child .progress-dot');
+  set _pomodoroDot(complete) {
+    let pomodoroDot = this.shadowRoot.querySelector('.progress-dot');
 
     if (complete) {
       pomodoroDot.classList.add('complete');
@@ -138,8 +137,8 @@ class TimerProgress extends HTMLElement {
    * Sets the completion status for the break (second) dot.
    * @param {boolean} complete indicates whether the dot should be filled.
    */
-  set breakDot(complete) {
-    let breakDot = this.shadowRoot.querySelector('#progress-pomodoro~div .progress-dot');
+  set _breakDot(complete) {
+    let breakDot = this.shadowRoot.querySelector('#progress-pomodoro + div .progress-dot');
 
     if (complete) {
       breakDot.classList.add('complete');
@@ -153,8 +152,8 @@ class TimerProgress extends HTMLElement {
    * Sets the completion status for the done (third) dot.
    * @param {boolean} complete indicates whether the dot should be filled.
    */
-  set doneDot(complete) {
-    let doneDot = this.shadowRoot.querySelector('#progress-break~div .progress-dot');
+  set _doneDot(complete) {
+    let doneDot = this.shadowRoot.querySelector('#progress-break + div .progress-dot');
 
     if (complete) {
       doneDot.classList.add('complete');
@@ -166,3 +165,5 @@ class TimerProgress extends HTMLElement {
 }
 
 customElements.define('timer-progress', TimerProgress);
+
+module.exports = TimerProgress;

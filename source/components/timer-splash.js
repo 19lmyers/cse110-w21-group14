@@ -46,3 +46,5 @@ class TimerSplash extends HTMLElement {
 }
 
 customElements.define('timer-splash', TimerSplash);
+
+module.exports = TimerSplash;

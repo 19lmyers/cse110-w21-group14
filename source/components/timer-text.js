@@ -100,3 +100,5 @@ class TimerText extends HTMLElement {
 }
 
 customElements.define('timer-text', TimerText);
+
+module.exports = TimerText;

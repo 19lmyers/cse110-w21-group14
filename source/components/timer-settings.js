@@ -16,24 +16,24 @@ class TimerSettings extends HTMLElement {
 						<label for="pomo-length-number">Length of Pomodoro (min):</label>
 						<div>
 							<input id="pomo-length-number" name="pomo-length-number" type="number" min="1" 
-                max="99" value="25">
+                max="60" value="25" required>
 							<input id="pomo-length-slider" name="pomo-length-slider" type="range" min="1" 
-                max="99" value="25">
+                max="60" value="25" required>
 						</div>
 
 						<label for="short-break-number">Length of short break (min):</label>
 						<div>
 							<input id="short-break-number" name="short-break-number" type="number" min="1" 
-                max="99" value="5">
+                max="60" value="5" required>
 							<input id="short-break-slider" name="short-break-slider" type="range" min="1" 
-                max="99" value="5">
+                max="60" value="5" required>
 						</div>
 						<label for="long-break-number">Length of long break (min):</label>
 						<div>
 							<input id="long-break-number" name="long-break-number" type="number" min="1" 
-                max="99" value="15">
+                max="60" value="15" required>
 							<input id="long-break-slider" name="long-break-slider" type="range" min="1" 
-                max="99" value="15">
+                max="60" value="15" required>
 						</div>
 					</fieldset>
 
@@ -97,8 +97,8 @@ class TimerSettings extends HTMLElement {
 
     wrapper.querySelector('.close-button')
       .addEventListener('click', () => this.closeSettings());
-    wrapper.querySelector('.save-button')
-      .addEventListener('click', (event) => {
+    wrapper.querySelector('#timer-settings-form')
+      .addEventListener('submit', (event) => {
         event.preventDefault();
         this.updateSettings();
         this.closeSettings();
@@ -166,3 +166,5 @@ class TimerSettings extends HTMLElement {
 }
 
 customElements.define('timer-settings', TimerSettings);
+
+module.exports = TimerSettings;

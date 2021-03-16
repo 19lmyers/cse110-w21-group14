@@ -7,16 +7,15 @@ const TIMER_BUTTON_SELECTOR = 'timer-button';
 const TIMER_PROGRESS_SELECTOR = 'timer-progress';
 const TIMER_SETTINGS_SELECTOR = 'timer-settings';
 const SETTINGS_BUTTON_SELECTOR = '#settings-button';
-const POMO_NUMBER_SELECTOR = '#pomo-number';
-const POMO_SLIDER_SELECTOR = '#pomo-slider';
 const POMO_LENGTH_NUMBER_SELECTOR = '#pomo-length-number';
 const POMO_LENGTH_SLIDER_SELECTOR = '#pomo-length-slider';
 const SHORT_BREAK_NUMBER_SELECTOR = '#short-break-number';
 const SHORT_BREAK_SLIDER_SELECTOR = '#short-break-slider';
 const LONG_BREAK_NUMBER_SELECTOR = '#long-break-number';
 const LONG_BREAK_SLIDER_SELECTOR = '#long-break-slider';
-const TIMER_SPLASH_SELECTOR = '#timer-splash';
-const TIMER_SPLASH_BUTTON_SELECTOR = '#timer-splash-button';
+// UNUSED
+// const TIMER_SPLASH_SELECTOR = '#timer-splash';
+// const TIMER_SPLASH_BUTTON_SELECTOR = '#timer-splash-button';
 
 /* Timer Phases */
 const PHASE_POMODORO = 'pomodoro';
@@ -240,12 +239,13 @@ class TimerApp {
     return this.currentPhase;
   }
 
+  // UNUSED
   /**
    * Resets the number of pomodoros completed.
    */
-  resetPomodoros() {
-    this.numPomodoros = 0;
-  } /* resetPomodoros */
+  // resetPomodoros() {
+  //   this.numPomodoros = 0;
+  // } /* resetPomodoros */
 
   /**
    * Will play a sound or start the sound over if it is already playing
@@ -303,38 +303,39 @@ class TimerApp {
     document.body.appendChild(confirmDialog);
   } /* confirmEnd */
 
+  // UNUSED
   /**
    * Handles the logic of confirming the reset of all completed Pomodoros.
    */
-  confirmReset() {
-    const RESET_TEXT = `Are you sure you want to reset your Pomodoro count? \
-    You won't be able to get them back.`;
+  // confirmReset() {
+  //   const RESET_TEXT = `Are you sure you want to reset your Pomodoro count? \
+  //   You won't be able to get them back.`;
 
-    let confirmDialog = document.createElement('confirm-dialog');
+  //   let confirmDialog = document.createElement('confirm-dialog');
 
-    // Fill slot header
-    let dialogHeader = document.createElement('span');
-    dialogHeader.setAttribute('slot', 'header');
-    dialogHeader.textContent = 'Reset Pomodoros';
-    confirmDialog.appendChild(dialogHeader);
+  //   // Fill slot header
+  //   let dialogHeader = document.createElement('span');
+  //   dialogHeader.setAttribute('slot', 'header');
+  //   dialogHeader.textContent = 'Reset Pomodoros';
+  //   confirmDialog.appendChild(dialogHeader);
 
-    // Fill slot text
-    let dialogText = document.createElement('span');
-    dialogText.setAttribute('slot', 'text');
-    dialogText.textContent = RESET_TEXT;
-    confirmDialog.appendChild(dialogText);
+  //   // Fill slot text
+  //   let dialogText = document.createElement('span');
+  //   dialogText.setAttribute('slot', 'text');
+  //   dialogText.textContent = RESET_TEXT;
+  //   confirmDialog.appendChild(dialogText);
 
-    // Fill slot confirm-button-text
-    let dialogConfirm = document.createElement('span');
-    dialogConfirm.setAttribute('slot', 'confirm-button-text');
-    dialogConfirm.textContent = 'Reset';
-    confirmDialog.appendChild(dialogConfirm);
+  //   // Fill slot confirm-button-text
+  //   let dialogConfirm = document.createElement('span');
+  //   dialogConfirm.setAttribute('slot', 'confirm-button-text');
+  //   dialogConfirm.textContent = 'Reset';
+  //   confirmDialog.appendChild(dialogConfirm);
 
-    // Set confirm action
-    confirmDialog.confirmAction = () => this.resetPomodoros();
+  //   // Set confirm action
+  //   confirmDialog.confirmAction = () => this.resetPomodoros();
 
-    document.body.appendChild(confirmDialog);
-  } /* confirmReset */
+  //   document.body.appendChild(confirmDialog);
+  // } /* confirmReset */
 }
 
 /* Task List */
@@ -378,7 +379,6 @@ class TaskList {
     this.taskPomoEstimateInput.id = 'task-pomo-estimate-input';
     this.taskPomoEstimateInput.type = 'number';
     this.taskPomoEstimateInput.min = '0';
-    this.taskPomoEstimateInput.value = '0';
     this.taskPomoEstimateInput.placeholder = '0';
 
     this.taskPomoEstimateInputLabel = document.createElement('label');
@@ -411,6 +411,29 @@ class TaskList {
 
     this.taskListContainerElement.appendChild(this.tasksSection);
    
+    // EVENT Handlers
+    // Handle create task when enter is pressed on keyboard
+    document.getElementById('task-name-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        this.createTask(this.taskNameInput.value,
+          this.taskPomoEstimateInput.value,
+          this.taskListContainerElement);
+        this.taskNameInput.value = '';
+        this.taskPomoEstimateInput.value = '';
+      }
+    });
+    
+    // Create task when click enter at the pomo estimate
+    document.getElementById('task-pomo-estimate-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        this.createTask(this.taskNameInput.value,
+          this.taskPomoEstimateInput.value,
+          this.taskListContainerElement);
+        this.taskNameInput.value = '';
+        this.taskPomoEstimateInput.value = '';
+      }
+    });
+    
     // EVENT Handlers
     // Handle create task when add button is clicked
     this.taskAddButton.addEventListener('click', (event) => {
@@ -529,9 +552,80 @@ class TaskList {
   createTask(taskName, pomoEstimate, taskListContainerElement) {
     if (taskName == '') {
       // Encourage user to give tasks accurate descriptions
+      let confirmDialog = document.createElement('confirm-dialog');
+
+      // Fill slot header
+      let dialogHeader = document.createElement('span');
+      dialogHeader.setAttribute('slot', 'header');
+      dialogHeader.textContent = 'NAME YOUR TASK!';
+      confirmDialog.appendChild(dialogHeader);
+
+      // Fill slot text
+      let dialogText = document.createElement('span');
+      dialogText.setAttribute('slot', 'text');
+      dialogText.textContent = 'Try to give an accurate task name to work on';
+      confirmDialog.appendChild(dialogText);
+
+      // Fill slot confirm-button-text
+      let dialogConfirm = document.createElement('span');
+      dialogConfirm.setAttribute('slot', 'confirm-button-text');
+      dialogConfirm.textContent = 'WILL DO!';
+      confirmDialog.appendChild(dialogConfirm);
+
+      confirmDialog.cancelText = '';
+      document.body.appendChild(confirmDialog);
     }
     else if (pomoEstimate > 4) {
-      // Prompt user to consider breaking down tasks into smaller more manageable chunks
+      let confirmDialog = document.createElement('confirm-dialog');
+
+      // Fill slot header
+      let dialogHeader = document.createElement('span');
+      dialogHeader.setAttribute('slot', 'header');
+      dialogHeader.textContent = 'INVALID POMO ESTMATE!';
+      confirmDialog.appendChild(dialogHeader);
+
+      // Fill slot text
+      let dialogText = document.createElement('span');
+      dialogText.setAttribute('slot', 'text');
+      dialogText.textContent = 'Number must be between 0-4, consider breaking your task up';
+      confirmDialog.appendChild(dialogText);
+
+      // Fill slot confirm-button-text
+      let dialogConfirm = document.createElement('span');
+      dialogConfirm.setAttribute('slot', 'confirm-button-text');
+      dialogConfirm.textContent = 'GOT IT!';
+      confirmDialog.appendChild(dialogConfirm);
+
+      confirmDialog.cancelText = '';
+      document.body.appendChild(confirmDialog);
+    }
+    else if (pomoEstimate < 0) {
+      let confirmDialog = document.createElement('confirm-dialog');
+
+      // Fill slot header
+      let dialogHeader = document.createElement('span');
+      dialogHeader.setAttribute('slot', 'header');
+      dialogHeader.textContent = 'INVALID POMO ESTMATE!';
+      confirmDialog.appendChild(dialogHeader);
+
+      // Fill slot text
+      let dialogText = document.createElement('span');
+      dialogText.setAttribute('slot', 'text');
+      dialogText.textContent = 'Do not use a negative value!';
+      confirmDialog.appendChild(dialogText);
+
+      // Fill slot confirm-button-text
+      let dialogConfirm = document.createElement('span');
+      dialogConfirm.setAttribute('slot', 'confirm-button-text');
+      dialogConfirm.textContent = 'GOT IT!';
+      confirmDialog.appendChild(dialogConfirm);
+
+      confirmDialog.cancelText = '';
+      document.body.appendChild(confirmDialog);
+    }
+    else if (pomoEstimate == 0) {
+      const newTask = new Task(taskName, 0, 0, false);
+      newTask.appendTask(this.notDoneTasksSection);
     }
     else {
       const newTask = new Task(taskName, pomoEstimate, 0, false);
@@ -585,11 +679,12 @@ class FocusTask {
       if (event.target.className == 'no-focus-task') {
         // Dispatch noFocusTaskEvent to document
         const noFocusTaskEvent = new Event('noFocusTask', {bubbles: true});
-        if (event.target.id == 'focus-task-checkbox') {
-          const finishedNoFocusTaskEvent = new Event('noFocusTask', {bubbles: true});
-          document.dispatchEvent(finishedNoFocusTaskEvent);
-          console.log('focusTask dispatched finishedNoFocusTask event to document');
-        }
+        // UNUSED (dispatching the same event as ^)
+        // if (event.target.id == 'focus-task-checkbox') {
+        //   const finishedNoFocusTaskEvent = new Event('noFocusTask', {bubbles: true});
+        //   document.dispatchEvent(finishedNoFocusTaskEvent);
+        //   console.log('focusTask dispatched finishedNoFocusTask event to document');
+        // }
         document.dispatchEvent(noFocusTaskEvent);
 
         // TODO: delete
@@ -905,9 +1000,30 @@ class Task {
  * Currently initializes the timer and button.
  */
 window.addEventListener('DOMContentLoaded', function() {
-  let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
+  // UNUSED (technically not needed, already declared in HTML)
+  // let timerSplash = new TimerSplash(TIMER_SPLASH_SELECTOR, TIMER_SPLASH_BUTTON_SELECTOR);
   let timerApp = new TimerApp();
-  let taskList = new TaskList('#task-button', '#task-list');
-  let focusTask = new FocusTask('#focus-task-container');
+  let taskList = new TaskList(TASK_BUTTON_SELECTOR, TASK_LIST_CONTAINER_SELECTOR);
+  let focusTask = new FocusTask(FOCUS_TASK_CONTAINER_SELECTOR);
 });
 
+var module = module || {}; //eslint-disable-line
+module.exports = {
+  MIN_05,
+  MIN_15,
+  MIN_25,
+  SETTINGS_BUTTON_SELECTOR,
+  PHASE_POMODORO,
+  PHASE_SHORT_BREAK,
+  PHASE_LONG_BREAK,
+  TIMER_COMPLETE_SOUND,
+  BUTTON_SOUND,
+  STATUS_RUNNING,
+  TASK_BUTTON_SELECTOR,
+  TASK_LIST_CONTAINER_SELECTOR,
+  FOCUS_TASK_CONTAINER_SELECTOR,
+  TimerApp,
+  TaskList,
+  FocusTask,
+  Task,
+};
