@@ -101,7 +101,7 @@ html::-webkit-scrollbar-thumb {
 }
 
 #focus-task-pomo-estimate::before {
-    content: " / ";
+    content: "/";
     font-family: Montserrat;
     font-size: 100%;
     font-weight: 500;

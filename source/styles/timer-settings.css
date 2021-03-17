@@ -28,6 +28,14 @@
   overflow: inherit;
 }
 
+p {
+  color: #528797;
+}
+
+h2 {
+  color: #024057;
+}
+
 @media (max-width: 50rem) {
   .dialog-content {
     border-radius: 0;

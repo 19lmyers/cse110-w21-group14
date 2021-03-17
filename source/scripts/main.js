@@ -887,6 +887,7 @@ class Task {
           this.taskEditButton.className == 'task-save-button') {
         return;
       }
+
       if (event.target.className == 'task-name') {
         console.log(event.target);
         const chooseTaskEvent = new CustomEvent('chooseTask', {
