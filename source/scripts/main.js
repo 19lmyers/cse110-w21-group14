@@ -13,9 +13,6 @@ const SHORT_BREAK_NUMBER_SELECTOR = '#short-break-number';
 const SHORT_BREAK_SLIDER_SELECTOR = '#short-break-slider';
 const LONG_BREAK_NUMBER_SELECTOR = '#long-break-number';
 const LONG_BREAK_SLIDER_SELECTOR = '#long-break-slider';
-// UNUSED
-// const TIMER_SPLASH_SELECTOR = '#timer-splash';
-// const TIMER_SPLASH_BUTTON_SELECTOR = '#timer-splash-button';
 
 /* Timer Phases */
 const PHASE_POMODORO = 'pomodoro';
